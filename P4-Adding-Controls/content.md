@@ -17,8 +17,7 @@ If you recall we changed the name of the bunny sprite to 'hero' in *Hero.sks*, t
 ```
 class GameScene: SKScene {
 
-    var hero: SKSpriteNode!
-
+  var hero: SKSpriteNode!
 ```
 >
 
@@ -98,9 +97,9 @@ One of the nice details of Flappy Bird is the way the bird rotates. When the pla
 
 There are a couple of things you will need to do to achieve this:
 
-*   On touch, turn the bunny upwards
-*   If no touch occurred for a while, turn the bunny downwards
-*   Limit the rotation between slightly up and 90 degrees down (just like Flappy Bird)
+- On touch, turn the bunny upwards
+- If no touch occurred for a while, turn the bunny downwards
+- Limit the rotation between slightly up and 90 degrees down (just like Flappy Bird)
 
 > [action]
 > The first step is to add a property to keep track of the time since the last touch. Add this declaration just below our hero variable declaration.
@@ -186,9 +185,9 @@ Hopping up and down is fun, but it would be even better if our bunny was going s
 
 You've made some real progress in this chapter:
 
-* Connecting Game Scene objects to game code
-* Added touch controls and applied physics forces
-* Importing additional functionality and using clamp to limit hero values
-* Learning about *delta* and adding a game logic timer
+- Connecting Game Scene objects to game code
+- Added touch controls and applied physics forces
+- Importing additional functionality and using clamp to limit hero values
+- Learning about *delta* and adding a game logic timer
 
 Next chapter time to get this world moving.

@@ -7,12 +7,12 @@ If you have never built a side scroller before, this introduction will help you 
 
 You will learn to implement the following:
 
-*   A physics controlled bunny
-*   Dynamic obstacle object generation and removal
-*   Animation and actions
-*   World scrolling
-*   Implement physics collision detection
-*   Create your own custom button class
+- A physics controlled bunny
+- Dynamic obstacle object generation and removal
+- Animation and actions
+- World scrolling
+- Implement physics collision detection
+- Create your own custom button class
 
 #Create a new project
 

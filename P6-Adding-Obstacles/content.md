@@ -194,8 +194,8 @@ Now run your game. You should see an endless amount of scrolling obstacles! With
 
 The gaming is really coming together now, you've learnt to:
 
-* Create a reusable obstacle object
-* Dynamically spawn obstacles using a timer
-* Randomize obstacle object properties to challenge the player
+- Create a reusable obstacle object
+- Dynamically spawn obstacles using a timer
+- Randomize obstacle object properties to challenge the player
 
 Next chapter you are going to implement physics based collision detection.

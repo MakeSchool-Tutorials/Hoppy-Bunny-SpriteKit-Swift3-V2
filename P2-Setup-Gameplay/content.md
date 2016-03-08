@@ -75,6 +75,8 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 > [info]
 > We will be referring to this file type as *SKS-File* for convenience.
 
+<!--  -->
+
 > [action]
 > Create a new *SKS-File* by selecting `File > New > File`:
 >

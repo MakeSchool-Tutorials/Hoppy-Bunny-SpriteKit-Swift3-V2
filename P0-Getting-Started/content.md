@@ -13,10 +13,10 @@ This tutorial will teach you how to implement a Flappy Bird clone for iOS using 
 
 If you complete this tutorial you will learn how to:
 
-*   Implement an endless scroller
-*   Implement procedural level generation
-*   Use physics with SpriteKit
-*   Use Swift with SpriteKit
+- Implement an endless scroller
+- Implement procedural level generation
+- Use physics with SpriteKit
+- Use Swift with SpriteKit
 
 #The finished product
 

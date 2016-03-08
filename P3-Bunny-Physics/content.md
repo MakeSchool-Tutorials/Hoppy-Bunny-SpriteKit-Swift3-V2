@@ -143,9 +143,9 @@ We can easily change the Z Order of our sprites in the *Attributes inspector*:
 
 It's coming along nicely now, so what did we learn?
 
-* You added physics to the game
-* Learnt how to use a reference node
-* Used Z Ordering to layer your sprites
-* Finally got to run the project!
+- Added basic physics to the game
+- Learnt how to use a reference node
+- Used Z Ordering to layer your sprites
+- Finally got to run the project!
 
 Next chapter we will be adding user controls to our hero.
