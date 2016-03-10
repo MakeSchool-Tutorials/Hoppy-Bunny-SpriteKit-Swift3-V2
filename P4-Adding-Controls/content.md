@@ -16,7 +16,7 @@ If you recall we changed the name of the bunny sprite to 'hero' in *Hero.sks*, t
 >
 ```
 class GameScene: SKScene {
-
+>
   var hero: SKSpriteNode!
 ```
 >
@@ -28,11 +28,10 @@ We now have a var to store a reference to our bunny.  However, this alone will n
 >
 ```
 override func didMoveToView(view: SKView) {
-       /* Setup your scene here */
-
-       /* Recursive node search for 'hero' (child of referenced node) */
-       hero = self.childNodeWithName("//hero") as! SKSpriteNode
-
+  /* Setup your scene here */
+>
+  /* Recursive node search for 'hero' (child of referenced node) */
+  hero = self.childNodeWithName("//hero") as! SKSpriteNode
 ```
 >
 
@@ -52,10 +51,10 @@ Our goal is to have our bunny hop every time we touch the screen.
 >
 ```
 override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-
-        /* Apply vertical impulse */
-        hero.physicsBody?.applyImpulse(CGVectorMake(0, 300))
+  /* Called when a touch begins */
+>
+  /* Apply vertical impulse */
+  hero.physicsBody?.applyImpulse(CGVectorMake(0, 300))
 ```
 > We apply an impulse to our hero's `physicsBody`.  Think of an impulse like being hit by a baseball bat.
 > In this case a short vertical burst to make our bunny jump higher.
@@ -77,15 +76,15 @@ As you may have noticed while testing the touch implementation, when you touch t
 >
 ```
 override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
-
-        /* Grab current velocity */
-        let velocityY = hero.physicsBody?.velocity.dy ?? 0
-
-        /* Check and cap vertical velocity */
-        if velocityY > 400 {
-            hero.physicsBody?.velocity.dy = 400
-        }
+  /* Called before each frame is rendered */
+>
+  /* Grab current velocity */
+  let velocityY = hero.physicsBody?.velocity.dy ?? 0
+>
+  /* Check and cap vertical velocity */
+  if velocityY > 400 {
+    hero.physicsBody?.velocity.dy = 400
+  }
 ```
 >
 
@@ -113,7 +112,7 @@ var sinceTouch : CCTime = 0
 ```
 /* Apply subtle rotation */
 hero.physicsBody?.applyAngularImpulse(1)
-
+>
 /* Reset touch timer */
 sinceTouch = 0
 ```
@@ -139,17 +138,18 @@ Next we will apply the `clamp(...)` function to limit the rotation of the bunny,
 
 > [action]
 > Add these lines at the end of the `update(...)` method:
+>
 ```
 /* Apply falling rotation */
 if sinceTouch > 0.1 {
     let impulse = -20000 * fixedDelta
     hero.physicsBody?.applyAngularImpulse(CGFloat(impulse))
 }
-
+>
 /* Clamp rotation */
 hero.zRotation.clamp(CGFloat(-90).degreesToRadians(),CGFloat(30).degreesToRadians())
 hero.physicsBody?.angularVelocity.clamp(-2, 2)
-
+>
 /* Update last touch timer */
 sinceTouch+=fixedDelta
 ```
@@ -159,6 +159,7 @@ First thing you will notice are the red errors, we need to define the value for 
 
 > [action]
 > Add the following code after the code declaring the `sinceTouch` var.
+>
 ```
 let fixedDelta: CFTimeInterval = 1.0/60.0 /* 60 FPS */
 ```
@@ -177,7 +178,7 @@ Finally, you check if more than a tenth of a second passed since the last touch.
 
 Now run your game again. The behavior should be similar to this:
 
-![Bunny rotating](../Tutorial-Images/SpriteBuilder_bunnyRotation.gif)
+![Bunny rotating](../Tutorial-Images/simulator_bunnyRotation.gif)
 
 #Summary
 

@@ -66,15 +66,18 @@ In this step you will dynamically add obstacles to the *GameScene* using your ne
 > Ensure you have *GameScene.swift* open.
 > Before you add the obstacles let's add a new *Obstacle Layer* node to hold them, add the following property after
 > *scrollLayer*:
+>
 ```
 var obstacleLayer: SKNode!
 ```
 > Next you will add a timer property to help monitor the rate of obstacle generation, add the following after the *sinceTouch* property
 > declaration:
+>
 ```
 var spawnTimer: CFTimeInterval = 0
 ```
 > Great, as before with our scroll and hero nodes, we need to connect the *Obstacle Layer* we are about to create in *GameScene* to our code, add the following code connection after the *Scroll Layer* connection:
+>
 ```
 /* Set reference to obstacle layer node */
 obstacleLayer = self.childNodeWithName("obstacleLayer")
@@ -104,27 +107,28 @@ Now that we have a code connection, you are going to create another conveyor bel
 
 > [action]
 > Ensure you have *GameScene.swift* open and add the following method to your *GameScene*:
+>
 ```
 func updateObstacles() {
-     /* Update Obstacles */
-
-     obstacleLayer.position.x -= scrollSpeed * CGFloat(fixedDelta)
-
-     /* Loop through obstacle layer nodes */
-     for obstacle in obstacleLayer.children as! [SKReferenceNode] {
-
-         /* Get obstacle node position, convert node position to scene space */
-         let obstaclePosition = obstacleLayer.convertPoint(obstacle.position, toNode: self)
-
-         /* Check if obstacle has left the scene */
-         if obstaclePosition.x <= 0 {
-
-             /* Remove obstacle node from obstacle layer */
-             obstacle.removeFromParent()
-         }
-
-     }
-
+   /* Update Obstacles */
+>
+   obstacleLayer.position.x -= scrollSpeed * CGFloat(fixedDelta)
+>
+   /* Loop through obstacle layer nodes */
+   for obstacle in obstacleLayer.children as! [SKReferenceNode] {
+>
+       /* Get obstacle node position, convert node position to scene space */
+       let obstaclePosition = obstacleLayer.convertPoint(obstacle.position, toNode: self)
+>
+       /* Check if obstacle has left the scene */
+       if obstaclePosition.x <= 0 {
+>
+           /* Remove obstacle node from obstacle layer */
+           obstacle.removeFromParent()
+       }
+>
+   }
+>
  }
  ```
 
@@ -134,6 +138,7 @@ Can you modify our game code to call the `updateObstacles()` method every frame?
 
 > [solution]
 > As with the `scrollWorld()` method, add the following to the `update(...)` method, after the `scrollWorld()` method.
+>
 ```
 /* Process obstacles */
 updateObstacles()
@@ -149,20 +154,21 @@ the timer and really challenge our bunny.
 
 > [action]
 > Add these lines to the end of your *updateObstacles* method:
+>
 ```
 /* Time to add a new obstacle? */
 if spawnTimer >= 1.5 {
-
+>
     /* Create a new obstacle reference object using our obstacle resource */
     let newObstacle = SKReferenceNode.init(fileNamed: "Obstacle")
     obstacleLayer.addChild(newObstacle)
-
+>
     /* Generate new obstacle position, start just outside screen and with a random y value */
     let randomPosition = CGPointMake(352, CGFloat.random(min: 234, max: 382))
-
+>
     /* Convert new node position back to obstacle layer space */
     newObstacle.position = self.convertPoint(randomPosition, toNode: obstacleLayer)
-
+>
     // Reset spawn timer
     spawnTimer = 0
 }
@@ -182,6 +188,7 @@ previously. Can you add this yourself?
 
 > [solution]
 > Ensure the bottom of the `update(...)` method in *GameScene.swift* looks as follows:
+>
 ```
 /* Update last touch timer */
 sinceTouch+=fixedDelta

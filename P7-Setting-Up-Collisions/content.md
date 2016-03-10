@@ -103,7 +103,7 @@ Publish and run the app in Xcode. Any time you collide with the ground, carrot o
 Instead of only showing a message in the console, you surely want to implement a game over situation:
 
 - Bunny falls to ground
-- Screen rumbles
+- Scene shakes
 - Restart button appears
 - Game restarts when restart button is pressed
 
@@ -146,8 +146,30 @@ var buttonRestart: MSButtonNode!
 buttonRestart = self.childNodeWithName("buttonRestart") as! MSButtonNode
 ```
 >
+> This is a restart button and we need to add our own restart function that will then be assigned to the button's `selectionHandler`.
+> Add the following after the connection.
+>
+```
+/* Setup restart button selection handler */
+buttonRestart.selectedHandler = {
 
-Now the button is connected, it would be a good idea to hide it while the bunny is hopping.
+  /* Grab reference to our SpriteKit view */
+  let skView = self.view as SKView!
+
+  /* Load Game scene */
+  let scene = GameScene(fileNamed:"GameScene") as GameScene!
+
+  /* Ensure correct aspect mode */
+  scene.scaleMode = .AspectFill
+
+  /* Restart game scene */
+  skView.presentScene(scene)
+
+}
+```
+> This code simply loads in a fresh copy of the *GameScene.sks*, ensures the correct *scaleMode* is applied and then replaces the current scene with this fresh *GameScene*.
+
+Great button has been connected and will execute the `selectionHandler` code when touched, it would be a good idea to hide it while the bunny is hopping.
 
 > [action]
 > Add the following code after the previous connect code:
@@ -158,70 +180,197 @@ buttonRestart.state = .MSButtonNodeStateHidden
 ```
 >
 
+We want the button to be visible when the bunny dies, let's look at how we implement our game over scenario.
+Before you implement this, it would be useful to know the current state of the game.  State management is a great way to do this
+, just look at the `MSButtonNode` code above.  We use a `state` to know if the button if `Active,Hidden or Selected`, we could of course add even more states.
+
+For the *GameScene* it would be great to know if the game is `Active or GameOver`, when the `GameOver` state applies we want to:
+
+- Kill the bunny
+- Stop the world scrolling
+- Show the restart button
+- Ignore scene touches
 
 > [action]
-> Now switch to Xcode and open *MainScene.swift*, then add this property at the top of the class:
+> Add the following `enum` to the top of *GameScene.swift*:
 >
->    weak var restartButton : CCButton!
+```
+enum GameSceneState {
+    case GameSceneStateActive, GameSceneStateGameOver
+}
+```
 >
-> Next, extend the collision handling method to show the restart button:
+> To track the state you need to add a `gameState` property to the *GameScene* class. We will set the default to `Active`
 >
->        func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, hero: CCNode!, level: CCNode!) -> Bool {
->            restartButton.visible = true;
->            return true
->        }
+```
+/* Game management */
+var gameState: GameSceneState = .GameSceneStateActive
+```
 >
-> Lastly, implement the *restart* method that will be called when the restart button is pressed:
->
->        func restart() {
->            let scene = CCBReader.loadAsScene("MainScene")
->            CCDirector.sharedDirector().replaceScene(scene)
->        }
 
-This method will reload the entire scene - restarting the game. Feel free to test this new functionality!
+#Bunny death
 
-You will see that restarting the game works, but you don't have a real "game over" state yet. The scrolling goes on and there's no visualization of the game over situation.
+Great we now have some basic game management in place, time to kill the bunny!
 
 > [action]
-> Add a *gameOver* property at the beginning of the *MainScene* class, below or next to the other properties:
+> Replace the `didBeginContact(...)` method as shown:
 >
->       var gameOver = false
+```
+func didBeginContact(contact: SKPhysicsContact) {
+  /* Hero touches anything, game over */
 >
-> Now add the new *triggerGameOver* method to *MainScene.swift*, ideally add it next to the *restart* method as they belong together:
+  /* Ensure only called while game running */
+  if gameState != .GameSceneStateActive { return }
 >
->        func triggerGameOver() {
->            if (gameOver == false) {
->                gameOver = true
->                restartButton.visible = true
->                scrollSpeed = 0
->                hero.rotation = 90
->                hero.physicsBody.allowsRotation = false
->    
->                // just in case
->                hero.stopAllActions()
->    
->                let move = CCActionEaseBounceOut(action: CCActionMoveBy(duration: 0.2, position: ccp(0, 4)))
->                let moveBack = CCActionEaseBounceOut(action: move.reverse())
->                let shakeSequence = CCActionSequence(array: [move, moveBack])
->                runAction(shakeSequence)
->            }
->        }
+  /* Change game state to game over */
+  gameState = .GameSceneStateGameOver
 >
-> Then call this new method from the collision handler, instead of just making the restart button visible:
+  /* Stop any new angular velocity being applied */
+  hero.physicsBody?.allowsRotation = false
 >
->        func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, hero: CCNode!, level: CCNode!) -> Bool {
->            triggerGameOver()
->            return true
->        }
+  /* Reset angular velocity */
+  hero.physicsBody?.angularVelocity = 0
 >
-> You also need to update the *touchBegan* method to ensure that the user cannot "jump" when the game is over:
+  /* Stop hero flapping animation */
+  hero.removeAllActions()
 >
->        override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
->            if (gameOver == false) {
->                hero.physicsBody.applyImpulse(ccp(0, 400))
->                hero.physicsBody.applyAngularImpulse(10000)
->                sinceTouch = 0
->            }
->        }
+  /* Show restart button */
+  buttonRestart.state = .MSButtonNodeStateActive
+}
+```
 
-You should run your app again and test the game over sequence. There is only one last point left: the points!
+Notice the check of the current `gameState` to ensure the player only dies once :) The bunnies physicsBody is effectively disabled
+by disabling `rotation`, reseting `angularVelocity` and removing the flapping animation with the `removeAllActions()` method.  The button is then activated with a simple state change.
+
+Run your project, when the player dies the button should appear and you can restart play.  
+It's not perfect yet as the bunny will still respond every so slightly to touch and the world will continue to scroll by.
+
+> [action]
+> To disable scrolling and touch, we can once again use our *gameState* property.
+> Add the following to the very top of the `update(...)` method, to exit the update if the game is no longer active and hence
+no longer required to update.
+>
+```
+/* Skip game update if game no longer active */
+if gameState != .GameSceneStateActive { return }
+```
+>
+
+<!-- -->
+
+Can you figure out how to disable touch?
+
+> [solution]
+> Add the following to the top of the `touchesBegan(...)` method:
+>
+```
+/* Disable touch if game state is not active */
+if gameState != .GameSceneStateActive { return }
+```
+
+Run the project again, death truly should be final for our bunny.
+Great... It would look better if the bunny fell face first upon hitting an obstacle.  A powerful way to do this that
+allows us to animate the effect is to use *SKActions*, you've already used actions visually when you setup the flappy animation frames.  You can of course set these up in code...
+
+> [action]
+> Add the following code after you stopped the hero's actions with the `removeAllActions()` method in `didBeginContact(...)`:
+>
+```
+/* Create our hero death action */
+let heroDeath = SKAction.runBlock({
+>
+    /* Put our hero face down in the dirt */
+    self.hero.zRotation = CGFloat(-90).degreesToRadians()
+})
+>
+/* Run action */
+hero.runAction(heroDeath)
+```
+>
+
+The `runBlock` action lets us define our own action and manually rotate the bunny face down. We need to wrap this in an action to ensure it is executed at the correct step in the rendering loop.  We could *override* the `didSimulatePhysics` step and apply this manually rotation however it's kind of awkward, much easier to wrap in an *SKAction*.
+
+Run the project, the bunny should be face down now upon any collision. It's all those little extra details...
+
+#Shake it
+
+It would be nice to add an old school style Star Trek camera shake.  This time we will create our own *GameEffects.sks* SpriteKit action file, this enables us to create multiple effects that can then be reused and executed on any node.
+
+> [action]
+> Create a new *SpriteKit Action* file called `GameEffects`:
+>
+> ![Create New Action file](../Tutorial-Images/xcode_create_skaction.png)
+> ![Add SpriteKit Action file GameEffects](../Tutorial-Images/xcode_create_skaction_file.png)
+>
+> Time for you to add your first *Action* let's call it `Shake`
+> ![Add New Action](../Tutorial-Images/xcode_spritekit_add_new_action.png)
+>
+> Now you have an empty action timeline ready for some actions, drag across the *Move action* from the *Object Library* then reduce
+> the duration to `0.2` seconds.
+>
+> ![Add Move Action](../Tutorial-Images/xcode_spritekit_action_add_move.png)
+>
+> Sadly in Xcode 7.2 it does not yet seem possible to preview this action on the scene from within the editor :(
+>
+> Copy and paste this action twice more and then modify the values as follows, although as always feel free to experiment.
+> *Timing Function*: `Ease In`, *Offset*: `(8,2)`
+> *Timing Function*: `Ease Out`, *Offset*: `(-4,-2)`
+> *Timing Function*: `Ease Out`, *Offset*: `(4,2)`
+
+Time to try this out in our code, you don't need to worry about loading the file, SpriteKit will automatically load any SpriteKit related resources and caches them at runtime.
+
+> [action]
+> Open *GameScene.swift* and add the following after running the death action on our bunny.
+>
+```
+/* Load our shake action resource */
+let shakeScene:SKAction = SKAction.init(named: "Shake")!
+>  
+  /* Loop through all nodes  */
+  for node in self.children {
+>      
+      /* Apply effect each ground node */
+      node.runAction(shakeScene)
+  }
+```
+> Unfortunately the effect does not work if applied directly to the *GameScene* so we need to loop through all the child nodes in our
+scene and apply to them all individually.  Thankfully it is straightforward to do so.
+
+Run the project, when the bunny dies the screen should give a short shake. I encourage you to make this effect as crazy as you like,
+experimentation is the best way to see what works.  Often the little accidents lead us onto something awesome.
+
+You may have noticed the game is a little tricky, perhaps too tricky.  It feels like the bunny falls too hard initially and applying the touch impulse doesn't feel quite right.
+
+> [action]
+> Open *Hero.sks*, click on the bunny and navigate down to the physics properties, notice the *Initial Velocity* properties.  Let's make a change here to the vertical velocity, set it to `400`.  This should give the player a little more reaction time when the game first starts.
+> ![Bunny Physics Tweaks](../Tutorial-Images/xcode_spritekit_bunny_physics_tweaks.png)
+>
+
+When the bunny is falling and the player touches the screen, it feels a little sluggish.  This is due to the cumulative downward velocity generated by the bunny's fall.  If we reset the vertical velocity at the point of touch this might make it feel more responsive.
+
+> [action]
+> Open *GameScene.swift*, navigate to the `touchesBegan(...)` method and add the following after the `gameState` check:
+>
+```
+/* Reset velocity, helps improve response against cumulative falling velocity */
+hero.physicsBody?.velocity = CGVectorMake(0, 0)
+```
+
+Run the project... That little change has made the core mechanic feel much more satisfying.  Good job.
+
+> [info]
+> Little tip, you've added a lot of code and your formatting may be getting a little ugly.  Thankfully there is an easy way to reformat your code.
+> Open *GameScene.swift* then press *Cmd+a* to select all your code then press *Ctrl+i* to Re-Indent.
+
+#Summary
+
+Wow, a lot of ground has been covered here:
+
+- Understanding the basics of SpriteKit physics collision and contact masking
+- Implementing the `SKPhysicsContactDelegate` so you know when the bunny has been hit
+- Creating your own custom button class
+- Implementing a simple game state manager
+- Running a custom *SKAction* and creating reusable *SKActions* visually
+- Tweaking core mechanics, making the gameplay feel just right.
+
+Next up, it wouldn't be a game without a scoring mechanism.

@@ -83,16 +83,16 @@ Before we build the project, select `Animate` in *GameScene* as you did before *
 >
 ```
 import SpriteKit
-
+>
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
     }
-
+>
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
     }
-
+>
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }

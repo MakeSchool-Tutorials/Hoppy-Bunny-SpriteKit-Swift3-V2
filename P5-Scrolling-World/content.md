@@ -91,8 +91,6 @@ The first step will be adding a second ground sprite to the *GameScene.sks*
 > [action]
 > The easiest way to create another ground sprite is to duplicate the existing one via *Edit => Copy* and *Edit => Paste*. This has the advantage that you can make all settings below to one sprite, then copy it and only apply properties that are different. Alternatively you can just add a second ground image to the stage. If you create a new one then make sure to set the parent of the new ground node to *scrollLayer*
 >
-> ![Adding a second ground image](../Tutorial-Images/SpriteBuilder_documentBorder.png)
->
 > I recommend holding down *shift* while dragging the ground sprite and snap it to the end of the original ground sprite.
 >
 
@@ -103,22 +101,23 @@ In the update method, you will perform a check for each ground sprite to see if 
 
 > [action]
 > Add the following chunk of code to the bottom of the `scrollWorld()`:
+>
 ```
 /* Loop through scroll layer nodes */
 for ground in scrollLayer.children as! [SKSpriteNode] {
-
-    /* Get ground node position, convert node position to scene space */
-    let groundPosition = scrollLayer.convertPoint(ground.position, toNode: self)
-
-    /* Check if ground sprite has left the scene */
-    if groundPosition.x <= -ground.size.width / 2 {
-
-        /* Reposition ground sprite to the second starting position */
-        let newPosition = CGPointMake( (self.size.width / 2) + ground.size.width, groundPosition.y)
-
-        /* Convert new node position back to scroll layer space */
-        ground.position = self.convertPoint(newPosition, toNode: scrollLayer)
-    }
+>
+  /* Get ground node position, convert node position to scene space */
+  let groundPosition = scrollLayer.convertPoint(ground.position, toNode: self)
+>
+  /* Check if ground sprite has left the scene */
+  if groundPosition.x <= -ground.size.width / 2 {
+>
+      /* Reposition ground sprite to the second starting position */
+      let newPosition = CGPointMake( (self.size.width / 2) + ground.size.width, groundPosition.y)
+>
+      /* Convert new node position back to scroll layer space */
+      ground.position = self.convertPoint(newPosition, toNode: scrollLayer)
+  }
 }
 ```
 >
