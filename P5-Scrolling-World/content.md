@@ -3,41 +3,48 @@ title: Scrolling the world
 slug: scrolling-the-world
 ---
 
-Time to bring this world to life, we will be creating a conveyor belt system to scroll our world objects toward the player, giving
-illusion of the player moving.
+Time for you to bring this world to life, you will be creating a conveyor belt system to scroll the world objects toward the player, giving illusion of the player moving.
 
 ![Conveyor Belt](https://media.giphy.com/media/WFkbyRl2Ke1oY/giphy.gif)
 
 #Ready to rock and scroll
 
+To control the speed of this conveyor belt you will want to add a new *scrollSpeed* property to the *GameScene* class.
+
 > [action]
-> We need to define a new member variable, which we will call `scrollSpeed`. Add the following line to *GameScene.swift* after the fixedDelta member variable:
+> Add the following line to *GameScene.swift* after the *fixedDelta* property:
 >
 ```
 let scrollSpeed: CGFloat = 100
 ```
 >
 
-Now you need to use that variable to manipulate the scroll speed of our conveyor belt, before we do this we need
-to modify our *GameScene* to create a virtual layer for the objects we wish to scroll.  
+##Virtual scroll layer
+
+You will need to use this property to manipulate the scroll speed of the conveyor belt, before you do this you need
+to modify the *GameScene* to create a virtual layer for all the objects you wish to scroll.  
 
 > [action]
-> Add an empty node to the scene, set the position to `(0,0)`, the Z Position to `2` and most important set the *name*
+> Drag an *Empty* node to the scene, set the position to `(0,0)`, set *Z-Position* to `2` and set the *Name*
 > to `scrollLayer`:
 >
 > ![Add empty node](../Tutorial-Images/xcode_add_empty_node_scroll.png)
 >
 
-Great, now we will to manipulate this object in our game code so lets create a code connection.
+Next you need to create a conde connection for the *scrollLayer*
 
 > [action]
-> Switch to *GameScene.swift* and add a new member variable for `scrollLayer`, add this after your `hero` member variable definition.
+> Open *GameScene.swift* and add the following after the `hero` property declaration.
 >
 ```
 var scrollNode: SKNode!
 ```
-> Next add the code to connect the Scene Editor object with our new member variable.  It's similar to the `hero` connection, although there is no need to do a recursive node search as this node is a top level child of the game scene.
-> Add the following after the hero node search connection.
+>
+
+
+Next you need to create the code connection to the Scene Editor object.  This step is very similar to creating the *hero* code connection, although this time there is no need to do a recursive node search as this node sits directly below the *GameScene*.
+
+> Add the following after the *hero* node code connection.
 >
 ```
 /* Set reference to scroll layer node */
@@ -45,8 +52,8 @@ scrollLayer = self.childNodeWithName("scrollLayer")
 ```
 >
 
-Next time to ensure the `scrollLayer` is being moved every frame. Instead of shoving all of our code into the `update(...)` method
-we will add a new method called `scrollWorld()` and reference this in our update step.
+#Scroll World
+To help organize your code, let's create a new method called **scrollWorld** and call this in the `update(...)` method.
 
 > [action]
 > Add the following method at the end of the *GameScene* class (but before the last closing bracket):
@@ -58,7 +65,7 @@ func scrollWorld() {
 }
 ```
 >
-> Next add the following to the bottom of your `update(...)` method:
+> Then add the following to the bottom of your `update(...)` method:
 >
 ```
 /* Process world scrolling */
@@ -69,38 +76,50 @@ scrollWorld()
 <!-- -->
 
 > [info]
-> Defining a member variable for the scroll speed rather than simply defining the hero's position to be increased by *100* * *delta* every time is an important programming practice. Variable names offer us clarity - if someone else looks at your code, or even if you revisit it next week, it may not be clear what *100* affects. Explicitly using the variable `scrollSpeed` alleviates this problem. They also offer us flexibility. Imagine we were writing a larger program which used `scrollSpeed` in several places and instead of using a variable, we used *100* every time. What happens if we decide our scroll speed is a little slow? We will need to visit every place we wrote *100* and change it. It's not hard to understand how this could quickly get messy and inefficient.
+> Defining a member variable for the scroll speed rather than simply defining the hero's position to be increased by `100` * *delta* every time is an important programming practice.  Variable names offer us clarity - if someone else looks at your code, or even if you revisit it next week, it may not be clear what `100` affects.
+> Explicitly using the variable `scrollSpeed` alleviates this problem. They also offer us flexibility. Imagine we were writing a larger program which used `scrollSpeed` in several places and instead of using a variable, we used `100` every time. What happens if we decide our scroll speed is a little slow? We will need to visit every place we wrote `100` and change it. It's not hard to understand how this could quickly get messy and inefficient.
 >
 
-Run the project... Oh no scrolling? Now that we have a virtual conveyor belt system, we need to add some objects to the belt.
+Run the game...
+
+#Adding objects to scroll
+
+Oh no scrolling?  Now that you have a virtual conveyor belt system, you need to put some objects on it :]
 
 > [action]
-> This is really easy, simply select the *scrollLayer* node in the Scene Editor and modify the `parent` value to `scrollLayer`, this modifies the ownership of the ground node to be a child of the *scrollLayer* and thus any scrolling applied to the *scrollLayer* will affect its child nodes.
+> Open *GameScene.sks*, select the *ground* node in the scene editor and set the *Parent* value to `scrollLayer`, this modifies the hierarchy of the scene graph.  The *ground* node a child of the *scrollLayer* and thus any scrolling applied to the *scrollLayer* will affect any child nodes.
 >
 > ![Modify sprite parent](../Tutorial-Images/xcode_spritekit_add_more_ground.png)
 >
 
-Run the project. The ground should be scrolling, keep watching and we will run out of ground and the bunny will fall into the abyss.
+Run the game...  The ground should be scrolling, keep watching...
 
-#Loop the ground
+> ![Ground scroll](../Tutorial-Images/animated_scroll_ground.gif)
 
-You can make the ground loop by adding a second ground sprite and implementing an endless scrolling using both ground sprites. When a ground sprite leaves the left edge you'll move it to the right edge of the screen to make the ground seem endlessly repeating.
+**For some reason the crystals get messed up in the gif**
+
+##Loop the ground
+
+Argh eventually you will run out of ground and the bunny will fall into the endless despair of the abyss.
+
+You can make the ground loop by adding a second ground sprite and implementing an endless scrolling technique using both ground sprites. When a ground sprite leaves the left edge you'll move it back to the right edge of the screen to make the ground seem endlessly repeating.
 
 The first step will be adding a second ground sprite to the *GameScene.sks*
 
 > [action]
-> The easiest way to create another ground sprite is to duplicate the existing one via *Edit => Copy* and *Edit => Paste*. This has the advantage that you can make all settings below to one sprite, then copy it and only apply properties that are different. Alternatively you can just add a second ground image to the stage. If you create a new one then make sure to set the parent of the new ground node to *scrollLayer*
->
-> I recommend holding down *shift* while dragging the ground sprite and snap it to the end of the original ground sprite.
+> Duplicate the existing *ground* by `Edit -> Copy` then `Edit -> Paste`. This way all the properties of ground are already setup.
+> You should snap it to the end of the first ground piece.
 >
 
-Run the project, the ground will now scroll both grounds and so it will take a bit longer for the bunny to fall off the edge of the world.
-The power of this setup is we can simply add new objects to the *scrollLayer* and they will move.  However, we want to ensure our ground sprites will loop around.
+Run the game...
 
-In the update method, you will perform a check for each ground sprite to see if it has moved off the screen, and if so, it will be moved to the far right and next to the ground sprite that's currently still visible on the screen.
+The ground will now scroll both grounds and so it will take a bit longer for the bunny to fall into the abyss.
+The power of this setup is you can simply add new objects to the *scrollLayer* and they will scroll.  However, we want to ensure our ground sprites will loop forever, this is an infinite flapper after all.
+
+In the update method, you will perform a check against every ground object in the *scrollLayer* to see if it has moved outside of the left edge of the screen, if so you will then relocate it to back to the right edge.
 
 > [action]
-> Add the following chunk of code to the bottom of the `scrollWorld()`:
+> Add the following code to the end of the `scrollWorld()` method:
 >
 ```
 /* Loop through scroll layer nodes */
@@ -122,17 +141,21 @@ for ground in scrollLayer.children as! [SKSpriteNode] {
 ```
 >
 
+##Relative node position
+
 This code retrieves the current screen position for each ground sprite. Since the ground sprites aren't children of the *GameScene*, you need to convert their relative position inside the *scrollLayer* to *GameScene* co-ordinate space using the `convertpoint(...)` method.
 
-> [info]
-> @todo This could do with a nice illustration
+Once you have this world space position, you check if the ground sprite is outside of the the screen. If so then move it to the right edge of the screen. You calculate the new position for the node in *GameScene* (world space) and then convert this back to get the relative position in *scrollLayer* space.
 
-Once you have the position, you check if a ground sprite is off the screen. If that is the case, you move it to the right of the other ground sprite. You calculate the new position for the node in *GameScene* space and then have to convert this back to *scrollLayer* space.
 This creates the ground's endless repeating effect.
 
-If you run the game now, the ground will scroll endlessly as the bunny moves about.
+Run the game... The ground should now scroll for eternity.  This is hard to test :]
 
 #Summary
 
-You learnt to create a scrolling world, don't worry if you don't get relative node conversion straight away, it can be confusing at first.
-This sets the scene up nicely for adding our game obstacles which our bunny will need to jump through.  
+The game now has a sense of movement, you've learnt:
+
+- To create an endless scrolling mechanic
+- Convert object positions between different node spaces
+
+In the next chapter it's time to add the challenge of obstacles.

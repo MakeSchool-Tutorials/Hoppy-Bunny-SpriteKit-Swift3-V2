@@ -3,27 +3,31 @@ title: Setting up collisions
 slug: setting-up-collisions
 ---
 
-You are going to set up collision handling so that your game finally becomes as frustrating as *Flappy Bird*. Any good game needs to be unforgiving and frustrating, right?
+You are going to set up collision handling so that your game finally becomes as frustrating as *Flappy Bird*. Any good game needs to be unforgivingly savage and frustrating, right?
 
-I would recommend you have a look at Apple's own documentation on the subject of [Working with Collisions and Contacts.](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW14) It can be a little bit confusing when you first start, so don't worry if you don't understand
-everything at once.
+I would recommend you have a look at Apple's documentation on the subject of [Working with Collisions and Contacts.](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW14) It can be a little bit confusing when you first start, so don't worry if you don't understand everything at once.
 
-In our setup of collisions we are going to use the *Scene Editor* as much as possible to keep the code as lean as possible, in later tutorials we will expand on physics based collision setup in code.
+In the setup of collisions you are going to use the *Scene Editor* as much as possible, in later tutorials you will expand this knowledge implementing physics setup in code.
 
 #Obstacle physics
 
+The current obstacle has no physics bodies, let's fix that.
+
 > [action]
-> First, open *Obstacle.sks*, select either carrot.
-> Enable physics by changing the *Body Type* to `Bounding rectangle` and untick the subsequent 4 boxes.
+> Open *Obstacle.sks*, make the following changes to both **carrots** and the invisible **goal** section.
+> Enable physics by setting the *Body Type* to `Bounding rectangle` and uncheck the subsequent 4 boxes.
 >
 > ![Carrot physics](../Tutorial-Images/xcode_spritekit_obstacle_physics_collision_properties.png)
 >
-> Next set the *Category Mask* to `2` and the *Contact Mask* to `1`, repeat this for the other carrot.
-> Then modify the invisible goal sprite in the middle with one difference, set the *Category Mask* to `8`.
+> Set the *Category Mask* to `2` and the *Contact Mask* to `1`
+>
+> One little tweak for the invisible goal sprite, set the *Category Mask* to `8`.
 >
 
-Every physics body in a scene can be assigned to up to 32 different categories, each corresponding to a bit in the 32 bit mask.
-You notice those really big numbers, they are the integer value of `2` to the power `32` which represents every bit in the 32 bit mask being 1, this also means that that the body will collide with every other body and is the default behavior.
+#Physics Categories
+
+Every physics body in a scene can be assigned up to 32 different categories, each corresponding to a bit in a 32 bit mask.
+You notice those really big numbers, they are the integer value of `2` to the power `32` which represents every bit in the 32 bit mask being 1, this also means that this body will collide with **every** other body and is the default behavior.
 
 Think about separating your *Categories* into logical groups, for example:
 
@@ -32,65 +36,68 @@ Think about separating your *Categories* into logical groups, for example:
 - 4 - Ground
 - 8 - Goal Sensor
 
-The *Contact Mask* allows us to define which physics bodies we want to be told about when a collision takes place.  This will be useful when the bunny hits the carrot, we don't want the bunny to bounce off the carrot we want the bunny to die at this point and fall from the sky.  We are setting the *Contact Mask* to `1` as we will be setting the *Category Mask* of the bunny to `1` very shortly.
+The *Contact Mask* allows you to define which physics bodies you want to be informed of when a collision takes place.  This would be useful when the bunny hits a carrot, you don't want the bunny to bounce off the carrot, you want the bunny to die at this point and fall from the sky.  You are setting the *Contact Mask* to `1` so the SpriteKit physics engine will inform you of this.
 
-The goal is a slightly different case, we want to be informed when the bunny has entered into the goal zone so we can increase our players
-score.  However, we don't want the bunny to be physically hit by an invisible force field, we want the bunny to pass through as if nothing is there. We are effectively creating a *Sensor* a type of physics body that is used only for collision detection without physically affecting the body. We will come back to this in more detail soon.
+The **goal** is a slightly different case, you want to be informed when the bunny has entered into the goal zone so you can increase the players score.  However, you don't want the bunny to be physically collide, as you want the bunny to pass through as if nothing is there.  You want to behave like a *Sensor*, a type of physics body that is used only for contact detection without physically affecting the body. This will be covered in more detail shortly.
 
 #Bunny physics
 
 > [action]
-> Open up our *Hero.sks* and modify the bunny physics properties.
-> Set the *Category Mask* to `1`, the *Collision Mask* to `4` and the *Contact Mask* to `4294967295` this is 2^32.
+> Open *Hero.sks* and take a `click` on the bunny.
+> Set *Category Mask* to `1`, *Collision Mask* to `7` and the *Contact Mask* to `4294967295` this is 2^32.
 >
 > ![Bunny physics](../Tutorial-Images/xcode_spritekit_bunny_physics_properties.png)
 >
 
 
-The *Collision Mask* is set to `7` as we only want to collide with *Categories* `1+2+4`, we don't want to physically collide with `8` which is our goal sensor, otherwise the bunny will never be able to pass through the goal.  The *Contact Mask* has been set to 2^32  the max value and lets the physics engine know we want to be alerted if our bunny collides with any other physics body.
+The *Collision Mask* is set to `7` as you only want the bunny to physically collide with *Categories* `1+2+4` e.g. `Player,Obstacle,Ground`.  You don't want to collide with `8` which is the goal sensor, otherwise the bunny will never be able to pass through the first obstacle.  
+The *Contact Mask* has been set to 2^32 the max value and lets the physics engine know that you want to be informed if our bunny contacts any other physics body.
 
 #Ground physics
 
-We need to setup the ground sprite physics, do you think you can tackle this yourself? Check back if you don't remember the *Category Mask* value we decided to use.  What value do you think you'll need for the *Contact Mask?*
+You need to setup the ground sprite physics, do you think you can tackle this yourself?
+Check back if you don't remember the *Category Mask* value we decided to use.  What value do you think you'll need for the *Contact Mask?*
 
 > [solution]
-> Open up our *GameScene.sks* and modify the ground physics for both sprites.
-> Set the *Category Mask* to `4` and the *Contact Mask* to `1`, we want to be informed if the bunny has hit the ground.
+> Open  *GameScene.sks* and modify both **ground** sprites.
+> Set *Category Mask* to `4` and *Contact Mask* to `1`, you want to be informed if the bunny has hit the ground.
+>
 > ![Ground physics](../Tutorial-Images/xcode_spritekit_ground_physics_properties.png)
 >
 
-Run your project, you should now collide with the obstacles yet be able to flap through the middle, if you're good enough :)
+Run your game... The bunny will now collide with the obstacles yet thankfully be able to flap through the goal gap.  Well if you're good enough :]
 
-#Physics Collision Delegate
+#Physics Contact Delegate
 
-If the bunny collides with the ground, the obstacle or passes through the goal, we want to know about.  We will implement the Physics Contact Delegate so our code will be informed whenever one of these collisions takes place.
+If the bunny collides with the ground, an obstacle or passes through the goal of an obstacle, you want to know about.  Next you will implement the *Physics Contact Delegate* so your code will be informed whenever one of these collision contacts takes place.
 
 > [action]
-> In *GameScene.swift* you need to declare that the *GameScene* class will implement the *SKPhysicsContactDelegate* protocol methods.
+> Open *GameScene.swift*, you need to declare that the *GameScene* class will implement the *SKPhysicsContactDelegate* protocol methods.
 > To learn more about *Protocols* and *Delegates* please check out our [Swift Concepts Guide](https://www.makeschool.com/tutorials/swift-concepts-explained).
 >
-> You declare that a class is implementing a protocol in Swift by appending *CKPhysicsContactDelegate* after the class' super class *SKScene*, separated by a comma, as follows:
->
+> You declare that a class is implementing this protocol in Swift by appending *CKPhysicsContactDelegate* after the class' super class *SKScene*, separated by a comma, as shown:
 >
 ```
 class GameScene: SKScene, SKPhysicsContactDelegate {
 ```
 >
 
-The *GameScene* class is now ready to be used as a contact delegate.
+##Delegate Support
+
+The *GameScene* class is now ready to implement the contact delegate, first you should inform the delegate which class will take responsibility for handling the messages.   You should assign *GameScene* as the collision delegate.
 
 > [action]
-> You should assign *GameScene* as the collision delegate class by adding the following line (anywhere) to the `didMoveToView(..)` method:
+> Add the following code to the `didMoveToView(..)` method:
 >
 ```
 /* Set physics contact delegate */
 physicsWorld.contactDelegate = self
 ```
 
-Finally, you can implement the contact handler method that will be called whenever a valid collision contact takes place.
+Finally, you can implement the *didBeginContact* method that will be called whenever a collision takes place that you want to know about e.g. The ones with a *contactMask* of `1`.
 
 > [action]
-> Add this method to the *GameScene* class:
+> Add this new method to the *GameScene* class:
 >
 ```
 func didBeginContact(contact: SKPhysicsContact) {
@@ -100,21 +107,21 @@ func didBeginContact(contact: SKPhysicsContact) {
 ```
 >
 
-Publish and run the app in Xcode. Any time you collide with the ground, carrot or goal sensor the *TODO* message will be printed to the console.
+Run the game... Any time you collide with the ground, a carrot or a goal sensor the *TODO* message will be logged to the console.
 
-#Implementing "game over"
+#Game over
 
-Instead of only showing a message in the console, you surely want to implement a game over situation:
+Instead of simply showing a message in the console, it would be nice to think about the game over scenario.
 
-- Bunny falls to ground
-- Scene shakes
-- Restart button appears
-- Game restarts when restart button is pressed
+This might consist of:
+
+- The bunny falling to ground
+- The game Scene shakes
+- A restart game button
 
 ##Adding a button
 
-There is no easy way to add a button in SpriteKit so we will need to get creative and create our own solution.  To get started
-with we have provided a custom class called *MSButtonNode*. Feel free to explore this class, it's well commented.
+There is no easy way to add a button in SpriteKit so you will need to get creative and create our own solution.  Only joking, we've kindly provided a starting point for you with a custom class called *MSButtonNode*.
 
 > [action]
 > ![Download MSButtonNode.swift](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift/raw/master/MSButtonNode.swift) and drag this file into your project.
@@ -122,13 +129,12 @@ with we have provided a custom class called *MSButtonNode*. Feel free to explore
 <!-- -->
 
 > [action]
-> First, add the `restart_button` from the *Media library* to your scene.
-> Next modify the properties of the button, set the *Name* to `buttonRestart` as we will want to create a code connection.
-> Set the *Z Position* to `10`, we want to ensure this UI (User Interface) element sits on top of everything visually.
+> Add the *restart_button.png* to your scene.
+> Set the *Name* to `buttonRestart`, set the *Z Position* to `10`, you want to ensure this UI (User Interface) element sits on top of everything visually.
 >
 > ![Restart button properties](../Tutorial-Images/xcode_spritekit_restart_properties.png)
 >
-> To turn this sprite into our custom button, we need to change the class to be an instance of `MSButtonNode` instead of `SKSpriteNode`, we can use the *Custom class* panel to change this:
+> To turn this sprite into a custom button, you need to change the class to be an instance of `MSButtonNode` instead of `SKSpriteNode`, you can use the *Custom class* panel to change this by setting the *Custom Class* to `MSButtonNode`
 >
 > ![Restart button custom class](../Tutorial-Images/xcode_spritekit_restart_custom_class.png)
 >
@@ -136,13 +142,14 @@ with we have provided a custom class called *MSButtonNode*. Feel free to explore
 Can you setup a code connection for this button?
 
 > [solution]
-> Open *GameScene.swift* and add a property for the button to the *GameScene* class.
+> Open *GameScene.swift*, add a property for the button to the *GameScene* class:
 >
 ```
 /* UI Connections */
 var buttonRestart: MSButtonNode!
 ```
-> Next, this is a bit tricker as we need to ensure the node is downcast to our `MSButtonNode` class.
+>
+> When you connect this node you need to ensure the node is downcast to the `MSButtonNode` class.
 > Add the following to the `didMoveToView(..)` method.
 >
 ```
@@ -150,33 +157,42 @@ var buttonRestart: MSButtonNode!
 buttonRestart = self.childNodeWithName("buttonRestart") as! MSButtonNode
 ```
 >
-> This is a restart button and we need to add our own restart function that will then be assigned to the button's `selectionHandler`.
-> Add the following after the connection.
+
+##Selection handler
+
+The code connection is ready, if you run the game you can touch the button, it looks like it was touched yet nothing happens.  You need to add some code to be executed upon user touch.
+
+> [action]
+> Add the following code after the code connection:
 >
 ```
 /* Setup restart button selection handler */
 buttonRestart.selectedHandler = {
-
+>
   /* Grab reference to our SpriteKit view */
   let skView = self.view as SKView!
-
+>
   /* Load Game scene */
   let scene = GameScene(fileNamed:"GameScene") as GameScene!
-
+>
   /* Ensure correct aspect mode */
   scene.scaleMode = .AspectFill
-
+>
   /* Restart game scene */
   skView.presentScene(scene)
-
+>
 }
 ```
-> This code simply loads in a fresh copy of the *GameScene.sks*, ensures the correct *scaleMode* is applied and then replaces the current scene with this fresh *GameScene*.
+>
 
-Great button has been connected and will execute the `selectionHandler` code when touched, it would be a good idea to hide it while the bunny is hopping.
+This code loads in a fresh copy of the *GameScene.sks*, ensures the correct *scaleMode* is applied and then replaces the current scene with this fresh *GameScene*. You can find this code in `GameViewController.swift` and how the *GameScene* is initially loaded when the game starts.
+
+##Hide the button
+
+Great you have a button, as it's bang in the middle of the screen it might be an idea to hide it once the game is in-play.
 
 > [action]
-> Add the following code after the previous connect code:
+> Add the following code after the selection handler setup.
 >
 ```
 /* Hide restart button */
@@ -184,37 +200,45 @@ buttonRestart.state = .MSButtonNodeStateHidden
 ```
 >
 
-We want the button to be visible when the bunny dies, let's look at how we implement our game over scenario.
-Before you implement this, it would be useful to know the current state of the game.  State management is a great way to do this
-, just look at the `MSButtonNode` code above.  We use a `state` to know if the button if `Active,Hidden or Selected`, we could of course add even more states.
+You want the button to be visible when the bunny dies, let's look at how we implement our game over scenario.
+It would be really useful to know the current state of the game.  Has the game started, is the player dead e.t.c ?
 
-For the *GameScene* it would be great to know if the game is `Active or GameOver`, when the `GameOver` state applies we want to:
+#Game State
+
+State management is a great way to do this, just look intp the `MSButtonNode` code above.  A `state` property is used to track if the button is `Active,Hidden or Selected`.
+
+For the *GameScene* class it would be great to know if the game state is either `Active` or `GameOver`.  
+
+When this `GameOver` state applies you want to:
 
 - Kill the bunny
 - Stop the world scrolling
 - Show the restart button
-- Ignore scene touches
+- Ignore any touch other than the button
+
+An *Enumeration* is a great way to setup a custom state type.
 
 > [action]
-> Add the following `enum` to the top of *GameScene.swift*:
+> Add the following `Enumeration` to the top of *GameScene.swift*:
 >
 ```
 enum GameSceneState {
-    case GameSceneStateActive, GameSceneStateGameOver
+    case Active, GameOver
 }
 ```
 >
-> To track the state you need to add a `gameState` property to the *GameScene* class. We will set the default to `Active`
+> To track the state you need to add a `gameState` property to the *GameScene* class.
+> Set the default to `Active`
 >
 ```
 /* Game management */
-var gameState: GameSceneState = .GameSceneStateActive
+var gameState: GameSceneState = .Active
 ```
 >
 
 #Bunny death
 
-Great we now have some basic game management in place, time to kill the bunny!
+Great you now have some rudimentary game management in place, time to kill the bunny!
 
 > [action]
 > Replace the `didBeginContact(...)` method as shown:
@@ -243,24 +267,24 @@ func didBeginContact(contact: SKPhysicsContact) {
 }
 ```
 
-Notice the check of the current `gameState` to ensure the player only dies once :) The bunnies physicsBody is effectively disabled
-by disabling `rotation`, reseting `angularVelocity` and removing the flapping animation with the `removeAllActions()` method.  The button is then activated with a simple state change.
+Notice the check of the **gameState** to ensure that the code will not be called more than once, when the player has died.  The bunnies physics are effectively disabled by stopping `rotation`, reseting `angularVelocity` and removing the flapping asprite frame animation with the use of `removeAllActions()` method.  The button is then activated and presented to the player  with a simple `MSButtonNodeStateActive` state change.
 
-Run your project, when the player dies the button should appear and you can restart play.  
+Run the game... When the player dies the button should appear and you can restart play.  
+
+#Shutting down the world
+
 It's not perfect yet as the bunny will still respond every so slightly to touch and the world will continue to scroll by.
 
+To disable scrolling and touch, you can once again make use of the *gameState* property.
+
 > [action]
-> To disable scrolling and touch, we can once again use our *gameState* property.
-> Add the following to the very top of the `update(...)` method, to exit the update if the game is no longer active and hence
-no longer required to update.
+> Add the following to the very top of the `update(...)` method:
 >
 ```
 /* Skip game update if game no longer active */
 if gameState != .GameSceneStateActive { return }
 ```
 >
-
-<!-- -->
 
 Can you figure out how to disable touch?
 
@@ -272,9 +296,11 @@ Can you figure out how to disable touch?
 if gameState != .GameSceneStateActive { return }
 ```
 
-Run the project again, death truly should be final for our bunny.
-Great... It would look better if the bunny fell face first upon hitting an obstacle.  A powerful way to do this that
-allows us to animate the effect is to use *SKActions*, you've already used actions visually when you setup the flappy animation frames.  You can of course set these up in code...
+Run the game... Death truly should be final for our bunny.
+
+#Death actions
+
+It would look better if the bunny fell face first upon hitting an obstacle.  A powerful way to do achieve this is using *SKActions*, you've already used actions to setup the the flappy animation frames.
 
 > [action]
 > Add the following code after you stopped the hero's actions with the `removeAllActions()` method in `didBeginContact(...)`:
@@ -292,89 +318,101 @@ hero.runAction(heroDeath)
 ```
 >
 
-The `runBlock` action lets us define our own action and manually rotate the bunny face down. We need to wrap this in an action to ensure it is executed at the correct step in the rendering loop.  We could *override* the `didSimulatePhysics` step and apply this manually rotation however it's kind of awkward, much easier to wrap in an *SKAction*.
+The `runBlock` action lets you define your own custom action and in this case, manually rotate the bunny face down. You need to wrap this in an action to ensure it is executed at the correct **step** in the **rendering loop**.  You could also achieve this with *overriding* the `didSimulatePhysics` step and applying this rotation.  However, it's kind of awkward to do and cleaner to wrap in an *SKAction*.
 
-Run the project, the bunny should be face down now upon any collision. It's all those little extra details...
+Run the game... The bunny should be face down now upon any collision. It's all about those little bits of polish :]
 
 #Shake it
 
-It would be nice to add an old school style Star Trek camera shake.  This time we will create our own *GameEffects.sks* SpriteKit action file, this enables us to create multiple effects that can then be reused and executed on any node.
+It would be nice to add an old school style Star Trek camera shake to emphasize the impact.  This time you will create your own *GameEffects.sks* **SpriteKit Action file**, this enables you to store multiple effects that can be reused on any node.
+
 
 > [action]
 > Create a new *SpriteKit Action* file called `GameEffects`:
 >
 > ![Create New Action file](../Tutorial-Images/xcode_create_skaction.png)
+>
 > ![Add SpriteKit Action file GameEffects](../Tutorial-Images/xcode_create_skaction_file.png)
 >
-> Time for you to add your first *Action* let's call it `Shake`
+> Add your first *Action*, name it `Shake`
 > ![Add New Action](../Tutorial-Images/xcode_spritekit_add_new_action.png)
 >
-> Now you have an empty action timeline ready for some actions, drag across the *Move action* from the *Object Library* then reduce
-> the duration to `0.2` seconds.
+> Now you have an empty action timeline ready for some actions, drag across the *Move action* from the *Object Library*.  Set the *Duration* to `0.2` seconds.
 >
 > ![Add Move Action](../Tutorial-Images/xcode_spritekit_action_add_move.png)
 >
-> Sadly in Xcode 7.2 it does not yet seem possible to preview this action on the scene from within the editor :(
+> **Sadly it does not yet seem possible (As of Xcode 7.2.1) to preview this action on the scene from within the scene editor :[**
 >
-> Copy and paste this action twice more and then modify the values as follows, although as always feel free to experiment.
-> *Timing Function*: `Ease In`, *Offset*: `(8,2)`
-> *Timing Function*: `Ease Out`, *Offset*: `(-4,-2)`
-> *Timing Function*: `Ease Out`, *Offset*: `(4,2)`
+> Copy and paste this action two times and then modify all three actions as follows.
+>
+> Set *Timing Function* to `Ease In`, set *Offset* to `(8,2)`
+> Set *Timing Function* to  `Ease Out`, set *Offset* to `(-4,-2)`
+> Set *Timing Function* to `Ease Out`, set *Offset* to `(4,2)`
+>
 
-Time to try this out in our code, you don't need to worry about loading the file, SpriteKit will automatically load any SpriteKit related resources and caches them at runtime.
+##Shake all the nodes
+
+Time to try this out in our code, you don't need to worry about loading the file itself, SpriteKit will automatically load any SpriteKit related resources and cache them at runtime :]
 
 > [action]
-> Open *GameScene.swift* and add the following after running the death action on our bunny.
+> Open *GameScene.swift* and add the following code after the death action.
 >
 ```
-/* Load our shake action resource */
+/* Load the shake action resource */
 let shakeScene:SKAction = SKAction.init(named: "Shake")!
 >  
-  /* Loop through all nodes  */
-  for node in self.children {
+/* Loop through all nodes  */
+for node in self.children {
 >      
-      /* Apply effect each ground node */
-      node.runAction(shakeScene)
-  }
+    /* Apply effect each ground node */
+    node.runAction(shakeScene)
+}
 ```
-> Unfortunately the effect does not work if applied directly to the *GameScene* so we need to loop through all the child nodes in our
-scene and apply to them all individually.  Thankfully it is straightforward to do so.
+> The effect can not be applied directly to the *GameScene*, so you need to loop through all the child nodes in the
+scene and apply them individually.  Thankfully it is straight forward to do so.
 
-Run the project, when the bunny dies the screen should give a short shake. I encourage you to make this effect as crazy as you like,
-experimentation is the best way to see what works.  Often the little accidents lead us onto something awesome.
+Run the game...  When the bunny dies the screen should give a short shake.
 
-You may have noticed the game is a little tricky, perhaps too tricky.  It feels like the bunny falls too hard initially and applying the touch impulse doesn't feel quite right.
+> [info]
+> I encourage you to make this effect as crazy as you like, experimentation is the best way to learn what works.  Often it's the happy little accidents lead you onto something awesome.
+
+#Physics tweaking
+
+You may have noticed the game is a little difficult, perhaps too difficult.  It feels like the bunny falls too hard initially and applying the touch impulse doesn't feel quite right.
 
 > [action]
-> Open *Hero.sks*, click on the bunny and navigate down to the physics properties, notice the *Initial Velocity* properties.  Let's make a change here to the vertical velocity, set it to `400`.  This should give the player a little more reaction time when the game first starts.
+> Open *Hero.sks*, click on the bunny and navigate down to the physics properties, notice the *Initial Velocity* property.  Set this to `(0,400)`.  This should give the player a much need reaction time cushion when the game first runs.
 > ![Bunny Physics Tweaks](../Tutorial-Images/xcode_spritekit_bunny_physics_tweaks.png)
 >
 
-When the bunny is falling and the player touches the screen, it feels a little sluggish.  This is due to the cumulative downward velocity generated by the bunny's fall.  If we reset the vertical velocity at the point of touch this might make it feel more responsive.
+When the bunny is falling and the player touches the screen, the touch feels a little sluggish.  This is due to the cumulative downward velocity generated by the bunny's fall.  If you reset the vertical velocity at the point of touch this might make it feel more responsive.
 
 > [action]
-> Open *GameScene.swift*, navigate to the `touchesBegan(...)` method and add the following after the `gameState` check:
+> Open *GameScene.swift*, add the following in the `touchesBegan(...)` method after the `gameState` check:
 >
 ```
 /* Reset velocity, helps improve response against cumulative falling velocity */
 hero.physicsBody?.velocity = CGVectorMake(0, 0)
 ```
+>
 
-Run the project... That little change has made the core mechanic feel much more satisfying.  Good job.
+Run the game... That little change has made the core mechanic feel much more satisfying :]
 
 > [info]
-> Little tip, you've added a lot of code and your formatting may be getting a little ugly.  Thankfully there is an easy way to reformat your code.
-> Open *GameScene.swift* then press *Cmd+a* to select all your code then press *Ctrl+i* to Re-Indent.
+> Bonus tip for making it so far:  You've added a lot of code and your formatting may be getting a little, well ugly.  
+> Thankfully there is an easy way to tidy up your code with *Re-Indent*
+> Open *GameScene.swift* then select all your code with *Cmd+a*, then press *Ctrl+i* to Re-Indent.
+>
 
 #Summary
 
-Wow, a lot of ground has been covered here:
+Wow, a lot of ground has been covered in this chapter:
 
-- Understanding the basics of SpriteKit physics collision and contact masking
-- Implementing the `SKPhysicsContactDelegate` so you know when the bunny has been hit
+- Understanding the principles of SpriteKit physics collision and contact masking
+- Implementing the `SKPhysicsContactDelegate` so you are informed of collision conacts.
 - Creating your own custom button class
 - Implementing a simple game state manager
 - Running a custom *SKAction* and creating reusable *SKActions* visually
 - Tweaking core mechanics, making the gameplay feel just right.
 
-Next up, it wouldn't be a game without a scoring mechanism.
+Next up, it wouldn't be a game without a scoring mechanism for the player.

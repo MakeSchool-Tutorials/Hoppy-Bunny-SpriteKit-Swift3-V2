@@ -1,27 +1,26 @@
 ---
-title: Set up the Gameplay scene
+title: Set up the Game Scene
 slug: setup-gameplay
 ---
 
-Let's get started setting up our game scene, SpritKit Scene Editor is a powerful Xcode tool that let's us visually layout our scene.
+Let's get started setting up the main game scene, SpritKit Scene Editor is a powerful Xcode tool that lets you rapidly layout the scene.
 
-#Set the stage
+#Setting the stage
 
 > [action]
 > Select *GameScene.sks* from the *Project navigator*:
 >
 > It's helpful to see the scene size, zoom out so you can see the yellow border which represents the scene size. Select `Editor / Zoom Out` or use the shortcut shown.
 >
-> ![Adjusting GameScene size](../Tutorial-Images/xcode_gamescene_size.png)
->
 > Next modify the size parameters as shown in the *Attributes inspector panel*
+> ![Adjusting GameScene size](../Tutorial-Images/xcode_gamescene_size.png)
 
-Remember the device resolution guide in the previous chapter? We will be using a common design points size of 320 x 480, this gives us a nice portrait suited to our artwork.  You may wondered what about the other devices?
+Remember the device resolution guide in the previous chapter? You will be using a common design size of 320 x 480, this gives you a nice portrait view, perfectly suited to the artwork.  You may be wondering what about supporting other devices?
 
-Thankfully SpriteKit has you covered and will automatically scale the view to fit the other devices.
+Thankfully SpriteKit has your back and can automatically scale the view to fit other devices.
 
 > [info]
-> If your curious have a look through the code in *GameViewController.swift*.  In particular:
+> Have a look through the code in *GameViewController.swift*.  In particular:
 >
 ```
 /* Set the scale mode to scale to fit the window */
@@ -32,113 +31,115 @@ scene.scaleMode = .AspectFill
 > If you `highlight` *scaleMode* and look at the *Quick Help inspector* panel you can find out more about the scaling options available.
 >
 
-#Add the background image
+##Add the background
 
 > [action]
-> Select *Show the media library* in the *Library pane* Add the background image by dragging `background` onto the stage:
+> Select *Show the media library* in the *Library pane*, add the background image by dragging *background.png* onto the stage:
 >
 > ![Adding background image](../Tutorial-Images/xcode_gamescene_add_background.png)
 >
-> We want to centre the background on the screen, you can do this by manually modifying the position as shown to *160, 240* which is exactly half of our size values. Or you can drag around the background and place it by hand.
+> You want to centre the background on the screen, you can do this by setting the *Position* to `(160, 240)` which is exactly half of the scene size values or drag it the image around by hand.
 >
-> When you add an object to the game scene this way, a *Color Sprite* object is added to the scene and the texture property is pre populated with the image you select from the media library.  
+> When you add an object to the game scene this way a *Color Sprite* object is added to the scene and the texture property is pre populated with the texture name of the asset you dragged in.
 
 <!--  -->
 
 > [info]
-> A really handy feature is to use node snapping, *Hold down shift* while dragging your object and you will notice it will snap against existing scene objects.  Try moving it around and you will notice it will snap to the left hand edge of the scene, giving you that perfect center point position.
+> A really handy feature is to use object snapping, *Hold down shift* **(behavior as of Xcode 7.2.1)** while dragging your game objects and you will notice it will snap against existing scene objects.  Try moving it around and you will notice it will snap to the left hand edge of the scene, giving you that perfect center point position.
 >
 
-#Add the ground image
+##Add the ground image
 
 > [action]
-> Now scroll through the media library and add the ground image by dragging it onto the stage:
+> Scroll through the media library and drag *ground.png* into the scene.
+> Set the position to `(160,32)` or anywhere you think looks good, it's your game after all.
 >
 > ![Adding the ground image](../Tutorial-Images/xcode_gamescene_add_ground.png)
 >
-> For position use the values shown `(160,32)` or anywhere you think looks good, it's your game!
 
-You'll notice the ground image extends beyond the screen border. Don't worry about it, the important part is the ground texture repeats seamlessly.  This will come in handy for scrolling.
+You'll notice the ground image extends beyond the screen border. Don't worry about it, you will be scrolling the ground later to create that endless runner effect.
 
-#Add the clouds image
+##Add the clouds
 
 > [action]
-> Add the clouds to the scene:
+> Drag in *clouds.png* to the scene
+> Set the *Position* to `(160, 385)` or any other value you think looks good.
 >
 > ![Adding the clouds](../Tutorial-Images/xcode_gamescene_add_clouds.png)
 >
-> For position use the values shown `(160, 385)`, or any other value you think looks good. Enjoy this creative freedom. ;)
 
 #Creating the Bunny Scene
 
 Now you're going to create a new *SpriteKit Scene File* for the bunny and animate it.
 
-> [info]
-> We will be referring to this file type as *SKS-File* for convenience.
-
-<!--  -->
-
 > [action]
-> Create a new *SKS-File* by selecting `File > New > File`:
+> Create a new *SpriteKit Scene File* by selecting `File > New > File > SpriteKit Scene`:
 >
-> ![Selecting the SKS File](../Tutorial-Images/xcode_add_sks.png)
+> ![Creating the Hero SpriteKit Scene file](../Tutorial-Images/xcode_add_sks.png)
 >
-> Because bunnies are heroes.
+> Because bunnies are heroes, save the file as `Hero.sks`
 >
-> ![Creating the SKS File](../Tutorial-Images/xcode_add_sks_hero.png)
+> ![Saving the SpriteKit Scene fike](../Tutorial-Images/xcode_add_sks_hero.png)
 >)
 
-#Add the bunny
+##Add the bunny
 
 > [action]
-> Ensure *Hero.sks* is selected in *Project navigator*.
-> Add *bunny1* to the scene:
 >
-> ![Adding the bunny character](../Tutorial-Images/xcode_add_bunny_hero_scene.png)
+> Select *Hero.sks* in the *Project navigator*
 >
-> You may not be able to see the bunny, if not zoom out the scene, center your view on the bunny and zoom back in.
-> We want to reference the bunny in code later on, so set the *name* to `hero`.
+> Drag *bunny1.png* into scene:
+>
+> You may not be able to see the bunny, if not `Zoom Out` the scene, center your view on the bunny and `Zoom In` a little.
+>
+> You will be connecting the bunny in code later so you need a way to reference it.  This is typically done using the *Name* property, so set *Name* to `hero`.
+>
+> ![Adding the bunny](../Tutorial-Images/xcode_add_bunny_hero_scene.png)
 >
 
 <!--  -->
 
 > [info]
-> Personally I dislike having the default scene size and yellow border when we are only dealing with a single asset.
-> I think it looks better if you click anywhere other than the bunny and modify the scene size (as you did with the *GameScene*
-> to `(0,0)`
+> Personally I dislike using the huge default scene size, when only dealing with a single asset. It can also cause unexpected position issues later on when using it as a referenced object.
+> Click anywhere other than the bunny itself and set the scene *Size* (as you previously did with the *GameScene*) to `(16,16)`.  Why `(16,16)`, this is the *Size* of the *bunny* sprite.
+> Set the *Anchor Point* to `(0.5,0.5)`
 
-#Animate the bunny
+##Animating the bunny
 
-The animation action you are about to add will be 0.5 seconds long and loop forever.
+Great, you have a static bunny.  However, we want this bunny to fly and the bunny can fly by flapping it's ears!
+You are going to setup a sprite frame based animation ~`0.5` seconds long and repeat forever.
 
 > [action]
-> First, select the *Object library* panel and scroll down until you find the *AnimateWithTextures Action* and drag this
-> to the start of the bunny *timeline* as shown:
+> Open *Hero.sks*, select the *Object library* panel and look for the *AnimateWithTextures Action* and drag this
+> into the start of the bunny *Timeline* as shown:
 >
 > ![Adding the animation action](../Tutorial-Images/xcode_hero_add_action.png)
 >
-> Next, modify the duration to be `0.5`, although feel free to play with this value.
-> Now time to add the animation frames, click on the action in the *timeline* then click on the *Media library* panel.
-> Next drag `bunny1` and `bunny2` into the *Textures* box as shown:
+> Set the *Duration* to `0.5`, feel free to have a play with this value.
+>
+> Time to add the animation frames, click on the *AnimateWithTextures Action* in the *Timeline* then click on the *Media library* panel.
+> Drag *bunny1.png* and *bunny2.png* into the *Textures* box as shown:
 >
 > ![Adding the animation frames](../Tutorial-Images/xcode_hero_add_action_frames.png)
 >
-> Before we play the animation, let's make it loop.  Click on the *Circular arrow* in the bottom left of the action in your timeline
-> as shown and select the `Infinity` symbol.
+> Before we try the animation, let's make it loop.  Click on the *Circular arrow* in the bottom left of your *AnimateWithTextures Action* as shown and click the `Infinity` symbol.
 >
 > ![Loop animation option](../Tutorial-Images/xcode_hero_action_loop.png)
 >
 > ![Loop animation forever](../Tutorial-Images/xcode_hero_animation_action_loop.png)
 >
-> Finally let's see the bunny in action! Click *Animate* in the *timeline* and watch that bunny go.
+> Finally time to see the bunny in action! Click *Animate* in the *Timeline* and watch that bunny go.
 >
 > ![Preview the animation](../Tutorial-Images/xcode_timeline_animate.png)
 >
 
 #Summary
 
-The game is already starting to take shape:
-* You learnt to build the foundation for your game scene using the visual SpriteKit Scene Editor.
-* You've created the hero of our game and setup a sprite frame animation.
+The game is already starting to take shape, you learnt to:
 
-Next chapter we will be adding physics to our world.
+- Build the layout for your game scene using the SpriteKit Scene Editor.
+- Create the hero of the game as a stand alone SpriteKit Scene
+- Used the timeline and added your first action
+- Added a sprite frame animation to bring the bunny to life
+
+In the next chapter you will be adding physics to the game world.

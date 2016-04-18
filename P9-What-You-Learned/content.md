@@ -11,74 +11,68 @@ Let's take a look at what you have learned so far.
 
 ![The game](../cover.png)
 
-###Creating a New Project
+At the beginning of the Hoppy Bunny tutorials you learned how to create a new SpriteKit game project in Xcode.
 
-At the beginning of the Hoppy Bunny tutorials you learned how to create a new SpriteBuilder project and set it up with Cocos2D.
+##Setting Up the Gameplay Scene
 
-###Setting Up the Gameplay Scene
+- **Importing assets**: You can drag assets directly into the `Assets.xcassets` folder in the *Project Navigator*.
 
-* **Importing assets**: You can drag assets directly into the resources pane on the left panel of SpriteBuilder.
+- **Setting the scene**: Adding assets to build the game scene and setting the *Z-Position* to ensure the correct draw order.
 
-* **Changing device orientation**: Device orientation for a project can be set in SpriteBuilder's project settings.
+- **Creating a new SKS**: SpriteKit Scene files or SKSs can be created to contain custom scene objects.
 
-* **Setting up a background**: Backgrounds should be positioned relative to an edge (the edge you choose depends on the asset) and the anchor point should be set to the same edge as the asset is positioned to.
+- **Sprite frame action animations**: You can create sprite frame animations in the Timeline, using *SKActions* such as *AnimateWithTextures*.
 
-* **Creating a new CCB**: Interface files or CCBs can be created to contain custom objects based on CCNode and its subclasses.
+##Letting the Bunny Fall
 
-* **Sprite frame animations**: You can animate CCSprites by setting keyframes to change the sprite frame at set times on the animation timeline. Chain a timeline to itself to repeat the animation endlessly.
+- **Static physics bodies**: Static physics bodies never move. They are great for ground and obstacles.
 
-###Letting the Bunny Fall
+- **Dynamic physics bodies**: Dynamic physics bodies can be affected by gravity and other forces.
 
-* **Static physics bodies**: Static physics bodies never move. They are great for ground and obstacles.
+- **SKS Reference Nodes**: SKS files can be added to other SKS files via reference nodes. This will allow you to reuse game elements.
 
-* **Dynamic physics bodies**: Dynamic physics bodies can be affected by gravity and other forces.
+##Adding Controls and Tuning Physics
 
-* **SKS Reference Nodes**: SKS files can be added to other SKS files via reference nodes. This will allow you to reuse game elements.
+- **Gravity property**: The gravitational constant of the physics engine can be set through the attributes panel for the Scene.
 
-###Adding Controls and Tuning Physics
+- **Class code connections**: Class code connections can be used to set a custom class for a node, like `MSButtonNode`
 
-* **Gravity property**: The gravitational constant of the physics engine can be set through the attributes panel for the Scene.
+- **Variable Code connections**: Code connections allow you to access SpriteKit Scene objects in code. They are created in the Scene Editor and completed in the *Scenes* class file using the format `var connectionName: ConnectionType!`.
 
-* **Class code connections**: Class code connections can be used to set a custom class for a node, like `MSButtonNode`
+- **Touch input**: Touches can be received by a node if you set `userInteractionEnabled` to `true` and override `touchBegan`.
 
-* **Variable Code connections**: Code connections allow you to access SpriteKit Scene objects in code. They are created in the Scene Editor and completed in the *Scenes* class file using the format `var connectionName: ConnectionType!`.
+- **Update loop**: Update loops are called between every frame. They can be created by overriding `update`.
 
-* **Touch input**: Touches can be received by a node if you set `userInteractionEnabled` to `true` and override `touchBegan`.
+- **Impulses**: `applyImpulse` adds directly to the velocity property of a physics body. `applyAngularImpulse` adds directly to the angular velocity property of a physics body.
 
-* **Update loop**: Update loops are called between every frame. They can be created by overriding `update`.
+##Scrolling the World
 
-* **Impulses**: `applyImpulse` adds directly to the velocity property of a physics body. `applyAngularImpulse` adds directly to the angular velocity property of a physics body.
+- **Implementing a conveyor belt**: You implemented a conveyor belt system by moving *Scrolling Layer* nodes with child objects attached such as Obstacles and ground.
 
-###Scrolling the World
+- **Looping elements**: The ground was looped once it went off screen. You added a second ground image so that at least one full ground was always visible.
 
-* **Implementing a conveyor belt**: We implemented a conveyor belt system by moving *Scrolling Layer* nodes with our child objects attached such as Obstacles and ground.
+##Adding Obstacles
 
-* **Looping elements**: The ground was looped once it went off screen. We added a second ground image so that at least one full ground was always visible.
+- **Endless generation**: You generated obstacles using a timer so that there was one always waiting just off screen. Once an obstacle left the screen, you removed it.
 
-###Adding Obstacles
+- **Random placement**: When you generated an obstacle, you randomized it's y-position value.
 
-* **Endless generation**: We generated enough obstacles so that there was one waiting just off screen. Once one left the screen behind the bunny, we removed it and added a new one off screen.
+##Setting Up Collisions
 
-* **Random placement**: When we generated an obstacle, we randomized it's y-position value. This worked because the obstacles asset was larger than the screen height (so we part of it was always off screen).
+- **Physics sensors**: Physics sensors detect and trigger collision events but do you physically affect the collisions. It's as if the physics bodies can pass through other physics bodies. These are useful for trigger events.
 
-* **Controlling draw order**: You can control the placement of objects added in code by modifying the *Z Position* value. The node's draw order controls the objects draw order.
+- **Contact delegate**: You implement a contact delegate so your class can receive collision events from the physics engine.
 
-###Setting Up Collisions
+- **Game state**: It is useful to have a game state to manage the game e.g Active or Game Over
 
-* **Physics sensors**: Physics sensors detect and trigger collision events but do you resolve the collisions. It's as if the physics bodies can pass through other physics bodies. These are useful for trigger events.
+##Implementing Scoring
 
-* **Contact delegate**: You implement a contact delegate so your class can receive collision events from the physics engine.
+- **Goals using physics sensor**: Physics sensor goals were placed between obstacles so you can use the `didBeginContact` delegate method to detect when a player passed an obstacle.
 
-* **Game over**: It is useful to have a game over state or boolean to stop the game loop and ignore touches after a game over.
+- **Updating a label**: Converting numerical points scoring to a string for display via a label.
 
-###Implementing Points
+##Solution
 
-* **Goals using physics sensor**: Physics sensor goals were placed between obstacles so you can use a collision begin handler to detect when a player passed an obstacle.
+[Download Sushi Neko](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift-Solution).
 
-* **Updating a label**: Converting numerical points scoring to a string for display via a label.
-
-###Solution
-
-The solution to this [tutorial is available on GitHub](https://github.com/MakeSchool/Hoppy-Bunny-SpriteKit-Swift).
-
-![Github lab cat](../Tutorial-Images/labtocat.png)
+[GitHub](https://static.makegameswith.us/gamernews_images/TVZ2mTmQpl/labtocat.png)
