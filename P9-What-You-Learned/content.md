@@ -11,7 +11,7 @@ Let's take a look at what you have learned so far.
 
 ![The game](../cover.png)
 
-At the beginning of the Hoppy Bunny tutorials you learned how to create a new SpriteKit game project in Xcode.
+At the beginning of the Hoppy Bunny tutorials you learned how to create your first SpriteKit game project in Xcode.
 
 ##Setting Up the Gameplay Scene
 
@@ -71,8 +71,8 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create a new Sp
 
 - **Updating a label**: Converting numerical points scoring to a string for display via a label.
 
-##Solution
+#Solution
 
-[Download Sushi Neko](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift-Solution).
+[Download Hoppy Bunny](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift-Solution).
 
-[GitHub](https://static.makegameswith.us/gamernews_images/TVZ2mTmQpl/labtocat.png)
+[GitHub Cat](https://static.makegameswith.us/gamernews_images/TVZ2mTmQpl/labtocat.png)

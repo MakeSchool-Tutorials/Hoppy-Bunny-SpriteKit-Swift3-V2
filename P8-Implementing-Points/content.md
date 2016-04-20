@@ -109,7 +109,7 @@ Run the game... With a bit of skill you should be able to pass through the goal 
 
 #Summary
 
-Congratulations!  Now you should see the complete game previewed at the beginning of this tutorial.
+Congratulations on finishing *Hoppy Bunny*, give the person next to you a high five.
 
 In this chapter you learned to:
 
@@ -117,4 +117,4 @@ In this chapter you learned to:
 - Manage the player score
 - Identifying specific physics collisions
 
-The next chapter is a recap of everything you have covered so far, well done.
+The next chapter will be a recap of everything you have covered so far, well done.
