@@ -31,7 +31,7 @@ to modify the *GameScene* to create a virtual layer for all the objects you wish
 > ![Add empty node](../Tutorial-Images/xcode_add_empty_node_scroll.png)
 >
 
-Next you need to create a conde connection for the *scrollLayer*
+Next you need to create a connection for the *scrollLayer*
 
 > [action]
 > Open *GameScene.swift* and add the following after the `hero` property declaration.
