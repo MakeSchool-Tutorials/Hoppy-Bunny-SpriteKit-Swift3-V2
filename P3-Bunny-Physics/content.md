@@ -15,7 +15,7 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 > [action]
 > Select the ground node, ensure the *Attributes inspector* is open and scroll down until you see the *Physics Definition* option.
 > Set the *Body Type* to `Bounding rectangle`, which will present you will the additional physics properties.
-> Set the body to be `static` by unchecking `dynamic`, there is no need for it to rotation so uncheck `Allows Rotation`, there is also need for it to be affected by gravity, so deselect `Affected By Gravity`.
+> Set the body to be `static` by unchecking `dynamic`, there is no need for it to rotation so uncheck `Allows Rotation`, there is also no need for it to be affected by gravity, so deselect `Affected By Gravity`.
 >
 > ![Create the static ground physics body](../Tutorial-Images/xcode_ground_physics.png)
 >
