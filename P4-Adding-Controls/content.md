@@ -110,7 +110,7 @@ There are a couple of things you will need to do to achieve this:
 > The first step is to add a property to keep track of the time since the last touch. Add this declaration just after our hero property declaration.
 >
 ```
-var sinceTouch : CCTime = 0
+var sinceTouch : CFTimeInterval = 0
 ```
 >
 > Next add this code to the `touchBegan(...)` method, after the application of vertical impulse `applyImpulse(...)`
