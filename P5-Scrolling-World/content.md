@@ -37,7 +37,7 @@ Next you need to create a code connection for the *scrollLayer*
 > Open *GameScene.swift* and add the following after the `hero` property declaration.
 >
 ```
-var scrollNode: SKNode!
+var scrollLayer: SKNode!
 ```
 >
 
