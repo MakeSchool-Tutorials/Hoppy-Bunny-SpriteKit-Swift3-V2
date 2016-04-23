@@ -134,7 +134,7 @@ You need to limit the rotation of the bunny and also perform a downward rotation
 <!--  -->
 
 > [action]
-> ![Download CGFloat+Extensions.swift](../CGFloat+Extensions.swift) and drag this file into your project.
+> [Download CGFloat+Extensions.swift](../CGFloat+Extensions.swift) and drag this file into your project.
 > Ensure *Copy items if needed* is checked.
 >
 > ![Add file](../Tutorial-Images/xcode_add_file.png)
