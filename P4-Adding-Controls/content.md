@@ -39,7 +39,7 @@ override func didMoveToView(view: SKView) {
 <!--  -->
 
 > [info]
-> You need to perform a recursive search as the hero node is not directly in the *GameScene*, even though you can see it in the scene editor. In the *GameScene* you added a `Reference node` which holds tge bunny (it could easily be pointed to another *SpriteKit Scene* if we had one). You are making use of the `//` search operator to ensure the search will check all  nodes recursively in our scene.
+> You need to perform a recursive search as the hero node is not directly in the *GameScene*, even though you can see it in the scene editor. In the *GameScene* you added a `Reference node` which holds the bunny (it could easily be pointed to another *SpriteKit Scene* if we had one). You are making use of the `//` search operator to ensure the search will check all  nodes recursively in our scene.
 >
 
 #Adding touch
