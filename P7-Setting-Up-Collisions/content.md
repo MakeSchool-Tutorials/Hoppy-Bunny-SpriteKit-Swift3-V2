@@ -382,6 +382,7 @@ You may have noticed the game is a little difficult, perhaps too difficult.  It 
 
 > [action]
 > Open *Hero.sks*, click on the bunny and navigate down to the physics properties, notice the *Initial Velocity* property.  Set this to `(0,400)`.  This should give the player a much need reaction time cushion when the game first runs.
+
 > ![Bunny Physics Tweaks](../Tutorial-Images/xcode_spritekit_bunny_physics_tweaks.png)
 >
 
