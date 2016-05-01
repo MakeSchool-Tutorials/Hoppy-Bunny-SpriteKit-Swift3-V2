@@ -38,7 +38,7 @@ Think about separating your *Categories* into logical groups, for example:
 
 The *Contact Mask* allows you to define which physics bodies you want to be informed of when a collision takes place.  This would be useful when the bunny hits a carrot, you don't want the bunny to bounce off the carrot, you want the bunny to die at this point and fall from the sky.  You are setting the *Contact Mask* to `1` so the SpriteKit physics engine will inform you of this.
 
-The **goal** is a slightly different case, you want to be informed when the bunny has entered into the goal zone so you can increase the players score.  However, you don't want the bunny to be physically collide, as you want the bunny to pass through as if nothing is there.  You want to behave like a *Sensor*, a type of physics body that is used only for contact detection without physically affecting the body. This will be covered in more detail shortly.
+The **goal** is a slightly different case, you want to be informed when the bunny has entered into the goal zone so you can increase the players score.  However, you don't want the bunny to physically collide, as you want the bunny to pass through as if nothing is there.  You want to behave like a *Sensor*, a type of physics body that is used only for contact detection without physically affecting the body. This will be covered in more detail shortly.
 
 #Bunny physics
 
