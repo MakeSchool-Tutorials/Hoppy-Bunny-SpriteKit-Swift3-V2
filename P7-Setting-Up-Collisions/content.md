@@ -251,7 +251,7 @@ func didBeginContact(contact: SKPhysicsContact) {
   if gameState != .Active { return }
 >
   /* Change game state to game over */
-  gameState = .GameSceneStateGameOver
+  gameState = .GameOver
 >
   /* Stop any new angular velocity being applied */
   hero.physicsBody?.allowsRotation = false
@@ -282,7 +282,7 @@ To disable scrolling and touch, you can once again make use of the *gameState* p
 >
 ```
 /* Skip game update if game no longer active */
-if gameState != .GameSceneStateActive { return }
+if gameState != .Active { return }
 ```
 >
 
@@ -293,7 +293,7 @@ Can you figure out how to disable touch?
 >
 ```
 /* Disable touch if game state is not active */
-if gameState != .GameSceneStateActive { return }
+if gameState != .Active { return }
 ```
 
 Run the game... Death truly should be final for our bunny.
