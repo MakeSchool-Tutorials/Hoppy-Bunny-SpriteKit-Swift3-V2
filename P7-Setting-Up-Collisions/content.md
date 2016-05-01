@@ -248,7 +248,7 @@ func didBeginContact(contact: SKPhysicsContact) {
   /* Hero touches anything, game over */
 >
   /* Ensure only called while game running */
-  if gameState != .GameSceneStateActive { return }
+  if gameState != .Active { return }
 >
   /* Change game state to game over */
   gameState = .GameSceneStateGameOver
