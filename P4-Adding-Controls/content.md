@@ -28,7 +28,7 @@ You now have a property to use for connecting to our bunny object.  However, thi
 > Add the following code to the `didMoveToView(...)` method:
 >
 ```
-override func didMoveToView(view: SKView) {
+override func didMove(to view: SKView) {
   /* Setup your scene here */
 >
   /* Recursive node search for 'hero' (child of referenced node) */
