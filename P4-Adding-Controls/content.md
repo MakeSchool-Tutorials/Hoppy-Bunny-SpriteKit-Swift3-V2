@@ -51,11 +51,11 @@ The goal is to have the bunny hop every time we touch the screen, which will kee
 > Replace the declaration:
 >
 ```
-override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
   /* Called when a touch begins */
->
+>        
   /* Apply vertical impulse */
-  hero.physicsBody?.applyImpulse(CGVectorMake(0, 300))
+  hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))
 ```
 > You are applying an impulse to the *hero's* `physicsBody`.  Think of an impulse like being hit by a baseball bat.
 > In this case a short vertical burst to make the bunny move vertically.
