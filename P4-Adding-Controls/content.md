@@ -155,8 +155,8 @@ if sinceTouch > 0.1 {
 }
 >
 /* Clamp rotation */
-hero.zRotation.clamp(CGFloat(-90).degreesToRadians(),CGFloat(30).degreesToRadians())
-hero.physicsBody?.angularVelocity.clamp(-2, 2)
+hero.zRotation.clamp(v1: CGFloat(-90).degreesToRadians(), CGFloat(30).degreesToRadians())
+hero.physicsBody?.angularVelocity.clamp(v1: -2, 2)
 >
 /* Update last touch timer */
 sinceTouch+=fixedDelta
