@@ -52,9 +52,9 @@ public extension CGFloat {
     /**
      * Ensures that the float value stays between the given values, inclusive.
      */
-    public mutating func clamp(v1: CGFloat, _ v2: CGFloat) -> CGFloat {
+    public mutating func clamp(v1: CGFloat, _ v2: CGFloat)  {
         self = clamped(v1: v1, v2)
-        return self
+        // return self
     }
     
     /**
@@ -93,6 +93,7 @@ public extension CGFloat {
  */
 public func shortestAngleBetween(angle1: CGFloat, angle2: CGFloat) -> CGFloat {
     let twoπ = π * 2.0
+    
     var angle = (angle2 - angle1) .truncatingRemainder(dividingBy: twoπ)
     if (angle >= π) {
         angle = angle - twoπ
