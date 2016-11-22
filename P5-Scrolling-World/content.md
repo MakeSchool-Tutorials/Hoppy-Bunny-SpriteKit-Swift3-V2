@@ -48,7 +48,7 @@ Next you need to create the code connection to the Scene Editor object.  This st
 >
 ```
 /* Set reference to scroll layer node */
-scrollLayer = self.childNodeWithName("scrollLayer")
+scrollLayer = self.childNode(withName: "scrollLayer")
 ```
 >
 
@@ -126,16 +126,16 @@ In the update method, you will perform a check against every ground object in th
 for ground in scrollLayer.children as! [SKSpriteNode] {
 >
   /* Get ground node position, convert node position to scene space */
-  let groundPosition = scrollLayer.convertPoint(ground.position, toNode: self)
+  let groundPosition = scrollLayer.convert(ground.position, to: self)
 >
   /* Check if ground sprite has left the scene */
   if groundPosition.x <= -ground.size.width / 2 {
 >
       /* Reposition ground sprite to the second starting position */
-      let newPosition = CGPointMake( (self.size.width / 2) + ground.size.width, groundPosition.y)
+      let newPosition = CGPoint(x: (self.size.width / 2) + ground.size.width, y: groundPosition.y)
 >
       /* Convert new node position back to scroll layer space */
-      ground.position = self.convertPoint(newPosition, toNode: scrollLayer)
+      ground.position = self.convert(newPosition, to: scrollLayer)
   }
 }
 ```
