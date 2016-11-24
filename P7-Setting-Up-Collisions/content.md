@@ -201,7 +201,7 @@ This might consist of:
 
 ##Adding a button
 
-There is no easy way to add a button in SpriteKit so you will need to get creative and create our own solution.  To help we've provided a starting point for you with a custom class called *MSButtonNode*.
+There is no premade button object in SpriteKit so you will need to get creative and create our own solution. To help we've provided a starting point for you with a custom class called *MSButtonNode*.
 
 > [action]
 > [Download MSButtonNode.swift](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift/raw/master/MSButtonNode.swift) and drag this file into your project.
@@ -210,6 +210,7 @@ There is no easy way to add a button in SpriteKit so you will need to get creati
 
 > [action]
 > Add the *restart_button.png* to your scene by opening the media *Media Library* in the lower right and dragging it into *GameScene.sks*
+>
 > Set the *Name* to `buttonRestart`, set the *Z Position* to `10`, you want to ensure this UI (User Interface) element sits on top of everything visually.
 >
 > ![Restart button properties](../Tutorial-Images/xcode_spritekit_restart_properties.png)
@@ -230,11 +231,11 @@ var buttonRestart: MSButtonNode!
 ```
 >
 > When you connect this node you need to ensure the node is downcast to the `MSButtonNode` class.
-> Add the following to the `didMoveToView(..)` method.
+> Add the following to the `didMove(to view:)` method.
 >
 ```
 /* Set UI connections */
-buttonRestart = self.childNodeWithName("buttonRestart") as! MSButtonNode
+buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
 ```
 >
 
@@ -243,7 +244,7 @@ buttonRestart = self.childNodeWithName("buttonRestart") as! MSButtonNode
 The code connection is ready, if you run the game you can touch the button, it looks like it was touched yet nothing happens.  You need to add some code to be executed upon user touch.
 
 > [action]
-> Add the following code after the code connection:
+> Add the following code after the code connection (still in didMove(to view:)):
 >
 ```
 /* Setup restart button selection handler */
@@ -256,23 +257,25 @@ buttonRestart.selectedHandler = {
   let scene = GameScene(fileNamed:"GameScene") as GameScene!
 >
   /* Ensure correct aspect mode */
-  scene.scaleMode = .AspectFill
+  scene?.scaleMode = .aspectFill
 >
   /* Restart game scene */
-  skView.presentScene(scene)
+  skView?.presentScene(scene)
 >
 }
 ```
 >
 
-This code loads in a fresh copy of the *GameScene.sks*, ensures the correct *scaleMode* is applied and then replaces the current scene with this fresh *GameScene*. You can find this code in `GameViewController.swift` and how the *GameScene* is initially loaded when the game starts.
+This code loads in a fresh copy of the *GameScene.sks*, ensures the correct *scaleMode* is applied and then replaces the current scene with this fresh *GameScene*. This same code is used in `GameViewController.swift` to initially load *GameScene* when the game starts.
+
+You should now be able to run the game. If the bunny gets knocked off the screen tap restart and the bunny is back and the game restarts!
 
 ##Hide the button
 
-Great you have a button, as it's bang in the middle of the screen it might be an idea to hide it once the game is in-play.
+Great you have a button, might be an idea to hide it once the game is in-play.
 
 > [action]
-> Add the following code after the selection handler setup.
+> Add the following code after the selection handler setup (at the bottom of didMove(to view:)).
 >
 ```
 /* Hide restart button */
@@ -281,11 +284,11 @@ buttonRestart.state = .MSButtonNodeStateHidden
 >
 
 You want the button to be visible when the bunny dies, let's look at how we implement our game over scenario.
-It would be really useful to know the current state of the game.  Has the game started, is the player dead e.t.c ?
+It would be really useful to know the current state of the game.  Has the game started, is the player dead etc?
 
 #Game State
 
-State management is a great way to do this, just look intp the `MSButtonNode` code above.  A `state` property is used to track if the button is `Active,Hidden or Selected`.
+State management is a great way to do this, take a look at `MSButtonNode.swift`.  A `state` property is used to track if the button is `Active,Hidden or Selected`.
 
 For the *GameScene* class it would be great to know if the game state is either `Active` or `GameOver`.  
 
@@ -299,11 +302,11 @@ When this `GameOver` state applies you want to:
 An *Enumeration* is a great way to setup a custom state type.
 
 > [action]
-> Add the following `Enumeration` to the top of *GameScene.swift*:
+> Add the following `Enumeration` to the top of *GameScene.swift* (Outside of the GameScene class):
 >
 ```
 enum GameSceneState {
-    case Active, GameOver
+    case active, gameOver
 }
 ```
 >
@@ -321,7 +324,7 @@ var gameState: GameSceneState = .Active
 Great you now have some rudimentary game management in place, time to kill the bunny!
 
 > [action]
-> Replace the `didBeginContact(...)` method as shown:
+> Replace the `didBegin(_ contact:)` method as shown:
 >
 ```
 func didBeginContact(contact: SKPhysicsContact) {
