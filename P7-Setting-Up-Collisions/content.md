@@ -3,55 +3,131 @@ title: Setting up collisions
 slug: setting-up-collisions
 ---
 
-You are going to set up collision handling so that your game finally becomes as frustrating as *Flappy Bird*. Any good game needs to be unforgivingly savage and frustrating, right?
+You are going to set up collision handling so that your game finally becomes a real game! At the moment the player passes through obstacles and lands on the ground. To make the game challenging the player will have to avoid the obstacles by manuvering through the space between the carrots and avoid hitting the ground! 
 
 I would recommend you have a look at Apple's documentation on the subject of [Working with Collisions and Contacts.](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW14) It can be a little bit confusing when you first start, so don't worry if you don't understand everything at once.
 
-In the setup of collisions you are going to use the *Scene Editor* as much as possible, in later tutorials you will expand this knowledge implementing physics setup in code.
+In this tutorial you will setup physics collisions and contacts in the scene editor, in later tutorials you will expand this knowledge implementing physics setup in code.
 
-#Obstacle physics
+#Quick overview of physics
 
-The current obstacle has no physics bodies, let's fix that.
+Physics objects have few properties that determine how they interact with each other. These are 
+
+- Category Bit Mask
+- Contact Bit Mask
+- Collision Bit Mask
+
+#Category bit mask
+
+This value identifies which category a physics object belongs to. You use this to declare how objects interact. You can say objects of category 1 will collide with objects of category 2 for example. 
+
+#Contact Bit Mask
+
+The contact bit mask determines which category of objects an object produces contact events for. It's important to understand that contact events do not produce a physical collision! In other words, an object my produce a contact event while passign through another physics object. 
+
+In your game you want the bunny to pass the "goal" object that sits between the two carrots. You also want to know when the bunny makes contact with the "goal" to score a point for the player. 
+
+#Collision Bit Mask
+
+The collission bit mask determines which category of objects a physics object collides with. A collision is a physical interaction. When an object collides with another object it there is a physical effect! For example one object may bounce off the other or knock the other object over. 
+
+#Physics Categories values
+
+Physics category are read as binary values with a value of 2 to the power of 32. So 0 would look like: 
+
+`00000000000000000000000000000000`
+
+The value 1 would translate to: 
+
+`00000000000000000000000000000001`
+
+A value of 2 would be: 
+
+`00000000000000000000000000000010`
+
+Binary values only contain 1s and 0s!
+
+When the *category* value of an object has a 1 in the same position as the value for *collision* then the objects collide. The same is true for contacts. For example, objects of category:
+
+`00000000000000000000000000000010`
+
+Will collide with objects whose have a collision bitmask of: 
+
+`00000000000000000000000000000011`
+
+This object would also collide with objects whose category is:
+
+`00000000000000000000000000000001`
+
+Let's apply this idea to the game. So far you have the following types of objects:
+
+- Player
+- Obstacle
+- Ground
+- Goal Sensor
+
+Let's give them each a unique binary value. They each need a value with a 1 in a different column from the others. 
+
+- `00000001` = 1 = Player
+- `00000010` = 2 = Obstacle 
+- `00000100` = 4 = Ground
+- `00001000` = 8 = Goal Sensor
+
+These are each unique categories becuase they each have a 1 in a unique column. 
+
+#Collision Bit Masks
+
+When you set the collision bit mask you are deciding which objects will produce a physical collision. In your game you want the bunny/hero (1) to collide with the carrots/obstacle (2) and the ground (4). 
+
+- `00000001` = 1 = Player
+- `00000010` = 2 = Obstacle 
+- `00000100` = 4 = Ground
+- `00000111` = 7 = **Collision for player**
+
+Notice that 1+2+4 = 7. Also notice that in binary the number 7 shares a 1 in the same columns as Player, Obstacle, and Ground. 
+
+#Contact Bit Masks
+
+A contact doesn't produce a physical interaction but it is noticed by the physics engine. You want to know when the player (1) makes contact with the goal (8) becuase they will score a point. You also wnat to know when the player contacts the 
+
+- `0010` = 2 Obstacles  
+- `0100` = 4 Ground     
+- `1000` = 8 Goal       
+- `1111` = 15 **Contacts Contact for player**  
+
+You could also use `4294967295` for the Player since you want to know when the the player contacts anything. 
+
+`11111111111111111111111111111111` = 2^32 = 4294967295
+
+#Setup physics
+
+Currently the obstacles don't use physics. You will apply physics in the next step:
 
 > [action]
 > Open *Obstacle.sks*, make the following changes to both **carrots** and the invisible **goal** section.
-> Enable physics by setting the *Body Type* to `Bounding rectangle` and uncheck the subsequent 4 boxes.
+> Enable physics by setting the *Body Type* to `Bounding rectangle`. Uncheck the 4 boxes that appear below.
 >
 > ![Carrot physics](../Tutorial-Images/xcode_spritekit_obstacle_physics_collision_properties.png)
 >
 > Set the *Category Mask* to `2` and the *Contact Mask* to `1`
 >
-> One little tweak for the invisible goal sprite, set the *Category Mask* to `8`.
+> Be sure to apply these steps to both carrots. 
 >
 
-#Physics Categories
-
-Every physics body in a scene can be assigned up to 32 different categories, each corresponding to a bit in a 32 bit mask.
-You notice those really big numbers, they are the integer value of `2` to the power `32` which represents every bit in the 32 bit mask being 1, this also means that this body will collide with **every** other body and is the default behavior.
-
-Think about separating your *Categories* into logical groups, for example:
-
-- 1 - Player
-- 2 - Obstacle
-- 4 - Ground
-- 8 - Goal Sensor
-
-The *Contact Mask* allows you to define which physics bodies you want to be informed of when a collision takes place.  This would be useful when the bunny hits a carrot, you don't want the bunny to bounce off the carrot, you want the bunny to die at this point and fall from the sky.  You are setting the *Contact Mask* to `1` so the SpriteKit physics engine will inform you of this.
-
-The **goal** is a slightly different case, you want to be informed when the bunny has entered into the goal zone so you can increase the players score.  However, you don't want the bunny to physically collide, as you want the bunny to pass through as if nothing is there.  You want to behave like a *Sensor*, a type of physics body that is used only for contact detection without physically affecting the body. This will be covered in more detail shortly.
+> [action]
+> Select the goal object. Choose `Bounding Rectangle` as the *Body Type*. Uncheck the 4 boxes that appear below. 
+>
+> Set the *Category Mask* to `8` and the *Contact Mask* to `1`. 
+>
 
 #Bunny physics
 
 > [action]
-> Open *Hero.sks* and take a `click` on the bunny.
-> Set *Category Mask* to `1`, *Collision Mask* to `7` and the *Contact Mask* to `4294967295` this is 2^32.
+> Open *Hero.sks* and `click` on the bunny. The Body Type should `Bounding Circle`. Below this
+> set *Category Mask* to `1`, *Collision Mask* to `7` and the *Contact Mask* to `15` (or `4294967295` this is 2^32 if you prefer).
 >
 > ![Bunny physics](../Tutorial-Images/xcode_spritekit_bunny_physics_properties.png)
 >
-
-
-The *Collision Mask* is set to `7` as you only want the bunny to physically collide with *Categories* `1+2+4` e.g. `Player,Obstacle,Ground`.  You don't want to collide with `8` which is the goal sensor, otherwise the bunny will never be able to pass through the first obstacle.  
-The *Contact Mask* has been set to 2^32 the max value and lets the physics engine know that you want to be informed if our bunny contacts any other physics body.
 
 #Ground physics
 
@@ -59,7 +135,7 @@ You need to setup the ground sprite physics, do you think you can tackle this yo
 Check back if you don't remember the *Category Mask* value we decided to use.  What value do you think you'll need for the *Contact Mask?*
 
 > [solution]
-> Open  *GameScene.sks* and modify both **ground** sprites.
+> Open  *GameScene.sks* and modify both **ground** sprites. The *Body Type* should be `Bounding Rectangle`, and the four boxes below should unchecked.  
 > Set *Category Mask* to `4` and *Contact Mask* to `1`, you want to be informed if the bunny has hit the ground.
 >
 > ![Ground physics](../Tutorial-Images/xcode_spritekit_ground_physics_properties.png)
@@ -67,15 +143,19 @@ Check back if you don't remember the *Category Mask* value we decided to use.  W
 
 Run your game... The bunny will now collide with the obstacles yet thankfully be able to flap through the goal gap.  Well if you're good enough :]
 
+Currently the bunny will get pushed off the screen if you collide with a carrot. Don't worry about this it's a physics interaction that you set up. You will be taking care of this in a later step. For now just restart the simulator and try again. 
+
 #Physics Contact Delegate
 
-If the bunny collides with the ground, an obstacle or passes through the goal of an obstacle, you want to know about.  Next you will implement the *Physics Contact Delegate* so your code will be informed whenever one of these collision contacts takes place.
+If the bunny collides with the ground, an obstacle or passes through the goal of an obstacle, you want to know about. Next you will implement the *Physics Contact Delegate* so your code will be informed whenever one of these collision contacts takes place.
+
+Remember earlier when you set the *Contact Bit Mask*? Here you informed the physics system which contacts you were interested in, and through the contact delegate you will be informed when they occur. 
 
 > [action]
-> Open *GameScene.swift*, you need to declare that the *GameScene* class will implement the *SKPhysicsContactDelegate* protocol methods.
+> Open *GameScene.swift*. You need to declare the *GameScene* class will implement the *SKPhysicsContactDelegate* protocol methods.
 > To learn more about *Protocols* and *Delegates* please check out our [Swift Concepts Guide](https://www.makeschool.com/tutorials/swift-concepts-explained).
 >
-> You declare that a class is implementing this protocol in Swift by appending *CKPhysicsContactDelegate* after the class' super class *SKScene*, separated by a comma, as shown:
+> You declare that a class is implementing this protocol in Swift by appending *SKPhysicsContactDelegate* after the class' super class *SKScene*, separated by a comma, as shown:
 >
 ```
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -87,7 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 The *GameScene* class is now ready to implement the contact delegate, first you should inform the delegate which class will take responsibility for handling the messages.   You should assign *GameScene* as the collision delegate.
 
 > [action]
-> Add the following code to the `didMoveToView(..)` method:
+> Add the following code to the `didMove(to view:)` method:
 >
 ```
 /* Set physics contact delegate */
@@ -100,7 +180,7 @@ Finally, you can implement the *didBeginContact* method that will be called when
 > Add this new method to the *GameScene* class:
 >
 ```
-func didBeginContact(contact: SKPhysicsContact) {
+func didBegin(_ contact: SKPhysicsContact) {
   /* Hero touches anything, game over */
   print("TODO: Add contact code")
 }
@@ -121,7 +201,7 @@ This might consist of:
 
 ##Adding a button
 
-There is no easy way to add a button in SpriteKit so you will need to get creative and create our own solution.  Only joking, we've kindly provided a starting point for you with a custom class called *MSButtonNode*.
+There is no easy way to add a button in SpriteKit so you will need to get creative and create our own solution.  To help we've provided a starting point for you with a custom class called *MSButtonNode*.
 
 > [action]
 > [Download MSButtonNode.swift](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift/raw/master/MSButtonNode.swift) and drag this file into your project.
@@ -129,7 +209,7 @@ There is no easy way to add a button in SpriteKit so you will need to get creati
 <!-- -->
 
 > [action]
-> Add the *restart_button.png* to your scene.
+> Add the *restart_button.png* to your scene by opening the media *Media Library* in the lower right and dragging it into *GameScene.sks*
 > Set the *Name* to `buttonRestart`, set the *Z Position* to `10`, you want to ensure this UI (User Interface) element sits on top of everything visually.
 >
 > ![Restart button properties](../Tutorial-Images/xcode_spritekit_restart_properties.png)

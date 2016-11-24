@@ -10,7 +10,7 @@ You are going to be creating obstacles for the player to navigate and implementi
 > [action]
 > Create a new *SpriteKit Scene File* by selecting `File > New > File > SpriteKit Scene`:
 >
-> ![Selecting the SKS File](../Tutorial-Images/xcode_add_sks.png)
+> ![Selecting the SKS File](../Tutorial-Images/xcode_add_sks.png) 
 > Save the file as *Obstacle.sks*
 >
 > ![Saving the SKS File](../Tutorial-Images/xcode_add_sks_obstacle.png)
@@ -20,7 +20,7 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 > [action]
 > Modify the size and anchor point of this new obstacle scene properties as shown:
 > ![Modify the obstacle scene size](../Tutorial-Images/xcode_obstacle_scene_size.png)
-> Set the *Anchor Point* to `(0.5,0.5)` and *Size* to `(51,768)`.
+> Set the *Anchor Point* to `(0.5, 0.5)` and *Size* to `(51, 768)`.
 >
 > Drag *carrot_top.png* and *carrot_bottom.png* from your *Media Library*, and snap the carrots in place.
 > Next add a *Color Sprite* from the object library and position it in between the carrot's as shown:
@@ -38,7 +38,7 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 <!-- -->
 
 > [info]
-> So how did I know that the scene size should be exactly `51` pixels wide and `768` tall? Well I, sometimes you
+> So how did I know that the scene size should be exactly `51` pixels wide and `768` tall? Well, sometimes you
 > need to have a play in the visual editor and then adjust, I saw the carrot's had a width of `51` so I used that value.
 > The default height of `768` (iPhone 5) was no coincidence as the assets were designed to fill an iPhone 5 screen height, leaving a suitable `100` pixel gap for the player to pass through.
 
@@ -56,7 +56,7 @@ You can test if you've setup the obstacle correctly by adding it to the *GameSce
 Can you fix this? Remember you've ran into similar *Z-Position* issues when you initially setup the scene.
 
 > [solution]
-> Tweak the *scrollLayer* which contains the ground nodes, set *Z-Position* to `2` and set the *Obstacle* reference node to `1`.
+> Tweak the *scrollLayer* which contains the ground nodes, set *Z-Position* to `2` and set the z-Position of the *Obstacle* node to `1`.
 
 Now this hopefully look a lot like this.
 
@@ -65,20 +65,35 @@ Now this hopefully look a lot like this.
 #Dynamic obstacle generation
 
 Time to learn about dynamic obstacle generation or DOG for short :]
-The *Obstacle.sks* you built will come in very hand now, you could of course design a huge level if you wanted to and manually place them to design a level.  However, for an infinite runner this just isn't practical.
+You added an a copy *obstacle.sks* to your scene. This is a sprite node. Your game will copy this node to create a relentless stream of obstacles for the player to avoid. To do this you will need a reference to the source obstacle. 
+
+> [action]
+> Open GameScene.sks. Select the obstacle node and give it the name:
+> "obstacle"
+
+> [action]
+> Add variable at the top of your class to hold a reference to the source obstacle:
+> `var obstacleSource: SKNode!`
+
+> [action]
+> Now set the value of the `obstacleSource` to the "obstacle" node in GameScene.sks using child(withName:). In didMove(to view:) add the following at the end of the method: 
+> 
+```
+/* Set reference to obstacle Source node */
+obstacleSource = self.childNode(withName: "obstacle")
+```
+>
 
 ##Obstacle layer
 
-It would be useful to add another virtual layer to contain the obstacles.
+It will useful to create a layer to hold all of the obstacles. You can do this with a node in GameScene. By attaching all of the obstacles to a parent node they will draw at the z position of that node, and allow you to move all of the obstacles by moving the node. 
 
 > [action]
 > Open *GameScene.sks* open and drag an *Empty* node into the scene.
-> Set the position to `(0,0)`, *Z-Position* to `1` and *Name* to `obstacleLayer`
+> Set the position to `(0, 0)`, *Z-Position* to `1` and *Name* to `obstacleLayer`
 >
 > ![Creating the obstacle layer node](../Tutorial-Images/xcode_add_obstacle_layer.png)
 >
-> Next set the obstacle reference node's parent to the *ObstacleLayer*:
-> ![Set obstacle parent](../Tutorial-Images/xcode_obstacle_modify_parent.png)
 
 <!-- -->
 
@@ -101,18 +116,18 @@ You'll need to code connect the obstacle layer object.
 var obstacleLayer: SKNode!
 ```
 >
-> Add the following code after the *Scroll Layer* connection:
+> Add the following code after the *Scroll Layer* in the didMove(to view:) method. Create a connection:
 >
 ```
 /* Set reference to obstacle layer node */
-obstacleLayer = self.childNodeWithName("obstacleLayer")
+obstacleLayer = self.childNode(withName: "obstacleLayer")
 ```
 
 ##Spawn Timer
 
-You will add a timer property to help manage the rate of obstacle generation, too slow it's boring, too fast it's too hard.
+You will add a timer property to help manage the rate of obstacle generation. Each time period we will generate a new obstacle. The time you choose is important to game play, too slow it's boring, too fast it's too hard.
 
-> Add the following code after the *sinceTouch* property declaration:
+> Add the following code after the *sinceTouch* property declaration at the top of the GameScene class:
 >
 ```
 var spawnTimer: CFTimeInterval = 0
@@ -124,7 +139,7 @@ var spawnTimer: CFTimeInterval = 0
 You are going to create another conveyor belt solution for the newly added *ObstacleLayer*.
 
 > [action]
-> Open *GameScene.swift* and add the following method to the *GameScene* class:
+> In *GameScene.swift* add the following method to the *GameScene* class:
 >
 ```
 func updateObstacles() {
@@ -136,7 +151,7 @@ func updateObstacles() {
    for obstacle in obstacleLayer.children as! [SKReferenceNode] {
 >
        /* Get obstacle node position, convert node position to scene space */
-       let obstaclePosition = obstacleLayer.convertPoint(obstacle.position, toNode: self)
+       let obstaclePosition = obstacleLayer.convert(obstacle.position, to: self)
 >
        /* Check if obstacle has left the scene */
        if obstaclePosition.x <= 0 {
@@ -150,7 +165,7 @@ func updateObstacles() {
  }
  ```
 
-This code should look familiar to the *ScrollLayer*, this time when an obstacle has left the scene, there is no longer any need for it.  So it will be removed with the `removeFromParent()` method.
+This code should look familiar it's similar to the code used in `scrollWorld()`. This time when an obstacle has left the scene, there is no longer any need for it, so it will be removed by calling the `removeFromParent()` method.
 
 Can you modify your game code to call the `updateObstacles()` method every frame?
 
@@ -162,14 +177,13 @@ Can you modify your game code to call the `updateObstacles()` method every frame
 updateObstacles()
 ```
 
-Run the game... You should see the first obstacle scroll past, sadly the conveyor only has one obstacle, let's make it a bit more challenging.
+Running the game now will not do much. The `obstacleSource` node is not attached to the obstacleLayer. So it doesn't move. You are using this node as the source from which you will create an endless supply of copies.
 
 #Spawning endless randomized obstacles
 
-The next task will be to continuously spawn obstacles till the end of time.
+The next task will be to continuously spawn obstacles by copying the source obstacle you created in GameScene.sks.
 
-Next you will implement a mechanic that spawns a new obstacles on a time schedule basis.  Feel free to play around with
-the timer and really challenge the player.
+To make the game interesting you will want each new obstacle appear at a different height. 
 
 > [action]
 > Add this code to the end of your *updateObstacles* method:
@@ -178,28 +192,31 @@ the timer and really challenge the player.
 /* Time to add a new obstacle? */
 if spawnTimer >= 1.5 {
 >
-    /* Create a new obstacle reference object using our obstacle resource */
-    let newObstacle = SKReferenceNode.init(fileNamed: "Obstacle")
+    /* Create a new obstacle by copying the source obstacle */
+    let newObstacle = obstacleSource.copy() as! SKNode
     obstacleLayer.addChild(newObstacle)
 >
     /* Generate new obstacle position, start just outside screen and with a random y value */
-    let randomPosition = CGPointMake(352, CGFloat.random(min: 234, max: 382))
+    let randomPosition = CGPoint(x: 352, y: CGFloat.random(min: 234, max: 382))
 >
     /* Convert new node position back to obstacle layer space */
-    newObstacle.position = self.convertPoint(randomPosition, toNode: obstacleLayer)
+    newObstacle.position = self.convert(randomPosition, to: obstacleLayer)
 >
     // Reset spawn timer
     spawnTimer = 0
 }
 ```
 
-In the code above, every `1.5` seconds a new obstacle instance is created from out *Obstacle.sks*, it is then moved just out of view and the **Y Position** is randomly set between the **min** value of `234` and a **max** value of `382` to mix things up a little.
+The code above creates a new obstacle instance every `1.5` seconds from *Obstacle.sks*. So far `spawnTimer` has not been incremented you will do that in the next step. 
 
-When deciding these sorts of gameplay values, it's handy to go back to the *GameScene.sks* and check the **Y Position** of our obstacle.  Move it up and down and take note of the Y Position, then pick a range that looks good to you.
-Once you are finished set your obstacle just outside of the scene view, this will be the first obstacle the player sees.
+We place this new obstacle off the right side of the screen and set the **Y Position** randomly between the **min** value of `234` and a **max** value of `382` to mix things up a little.
+
+When deciding these sorts of gameplay values, it's handy to go back to *GameScene.sks* and check the **Y Position** of our obstacle.  Move it up and down and take note of the Y Position, then pick a range that looks good to you.
+
+Once you are finished move the source obstacle outside of the scene on the right side. This way it will not be visible. Players will only see the copies as they are created. 
 
 > [info]
-> You know that feeling when you play a great game and the core mechanic feels just right? This is rarely a coincidence, expect to tweak game values and tinker with mechanics, get friends to feedback until the balance feels right.
+> You know that feeling when you play a great game and the core mechanic feels just right? This is rarely a coincidence, expect to adjust these values and tinker with mechanics, get friends to  play and ask for feedback. Keep adjusting the values until the game play feels right and your play testers are having fun!
 
 Although you've added a *spawnTimer* property, it's not been setup to track time.
 Can you think of how to do this?
