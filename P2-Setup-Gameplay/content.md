@@ -12,12 +12,16 @@ Let's get started setting up the main game scene, SpritKit Scene Editor is a pow
 >
 > It's helpful to see the scene size, zoom out so you can see the yellow border which represents the scene size. Select `Editor / Zoom Out` or use the shortcut shown.
 >
-> Next modify the size parameters as shown in the *Attributes inspector panel*
+>The default project may have a Label in the center with the Text "Hello World". Click it to select it and press `delete` on the keyboard. 
+>
+> Next modify the size parameters as shown in the *Attributes inspector panel* set width to 320 and height to 568 `(width: 320, height: 568)`
+>
 > ![Adjusting GameScene size](../Tutorial-Images/xcode_gamescene_size.png)
+>
 
-Remember the device resolution guide in the previous chapter? You will be using a common design size of 320 x 480, this gives you a nice portrait view, perfectly suited to the artwork.  You may be wondering what about supporting other devices?
+Remember the device resolution guide in the previous chapter? You will be using a common design size of 320 x 568, this gives you a nice portrait view, perfectly suited to the artwork.  You may be wondering what about supporting other devices?
 
-Thankfully SpriteKit has your back and can automatically scale the view to fit other devices.
+Thankfully SpriteKit has your back and can automatically scale the view to fit other devices. This size will scale to fit iPhone 4, 5, 6, and 7. 
 
 > [info]
 > Have a look through the code in *GameViewController.swift*.  In particular:
@@ -28,29 +32,32 @@ Thankfully SpriteKit has your back and can automatically scale the view to fit o
 scene.scaleMode = .aspectFill
 ```
 >
-> If you `highlight` *scaleMode* and look at the *Quick Help inspector* panel you can find out more about the scaling options available.
+> If you `option+click` *scaleMode* and look at the *Quick Help inspector* panel you can find out more about the scaling options available.
 >
 
-##Add the background
+##Move the center to the lower left
+
+To make it easier to position objects on the screen you will move the center point of the scene to the lower left. 
 
 > [action]
-> Select *Show the media library* in the *Library pane*, add the background image by dragging *background.png* onto the stage:
+> Set Achor Point x and y to 0 (x: 0, y: 0).
 >
-> ![Adding background image](../Tutorial-Images/xcode_gamescene_add_background.png)
+> ![Adding background image](../Tutorial-Images/Xcode-set-anchor-point.png)
 >
-> You want to centre the background on the screen, you can do this by setting the *Position* to `(160, 240)` which is exactly half of the scene size values or drag it the image around by hand.
->
-> When you add an object to the game scene this way a *Color Sprite* object is added to the scene and the texture property is pre populated with the texture name of the asset you dragged in.
 
-<!--  -->
+##Set the Background Color
 
-> [info]
-> A really handy feature is to use object snapping, *Hold down shift* **(behavior as of Xcode 7.2.1)** while dragging your game objects and you will notice it will snap against existing scene objects.  Try moving it around and you will notice it will snap to the left hand edge of the scene, giving you that perfect center point position.
+> [action]
+> With *GameScene.sks* set the color by clicking the color selector near the top of the property inspector. Set the color to a nice sky blue. You can use 
+> your own color or use (red: 72, green: 192, blue: 203).
+>
+> ![Adding background image](../Tutorial-Images/Xcode-Background-color.png)
 >
 
 ##Add the ground image
 
 > [action]
+> Open the media library by clicking the small film strip in the lower right. ![Adding the ground image](../Tutorial-Images/media-library.png)
 > Scroll through the media library and drag *ground.png* into the scene.
 > Set the position to `(160,32)` or anywhere you think looks good, it's your game after all.
 >
@@ -85,7 +92,6 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 ##Add the bunny
 
 > [action]
->
 > Select *Hero.sks* in the *Project navigator*
 >
 > Drag *bunny1.png* into scene:
@@ -94,15 +100,18 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 >
 > You will be connecting the bunny in code later so you need a way to reference it.  This is typically done using the *Name* property, so set *Name* to `hero`.
 >
-> ![Adding the bunny](../Tutorial-Images/xcode_add_bunny_hero_scene.png)
+> ![Adding the bunny](../Tutorial-Images/hero-scene-size.png)
 >
 
 <!--  -->
 
 > [info]
 > Personally I dislike using the huge default scene size, when only dealing with a single asset. It can also cause unexpected position issues later on when using it as a referenced object.
-> Click anywhere other than the bunny itself and set the scene *Size* (as you previously did with the *GameScene*) to `(16,16)`.  Why `(16,16)`, this is the *Size* of the *bunny* sprite.
-> Set the *Anchor Point* to `(0.5,0.5)`
+> Click anywhere other than the bunny itself and set the scene *Size* (as you previously did with the *GameScene*) to `(33, 33)`.  Why `(33, 33)`, this is the *Size* of the *bunny* sprite.
+> Set the *Anchor Point* to `(0.5, 0.5)`
+>
+> ![Adding the bunny](../Tutorial-Images/xcode_add_bunny_hero_scene.png)
+>
 
 ##Animating the bunny
 
