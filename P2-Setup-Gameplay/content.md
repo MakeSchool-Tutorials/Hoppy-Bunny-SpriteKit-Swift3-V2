@@ -119,7 +119,9 @@ Great, you have a static bunny.  However, we want this bunny to fly and the bunn
 You are going to setup a sprite frame based animation ~`0.5` seconds long and repeat forever.
 
 > [action]
-> Open *Hero.sks*, select the *Object library* panel ![Object Library](../Tutorial-Images/object-library.png) and look for the *AnimateWithTextures Action* and drag this
+> Open *Hero.sks*, open the Timeline if it is not open already ![Timeline](../Tutorial-Images/timeline.png).
+> Next open select the *Object library* panel ![Object Library].
+> !(../Tutorial-Images/object-library.png) and look for the *AnimateWithTextures Action* and drag this
 > into the start of the bunny *Timeline* as shown:
 >
 > ![Adding the animation action](../Tutorial-Images/xcode_hero_add_action.png)
