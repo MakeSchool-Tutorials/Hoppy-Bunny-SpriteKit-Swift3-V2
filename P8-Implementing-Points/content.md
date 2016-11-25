@@ -36,7 +36,7 @@ var scoreLabel: SKLabelNode!
 > Add the following code after the `buttonRestart` connection:
 >
 ```
-scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
+scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
 ```
 >
 
@@ -61,27 +61,22 @@ When the game starts you want to ensure the label is reset to `0`, let's make th
 >
 ```
 /* Reset Score label */
-scoreLabel.text = String(points)
+scoreLabel.text = "\(points)"
 ```
 >
-> `String(...)` is great for converting a number quickly into a string representation. You will be reusing this snippet when it comes to updating the score.
+> `scorLabel.text` expects a string `points` is an Int, wrapping points in "\()" converts it into a string.  
 
-The next part takes a little bit of extra work, as it stands if the bunny collides with anything it will trigger the death sequence. So you need some way of knowing if this was a collision between the **bunny** and the **goal**. One way would be to compare the *categoryMask* remember this list:
+So far if the bunny collides with anything it will trigger the death sequence. When there is a collision with the goal you want to score a point instead of ending the game. When a collision occurs you need some way of knowing if this was a collision between the **bunny** and the **goal**, it it's a collision with anything else the game is over. 
 
-- 1 - Player
-- 2 - Obstacle
-- 4 - Ground
-- 8 - Goal Sensor
-
-However in this example you will be using the *name* of the node.
+The `didBegin(_ contact:)` method provides `contact` which an `SKPhysicsContact` object. This object contains two properties: `bodyA` and `bodyB` which represent the two objects that just made contact with each other. In this next step you will check them both and if one is the player and the other the goal you will add 1 to `points` and ignore the rest of code that ends the game.  
 
 > [action]
-> Open *GameScene.swift* and add this code to the start of the `didBeginContact(...)` method, before the `gameState` check.
+> Open *GameScene.swift* and add this code to the *start* of the `didBeginContact(...)` method, before the `gameState` check.
 >
 ```
 /* Get references to bodies involved in collision */
-let contactA:SKPhysicsBody = contact.bodyA
-let contactB:SKPhysicsBody = contact.bodyB
+let contactA = contact.bodyA
+let contactB = contact.bodyB
 >
 /* Get references to the physics body parent nodes */
 let nodeA = contactA.node!
@@ -103,7 +98,7 @@ if nodeA.name == "goal" || nodeB.name == "goal" {
 
 When a collision takes place between two bodies the information is stored in a *SKPhysicsContact* object.  You can use this to find out more information about the collision, so first you grab a reference to the *SKPhysicsBodies*.  However, you may have a custom class with your own properties and want to access those, so you go up a level and get a reference to the parent node this body belongs.
 
-With the reference to *SKSpriteNode* node you can check for the *Name* of `goal`. You can then update the players *points* and use that to update the **score label**.  Straight after that you *return* from the `didBeginContact(...)` method, otherwise the player will suffer a needless death.
+With the reference to *SKSpriteNode* node you can check for the *Name* of `goal`. You can then update the players *points* and use that to update the **score label**.  After that you *`return`* from the `didBeginContact(...)` method, otherwise the game would end. Important! a function ends when it hits a return statement!
 
 Run the game... With a bit of skill you should be able to pass through the goal and get a point. You can always make the goal area bigger for testing :]
 

@@ -352,7 +352,7 @@ func didBeginContact(contact: SKPhysicsContact) {
 
 Notice the check of the **gameState** to ensure that the code will not be called more than once, when the player has died.  The bunnies physics are effectively disabled by stopping `rotation`, reseting `angularVelocity` and removing the flapping asprite frame animation with the use of `removeAllActions()` method.  The button is then activated and presented to the player  with a simple `MSButtonNodeStateActive` state change.
 
-Run the game... When the player dies the button should appear and you can restart play.  
+Run the game... When the player dies the button should appear and you can restart play. **NOTE!** for now hitting anythi, including the goal, will end the game. For the next few steps the bunny will NOT be able to pass through the goal! You will take care of this when you set up scoring in section 8. 
 
 #Shutting down the world
 

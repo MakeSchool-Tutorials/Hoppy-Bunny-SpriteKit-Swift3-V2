@@ -25,7 +25,7 @@ Thankfully SpriteKit has your back and can automatically scale the view to fit o
 ```
 /* Set the scale mode to scale to fit the window */
 >
-scene.scaleMode = .AspectFill
+scene.scaleMode = .aspectFill
 ```
 >
 > If you `highlight` *scaleMode* and look at the *Quick Help inspector* panel you can find out more about the scaling options available.
