@@ -100,7 +100,7 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 >
 > You will be connecting the bunny in code later so you need a way to reference it.  This is typically done using the *Name* property, so set *Name* to `hero`.
 >
-> ![Adding the bunny](../Tutorial-Images/hero-scene-size.png)
+> ![Adding the bunny](../Tutorial-Images/xcode_add_bunny_hero_scene.png)
 >
 
 <!--  -->
@@ -110,7 +110,7 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 > Click anywhere other than the bunny itself and set the scene *Size* (as you previously did with the *GameScene*) to `(33, 33)`.  Why `(33, 33)`, this is the *Size* of the *bunny* sprite.
 > Set the *Anchor Point* to `(0.5, 0.5)`
 >
-> ![Adding the bunny](../Tutorial-Images/xcode_add_bunny_hero_scene.png)
+> ![Adding the bunny](../Tutorial-Images/hero-scene-size.png)
 >
 
 ##Animating the bunny
@@ -119,7 +119,7 @@ Great, you have a static bunny.  However, we want this bunny to fly and the bunn
 You are going to setup a sprite frame based animation ~`0.5` seconds long and repeat forever.
 
 > [action]
-> Open *Hero.sks*, select the *Object library* panel and look for the *AnimateWithTextures Action* and drag this
+> Open *Hero.sks*, select the *Object library* panel ![Object Library](../Tutorial-Images/object-library.png) and look for the *AnimateWithTextures Action* and drag this
 > into the start of the bunny *Timeline* as shown:
 >
 > ![Adding the animation action](../Tutorial-Images/xcode_hero_add_action.png)
