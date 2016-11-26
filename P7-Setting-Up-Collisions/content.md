@@ -172,7 +172,7 @@ Remember earlier when you set the *Contact Bit Mask*? Here you informed the phys
 > You declare that a class is implementing this protocol in Swift by appending *SKPhysicsContactDelegate* after the class' super class *SKScene*, separated by a comma, as shown:
 >
 ```
-class GameScene: SKScene **, SKPhysicsContactDelegate** {
+class GameScene: SKScene __, SKPhysicsContactDelegate__ {
 ```
 >
 
