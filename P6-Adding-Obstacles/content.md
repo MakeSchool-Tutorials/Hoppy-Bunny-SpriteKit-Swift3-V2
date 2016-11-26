@@ -20,7 +20,7 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 > [action]
 > Modify the size and anchor point of this new obstacle scene properties as shown:
 > ![Modify the obstacle scene size](../Tutorial-Images/xcode_obstacle_scene_size.png)
-> Set the *Anchor Point* to `(0.5, 0.5)` and *Size* to `(51, 768)`.
+> Set the *Anchor Point* to `(0.5, 0.5)` and *Size* to `(51, 820)`.
 >
 > Drag *carrot_top.png* and *carrot_bottom.png* from your *Media Library*, and snap the carrots in place.
 > Next add a *Color Sprite* from the object library and position it in between the carrot's as shown:
@@ -38,9 +38,10 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 <!-- -->
 
 > [info]
-> So how did I know that the scene size should be exactly `51` pixels wide and `768` tall? Well, sometimes you
+> So how did I know that the scene size should be exactly `51` pixels wide and `820` tall? Well, sometimes you
 > need to have a play in the visual editor and then adjust, I saw the carrot's had a width of `51` so I used that value.
-> The default height of `768` (iPhone 5) was no coincidence as the assets were designed to fill an iPhone 5 screen height, leaving a suitable `100` pixel gap for the player to pass through.
+> The default height of `820` (iPhone 5) was no coincidence as the assets were designed to fill an iPhone 5 screen height, leaving a suitable `140` pixel gap for the player to pass through.
+>
 
 <!-- -->
 
@@ -57,6 +58,12 @@ Can you fix this? Remember you've ran into similar *Z-Position* issues when you 
 
 > [solution]
 > Tweak the *scrollLayer* which contains the ground nodes, set *Z-Position* to `2` and set the z-Position of the *Obstacle* node to `1`.
+>
+
+> [action]
+> Open GameScene.sks. Select the obstacle node and give it the name:
+> "obstacle"
+>
 
 Now this hopefully look a lot like this.
 
@@ -67,13 +74,12 @@ Now this hopefully look a lot like this.
 Time to learn about dynamic obstacle generation or DOG for short :]
 You added an a copy *obstacle.sks* to your scene. This is a sprite node. Your game will copy this node to create a relentless stream of obstacles for the player to avoid. To do this you will need a reference to the source obstacle. 
 
-> [action]
-> Open GameScene.sks. Select the obstacle node and give it the name:
-> "obstacle"
+In the image above you may have noticed that the obstacel was placed outside the visible area of the game scene. This obstacle will always sit outside of view and act as a source for obstacles that will move across the screen. 
 
 > [action]
 > Add variable at the top of your class to hold a reference to the source obstacle:
 > `var obstacleSource: SKNode!`
+>
 
 > [action]
 > Now set the value of the `obstacleSource` to the "obstacle" node in GameScene.sks using child(withName:). In didMove(to view:) add the following at the end of the method: 
