@@ -25,7 +25,9 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 > [action]
 > Open *Hero.sks* and select the Bunny sprite. Find the physics definition section and Set *Body Type* to `Bounding circle`.
 > You should notice a faint circle around the bunny to show the physics body.
-> Next check the following boxes *Dynamic*, *Allow Rotation* and *Affected By Gravity*. (By default they should be checked)
+> Next check the following boxes *Dynamic*, *Allow Rotation* and *Affected By Gravity*. (By default they should be checked).
+> 
+> Set *Friction* to `0`. This will prevent the Bunny from sliding along the ground, this will help as the tutorial progresses. 
 >
 > ![Enabling bunny physics](../Tutorial-Images/xcode_hero_physics.png)
 >

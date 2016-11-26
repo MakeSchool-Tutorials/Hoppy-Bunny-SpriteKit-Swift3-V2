@@ -7,6 +7,85 @@ Time for you to bring this world to life, you will be creating a conveyor belt s
 
 ![Conveyor Belt](https://media.giphy.com/media/WFkbyRl2Ke1oY/giphy.gif)
 
+#Scrolling Sprites
+
+To scroll sprites we you will move a sprite to the left until gets off the screen, then move it twice it's width to the right where it will start crossing the screen again. 
+
+Since you will have several sprites to scroll you should write a function that will do the work for you. 
+
+> [action]
+> Open *GameScene.swift* and add the following function to the `GameScene` class. 
+>
+```
+func scrollSprite(_ sprite: SKSpriteNode, speed: CGFloat) {
+    sprite.position.x -= speed
+>
+    if sprite.position.x < sprite.size.width / -2 {
+        sprite.position.x += sprite.size.width * 2
+    }
+}
+```
+>
+> This needs a little explanation. The `scrollSprite()` method takes two parameters: sprite, the sprite to scroll, 
+> and speed, the distance in pixels to moev the sprite to the left. Then the function checks the x position
+> of the sprite. If the x position is less than negative have the width the function moves the sprite 
+> twice it's width to the right. The x coordinates counts positive going to the right, and negative going to the left. This means when a sprite's x position is negative have of it's width we know it's gotten all the way off the screen to the left. 
+>
+> To create an endless scrolling ground plane you will two sections. 
+>
+
+#Creating endless ground
+
+> [action]
+> Open *GameScene.sks* select the ground and give it the name `groundA`. 
+> 
+> ![Name groundA](../Tutorial-Images/xcode-name-groundA.png)
+> 
+> You need a second ground sprite. You can easily copy the first ground sprite by holding option and dragging. 
+> Snap the new ground sprite to the right of the first. Then give the new ground sprite the name `groundB`.
+> 
+> ![Name groundA](../Tutorial-Images/xcode-name-groundB.png)
+>
+
+Now you need to make a connection in code to the two ground sprites: `groundA` and `groundB`.
+
+> [action]
+> Open *GameScene.swift* add the following at the top of the GameScene class under `let scrollSpeed`. 
+>
+```
+var groundA: SKSpriteNode!
+var groundB: SKSpriteNode!
+```
+> 
+> Make a sprite reference new variables in `didMove(to View:)`. 
+>
+```
+/* Make a reference to ground sprites */
+groundA = self.childNode(withName: "groundA") as! SKSpriteNode!
+groundB = self.childNode(withName: "groundB") as! SKSpriteNode!
+```
+>
+
+Now that you have your sprites set up call the `scrollSprite()` method in `update()`. 
+
+> [action]
+> Add the following at the bottom of the `update()` method. 
+>
+```
+/* Scroll the ground sprites */
+scrollSprite(groundA, speed: 5)
+scrollSprite(groundB, speed: 5)
+```
+>
+
+**Note!** It's important that the ground sprites both have the same speed! If the speeds are different one ground sprite will faster than then the other. With this in mind feel free to play with the speed value (5) to adjust the speed of the ground. 
+
+**Challenge** 
+Can you get the clouds to move past? What about the crystals? 
+
+
+<!-- 
+
 #Ready to rock and scroll
 
 To control the speed of this conveyor belt you will want to add a new *scrollSpeed* property to the *GameScene* class.
@@ -73,7 +152,6 @@ scrollWorld()
 ```
 >
 
-<!-- -->
 
 > [info]
 > Defining a member variable for the scroll speed rather than simply defining the hero's position to be increased by `100` * *delta* every time is an important programming practice.  Variable names offer us clarity - if someone else looks at your code, or even if you revisit it next week, it may not be clear what `100` affects.
@@ -159,3 +237,17 @@ The game now has a sense of movement, you've learnt:
 - Convert object positions between different node spaces
 
 In the next chapter it's time to add the challenge of obstacles.
+
+-->
+
+#Run the game
+
+The ground is now scrolling endlessly. 
+
+#Summary
+
+The game now has a sense of the bunny moving through space. You've learned:
+
+- A helper function that takes parameters. 
+- Move objects usign their position.x property.
+- Create an endless scrolling mechanic. 

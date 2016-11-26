@@ -11,8 +11,28 @@ Before you can control the bunny in Swift code, you first need to make a connect
 
 If you recall you changed the name of the bunny sprite to `hero` in *Hero.sks*, this gives you a way to easily find this node in the *GameScene* scene graph.
 
+You will now be doing work in *GameScene.swift* this file contains the code that runs the game. The file created with the project has some default code that we want to remove. 
+
 > [action]
-> Open *GameScene.swift*, in order to control our bunny, you need to setup the code connection.  
+> Open *GameScene.swift* by clicking it in the project navigator on the left. Delete the code in side the `GameScene` class. 
+>
+> It should look like this when you are done:
+>
+```
+import SpriteKit
+import GameplayKit
+>
+class GameScene: SKScene {
+    /* Game Code Here */
+> 
+}
+```
+>
+
+Next you will add a code connection to the `hero` in your `GameScene` Class.
+
+> [action]
+> Still in *GameScene.swift* setup the code connection.  
 > Add the hero property to the top of the *GameScene* class.
 >
 ```
@@ -22,7 +42,7 @@ class GameScene: SKScene {
 ```
 >
 
-You now have a property to use for connecting to our bunny object.  However, this alone will not do anything, you then need to add some code to find the bunny inside the scene graph and assign it to our newly added *hero* property.
+You now have a property to use for connecting to our bunny object.  However, this alone will not do anything, you then need to add some code to find the bunny inside *GameScene.sks* and assign it to our newly added `hero` property.
 
 > [action]
 > Add the following code to the `didMoveToView(...)` method:
@@ -33,6 +53,7 @@ override func didMove(to view: SKView) {
 >
   /* Recursive node search for 'hero' (child of referenced node) */
   hero = self.childNode(withName: "//hero") as! SKSpriteNode
+}
 ```
 >
 
@@ -47,8 +68,9 @@ override func didMove(to view: SKView) {
 The goal is to have the bunny hop every time we touch the screen, which will keep the bunny flying high.
 
 > [action]
-> Open *GameScene.swift*, you will notice there is already a `touchesBegan(...)` method ready and waiting for your code.
-> Replace the declaration:
+> In *GameScene.swift*, add a touchesBegan event. This event notifies `GameScene` when a touch makes contact with the screen. Inside the `GameScene` class below (not inside!) `didMove(to view:)` start typing `touchesBegan` the name should appear on a popup menu, hit the *return/enter* key to auto-complete this function. 
+>
+> Add the following inside `touchesBegan(touches:)`:
 >
 ```
 override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -56,9 +78,12 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 >        
   /* Apply vertical impulse */
   hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))
+}
 ```
-> You are applying an impulse to the *hero's* `physicsBody`.  Think of an impulse like being hit by a baseball bat.
+>
+> Here you are applying an impulse to the *hero's* `physicsBody`.  Think of an impulse like being hit by a baseball bat.
 > In this case a short vertical burst to make the bunny move vertically.
+>
 
 <!--  -->
 
@@ -73,7 +98,9 @@ Now sit back and run your game and try out the new touch control...
 It works, yet it doesn't feel right.  As you may have noticed while testing the touch implementation, when you touch the screen repeatedly, the impulses accumulate and the bunny blasts out of the screen. Gone for seconds or even (seemingly) forever.  To make the game playable, you will want to limit the vertical upward velocity. The best way to limit the bunny's speed is by modifying it in the *update* method, which is called every frame.
 
 > [action]
-> Modify the `update(...)` method as shown:
+> Add the update method. In the GameScene class start typing update, when the popup shows up find: `update(_ currentTime:)` on the menu and choose it by pressing the *return* key. 
+>
+>  
 >
 ```
 override func update(_ currentTime: CFTimeInterval) {
@@ -86,6 +113,7 @@ override func update(_ currentTime: CFTimeInterval) {
   if velocityY > 400 {
     hero.physicsBody?.velocity.dy = 400
   }
+}
 ```
 >
 
@@ -96,15 +124,19 @@ You've added a simple yet effective modification.
 
 There is no need to limit the falling speed or modify the x velocity as the bunny should never move horizontally.
 
+Test your app now. The bunny should have a nice bump up each time you touch the screen. Good work!
+
+![Bunny Test gif](../Tutorial-Images/p04-bunny-physics-test.gif)
+
 #Make the bunny rotate
 
 One of the nice visual touches in Flappy Bird is the way the bird rotates. When the player does not touch the screen for a little while, the bird turns towards the ground. Touching the screen makes the bird turn upwards again. You are going to imitate this behavior in Hoppy Bunny!
 
 There are a couple of things you will need to do to achieve this:
 
-- On touch, turn the bunny upwards
-- If no touch occurred for a while, turn the bunny downwards
-- Limit the rotation between slightly up and 90 degrees down (just like Flappy Bird)
+- On touch, turn the bunny upwards.
+- If no touch occurred for a while, turn the bunny downwards.
+- Limit the rotation between slightly up and 90 degrees down.
 
 > [action]
 > The first step is to add a property to keep track of the time since the last touch. Add this declaration just after our hero property declaration.
@@ -123,7 +155,7 @@ hero.physicsBody?.applyAngularImpulse(1)
 sinceTouch = 0
 ```
 
-Applying continue angular impulse with no limitation will put the bunny into a wild head spin.  If you want to see this, go ahead and try the game now. Those of a sensitive disposition, please don't :]
+Applying continue angular impulse with no limitation will put the bunny into a wild head spin.  If you want to see this, go ahead and try the game now.
 
 You need to limit the rotation of the bunny and also perform a downward rotation if no touch has occurred in a while. You perform both in the update method.
 
@@ -159,18 +191,18 @@ hero.zRotation.clamp(v1: CGFloat(-90).degreesToRadians(), CGFloat(30).degreesToR
 hero.physicsBody?.angularVelocity.clamp(v1: -2, 2)
 >
 /* Update last touch timer */
-sinceTouch+=fixedDelta
+sinceTouch += fixedDelta
 ```
 >
 
 First thing you will notice are the red errors, you need to define the value for `fixedDelta`.  
-What is *delta*? Delta is typically the time taken between rendering frames.  The target FPS (Frames Per Second) is 60, which makes everything feel silky smooth, an optimal fixed delta time would be `1 second / 60 frames = 0.01666666666`.  For simplicity we will be using this value. However, in practice for more complex scenes we would calculate a more accurate delta.
+What is *delta*? Delta is the difference in time taken between rendering frames. The target FPS (Frames Per Second) is 60, which makes everything feel silky smooth, an optimal fixed delta time would be `1 second / 60 frames = 0.01666666666`.  For simplicity we will be using this value. However, in practice for more complex scenes we would calculate a more accurate delta.
 
 > [action]
 > Add the following code after the declaration of the `sinceTouch` property.
 >
 ```
-let fixedDelta: CFTimeInterval = 1.0/60.0 /* 60 FPS */
+let fixedDelta: CFTimeInterval = 1.0 / 60.0 /* 60 FPS */
 ```
 >
 

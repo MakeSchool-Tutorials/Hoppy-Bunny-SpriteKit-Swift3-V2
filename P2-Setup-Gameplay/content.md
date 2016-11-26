@@ -54,6 +54,7 @@ To make it easier to position objects on the screen you will move the center poi
 > ![Adding background image](../Tutorial-Images/Xcode-Background-color.png)
 >
 
+<!-- 
 ##Add the ground image
 
 > [action]
@@ -65,6 +66,7 @@ To make it easier to position objects on the screen you will move the center poi
 >
 
 You'll notice the ground image extends beyond the screen border. Don't worry about it, you will be scrolling the ground later to create that endless runner effect.
+-->
 
 ##Add the clouds
 
