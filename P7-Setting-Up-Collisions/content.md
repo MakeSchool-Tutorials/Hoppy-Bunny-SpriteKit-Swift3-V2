@@ -5,13 +5,17 @@ slug: setting-up-collisions
 
 You are going to set up collision handling so that your game finally becomes a real game! At the moment the player passes through obstacles and lands on the ground. To make the game challenging the player will have to avoid the obstacles by manuvering through the space between the carrots and avoid hitting the ground! 
 
-I would recommend you have a look at Apple's documentation on the subject of [Working with Collisions and Contacts.](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW14) It can be a little bit confusing when you first start, so don't worry if you don't understand everything at once.
+Have a look at Apple's documentation on the subject of [Working with Collisions and Contacts.](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW14). It can be a little bit confusing when you first start, so don't worry if you don't understand everything at once.
 
 In this tutorial you will setup physics collisions and contacts in the scene editor, in later tutorials you will expand this knowledge implementing physics setup in code.
 
 #Quick overview of physics
 
-Physics objects have few properties that determine how they interact with each other. These are 
+SpriteKit has a high performance physics engine built in. It allows you to create games with objects that collide, bounce, and move like objects in the real world. The physics engine does this by assigning objects properties like velocity, friction, elasticity, and more. 
+
+Imagine a game with players, missiles, platforms, and enemies. Missiles might explode when they hit an enemy. Players and enemies might bounce off platforms and each other. Player objects might move as if they were soft and rubbery while enemies seem heavy and solid. 
+
+Physics objects have few properties that determine how they interact with each other, these are: 
 
 - Category Bit Mask
 - Contact Bit Mask
@@ -19,21 +23,19 @@ Physics objects have few properties that determine how they interact with each o
 
 #Category bit mask
 
-This value identifies which category a physics object belongs to. You use this to declare how objects interact. You can say objects of category 1 will collide with objects of category 2 for example. 
+This value identifies which category a physics object belongs to. You will assign each object a category so the physics engine can assign the appropriate interactions. 
 
 #Contact Bit Mask
 
-The contact bit mask determines which category of objects an object produces contact events for. It's important to understand that contact events do not produce a physical collision! In other words, an object my produce a contact event while passign through another physics object. 
-
-In your game you want the bunny to pass the "goal" object that sits between the two carrots. You also want to know when the bunny makes contact with the "goal" to score a point for the player. 
+The contact bit mask determines which category an object produces contact events for. It's important to understand that contact events *do not produce a physical collision!*. In other words a contact only tells you that two objects made contact. Objects that make contact might bounce or might pass through one another. How they interact is determined by the *Collision Bit Mask*.
 
 #Collision Bit Mask
 
-The collission bit mask determines which category of objects a physics object collides with. A collision is a physical interaction. When an object collides with another object it there is a physical effect! For example one object may bounce off the other or knock the other object over. 
+The collission bit mask determines which category of objects a physics object collides with. A collision is a physical interaction. When an object collides with another object it there is a physical effect! For example one object may bounce off the other or knock the other object over (Think about Angry Birds).
 
 #Physics Categories values
 
-Physics category are read as binary values with a value of 2 to the power of 32. So 0 would look like: 
+Physics categories are read as binary values with a value of 2 to the power of 32. So 0 would look like: 
 
 `00000000000000000000000000000000`
 
@@ -47,17 +49,19 @@ A value of 2 would be:
 
 Binary values only contain 1s and 0s!
 
+Contact, and Collision Bit masks use the same values. The physics engine compares all three values to detmermine which objects will collide and which contacts it should tell you about. 
+
 When the *category* value of an object has a 1 in the same position as the value for *collision* then the objects collide. The same is true for contacts. For example, objects of category:
 
 `00000000000000000000000000000010`
 
 Will collide with objects whose have a collision bitmask of: 
 
-`00000000000000000000000000000011`
+`00000000000000000000000000000011` (both have a 1 in the second column)
 
 This object would also collide with objects whose category is:
 
-`00000000000000000000000000000001`
+`00000000000000000000000000000001` (shares a 1 in the first column)
 
 Let's apply this idea to the game. So far you have the following types of objects:
 
@@ -66,38 +70,43 @@ Let's apply this idea to the game. So far you have the following types of object
 - Ground
 - Goal Sensor
 
-Let's give them each a unique binary value. They each need a value with a 1 in a different column from the others. 
+Let's give them each a unique binary value. They each need a value with a 1 in a different column from the others this identifies each as a different type (or category) of object. 
 
 - `00000001` = 1 = Player
 - `00000010` = 2 = Obstacle 
 - `00000100` = 4 = Ground
 - `00001000` = 8 = Goal Sensor
 
-These are each unique categories becuase they each have a 1 in a unique column. 
+These are each unique categories becuase they each have a 1 in a unique column. In the scene editor you will enter the integer value for the binary number (`00000100` = 4). 
 
 #Collision Bit Masks
 
-When you set the collision bit mask you are deciding which objects will produce a physical collision. In your game you want the bunny/hero (1) to collide with the carrots/obstacle (2) and the ground (4). 
+When you set the collision bit mask you are deciding which objects will produce a physical collision. In your game you want the bunny/hero (1) to collide with the carrots/obstacle (2) and the ground (4). So the Collision Bit Mask for the player is 7. 
 
 - `00000001` = 1 = Player
 - `00000010` = 2 = Obstacle 
 - `00000100` = 4 = Ground
-- `00000111` = 7 = **Collision for player**
+- `00000111` = 7 = **Player Collision Bit Mask**
+- `00001000` = 8 = Goal (doesn't collide with Player)
 
 Notice that 1+2+4 = 7. Also notice that in binary the number 7 shares a 1 in the same columns as Player, Obstacle, and Ground. 
 
+You don't want the player (1) to collide with goal (8)! Notice the goal Category Bit Mask in binary doesn't share a 1 in any of the collumns with the *Player Collision Bit Mask*. 
+
 #Contact Bit Masks
 
-A contact doesn't produce a physical interaction but it is noticed by the physics engine. You want to know when the player (1) makes contact with the goal (8) becuase they will score a point. You also wnat to know when the player contacts the 
+A contact doesn't produce a physical interaction but it is noticed by the physics engine. You want to know when the player (1) makes contact with the goal (8) becuase this will score a point. You also want to know when the player hits obstacles (2) or the ground (4) because this ends the game. 
 
 - `0010` = 2 Obstacles  
 - `0100` = 4 Ground     
 - `1000` = 8 Goal       
-- `1111` = 15 **Contacts Contact for player**  
+- `1110` = 14 **Contact Bit Mask for player**  
 
-You could also use `4294967295` for the Player since you want to know when the the player contacts anything. 
+Contact for player is 2+4+8 = 14. 
 
-`11111111111111111111111111111111` = 2^32 = 4294967295
+Any binary value with `1110` would work here. For example `15` (`1111`), or even `4294967295` which is:
+
+`11111111111111111111111111111111` = 2^32 = 4294967295. You may have noticed this is the default value in the editor. These default settings are why the bunny collides with the ground currently. 
 
 #Setup physics
 
@@ -109,15 +118,20 @@ Currently the obstacles don't use physics. You will apply physics in the next st
 >
 > ![Carrot physics](../Tutorial-Images/xcode_spritekit_obstacle_physics_collision_properties.png)
 >
-> Set the *Category Mask* to `2` and the *Contact Mask* to `1`
+> Set the *Category Mask* to `2` (obstacle category) and the *Contact Mask* to `1` (player category). 
+> With these settings obstacles should collide with players. 
 >
-> Be sure to apply these steps to both carrots. 
+> *Be sure to apply these steps to both carrots.* 
 >
 
 > [action]
 > Select the goal object. Choose `Bounding Rectangle` as the *Body Type*. Uncheck the 4 boxes that appear below. 
 >
 > Set the *Category Mask* to `8` and the *Contact Mask* to `1`. 
+>
+> ![Goal physics](../Tutorial-Images/xcode_spritekit_goal_physics_collision_properties.png)
+>
+> Goal objets are category 8, and contact Players (category 1).
 >
 
 #Bunny physics
@@ -158,7 +172,7 @@ Remember earlier when you set the *Contact Bit Mask*? Here you informed the phys
 > You declare that a class is implementing this protocol in Swift by appending *SKPhysicsContactDelegate* after the class' super class *SKScene*, separated by a comma, as shown:
 >
 ```
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene **, SKPhysicsContactDelegate** {
 ```
 >
 
