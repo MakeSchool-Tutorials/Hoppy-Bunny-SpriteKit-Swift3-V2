@@ -10,7 +10,7 @@ Time to setup physics for your game world and game play objects.
 You will be using the powerful physics engine built into SpriteKit, thankfully it's as easy as ticking a box to enable physics for each of our game objects.
 I recommend you have a read of [Apple's Physics Documentation](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW1) as physics plays a key role in many games, a game may not even appear to be physics based yet will often use physics for collision detection as this on its own is a powerful feature.
 
-##Make the ground static
+##Make the ground static 
 
 > [action]
 > Select the ground node, ensure the *Attributes inspector* is open and scroll down until you see the *Physics Definition* option.
@@ -44,8 +44,7 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 >
 > ![Enabling bunny physics](../Tutorial-Images/xcode_add_reference_node_hero.png)
 >
-> Set the position to `(80,280)`.
-> The bunny looks a little small in the scene, set the *Scale* properties to `(2,2)` to double up the size of the bunny.
+> Set the position to `(80, 280)`.
 >
 
 <!--  -->
@@ -130,7 +129,7 @@ You can easily set the *Z-Position* of your sprites in the *Attributes inspector
 ![Modify Z Position](../Tutorial-Images/xcode_zorder_modify.png)
 
 > [action]
-> Keep it logical, imagine you are painting a scene, work from the back to the front. Set the **background** to `-1` then let's ensure the crystals and ground are on top of the background by setting them to `0` and then put our bunny on top of everything with a value of `2`.
+> Keep it logical, imagine you are painting a scene, work from the back to the front. Set the z position of the crystals and ground to `0`. Set the clouds to z position `1`. Last put our bunny on top of everything with a value of `2`.
 
 Run the project again and it should look perfect now.
 
