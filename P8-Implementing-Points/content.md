@@ -57,7 +57,7 @@ var points = 0
 When the game starts you want to ensure the label is reset to `0`, let's make that happen.
 
 > [action]
-> Add the following code to the bottom of the `didMoveToView(...)` method:
+> Add the following code to the bottom of the `didMove(to view:)` method:
 >
 ```
 /* Reset Score label */
@@ -71,7 +71,7 @@ So far if the bunny collides with anything it will trigger the death sequence. W
 The `didBegin(_ contact:)` method provides `contact` which an `SKPhysicsContact` object. This object contains two properties: `bodyA` and `bodyB` which represent the two objects that just made contact with each other. In this next step you will check them both and if one is the player and the other the goal you will add 1 to `points` and ignore the rest of code that ends the game.  
 
 > [action]
-> Open *GameScene.swift* and add this code to the *start* of the `didBeginContact(...)` method, before the `gameState` check.
+> Open *GameScene.swift* and add this code to the *start* of the `didBeginContact(...)` method, *before* the `gameState` check.
 >
 ```
 /* Get references to bodies involved in collision */
