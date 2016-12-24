@@ -84,9 +84,9 @@ Now that you have gotten through the entire tutorial don't stop here! You can st
 - Add a sound each time the bunny makes it through the goal.
 - Change the art. Change the whole theme of the game by adding new art.
 - Modify game play. There are many variables used in the game that can be changed.
-    - The physics properties of the bunny. This will chnage the feel of the game and how it plays.
+    - The physics properties of the bunny. This will change the feel of the game and how it plays.
     - The speed of obstacles and how often they are created. This will change the pace of the game.
-    - The vertical position of obstacles on the screen. This will change the dificulty.
+    - The vertical position of obstacles on the screen. This will change the difficulty.
     - The size of the goal area. This will also change the difficulty.
 - Add different types of obstacles.
     - Having different types of obstacles will keep the game interesting.

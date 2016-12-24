@@ -3,7 +3,7 @@ title: Setting up collisions
 slug: setting-up-collisions
 ---
 
-You are going to set up collision handling so that your game finally becomes a real game! At the moment the player passes through obstacles and lands on the ground. To make the game challenging the player will have to avoid the obstacles by manuvering through the space between the carrots and avoid hitting the ground! 
+You are going to set up collision handling so that your game finally becomes a real game! At the moment the player passes through obstacles and lands on the ground. To make the game challenging the player will have to avoid the obstacles by manuvering through the space between the carrots and avoid hitting the ground!
 
 Have a look at Apple's documentation on the subject of [Working with Collisions and Contacts.](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW14). It can be a little bit confusing when you first start, so don't worry if you don't understand everything at once.
 
@@ -11,11 +11,11 @@ In this tutorial you will setup physics collisions and contacts in the scene edi
 
 #Quick overview of physics
 
-SpriteKit has a high performance physics engine built in. It allows you to create games with objects that collide, bounce, and move like objects in the real world. The physics engine does this by assigning objects properties like velocity, friction, elasticity, and more. 
+SpriteKit has a high performance physics engine built in. It allows you to create games with objects that collide, bounce, and move like objects in the real world. The physics engine does this by assigning objects properties like velocity, friction, elasticity, and more.
 
-Imagine a game with players, missiles, platforms, and enemies. Missiles might explode when they hit an enemy. Players and enemies might bounce off platforms and each other. Player objects might move as if they were soft and rubbery while enemies seem heavy and solid. 
+Imagine a game with players, missiles, platforms, and enemies. Missiles might explode when they hit an enemy. Players and enemies might bounce off platforms and each other. Player objects might move as if they were soft and rubbery while enemies seem heavy and solid.
 
-Physics objects have few properties that determine how they interact with each other, these are: 
+Physics objects have few properties that determine how they interact with each other, these are:
 
 - Category Bit Mask
 - Contact Bit Mask
@@ -23,7 +23,7 @@ Physics objects have few properties that determine how they interact with each o
 
 #Category bit mask
 
-This value identifies which category a physics object belongs to. You will assign each object a category so the physics engine can assign the appropriate interactions. 
+This value identifies which category a physics object belongs to. You will assign each object a category so the physics engine can assign the appropriate interactions.
 
 #Contact Bit Mask
 
@@ -35,27 +35,27 @@ The collission bit mask determines which category of objects a physics object co
 
 #Physics Categories values
 
-Physics categories are read as binary values with a value of 2 to the power of 32. So 0 would look like: 
+Physics categories are read as binary values with a value of 2 to the power of 32. So 0 would look like:
 
 `00000000000000000000000000000000`
 
-The value 1 would translate to: 
+The value 1 would translate to:
 
 `00000000000000000000000000000001`
 
-A value of 2 would be: 
+A value of 2 would be:
 
 `00000000000000000000000000000010`
 
 Binary values only contain 1s and 0s!
 
-Contact, and Collision Bit masks use the same values. The physics engine compares all three values to detmermine which objects will collide and which contacts it should tell you about. 
+Contact, and Collision Bit masks use the same values. The physics engine compares all three values to detmermine which objects will collide and which contacts it should tell you about.
 
 When the *category* value of an object has a 1 in the same position as the value for *collision* then the objects collide. The same is true for contacts. For example, objects of category:
 
 `00000000000000000000000000000010`
 
-Will collide with objects whose have a collision bitmask of: 
+Will collide with objects whose have a collision bitmask of:
 
 `00000000000000000000000000000011` (both have a 1 in the second column)
 
@@ -70,43 +70,43 @@ Let's apply this idea to the game. So far you have the following types of object
 - Ground
 - Goal Sensor
 
-Let's give them each a unique binary value. They each need a value with a 1 in a different column from the others this identifies each as a different type (or category) of object. 
+Let's give them each a unique binary value. They each need a value with a 1 in a different column from the others this identifies each as a different type (or category) of object.
 
 - `00000001` = 1 = Player
-- `00000010` = 2 = Obstacle 
+- `00000010` = 2 = Obstacle
 - `00000100` = 4 = Ground
 - `00001000` = 8 = Goal Sensor
 
-These are each unique categories becuase they each have a 1 in a unique column. In the scene editor you will enter the integer value for the binary number (`00000100` = 4). 
+These are each unique categories becuase they each have a 1 in a unique column. In the scene editor you will enter the integer value for the binary number (`00000100` = 4).
 
 #Collision Bit Masks
 
-When you set the collision bit mask you are deciding which objects will produce a physical collision. In your game you want the bunny/hero (1) to collide with the carrots/obstacle (2) and the ground (4). So the Collision Bit Mask for the player is 7. 
+When you set the collision bit mask you are deciding which objects will produce a physical collision. In your game you want the bunny/hero (1) to collide with the carrots/obstacle (2) and the ground (4). So the Collision Bit Mask for the player is 7.
 
 - `00000001` = 1 = Player
-- `00000010` = 2 = Obstacle 
+- `00000010` = 2 = Obstacle
 - `00000100` = 4 = Ground
 - `00000111` = 7 = **Player Collision Bit Mask**
 - `00001000` = 8 = Goal (doesn't collide with Player)
 
-Notice that 1+2+4 = 7. Also notice that in binary the number 7 shares a 1 in the same columns as Player, Obstacle, and Ground. 
+Notice that 1+2+4 = 7. Also notice that in binary the number 7 shares a 1 in the same columns as Player, Obstacle, and Ground.
 
-You don't want the player (1) to collide with goal (8)! Notice the goal Category Bit Mask in binary doesn't share a 1 in any of the collumns with the *Player Collision Bit Mask*. 
+You don't want the player (1) to collide with goal (8)! Notice the goal Category Bit Mask in binary doesn't share a 1 in any of the collumns with the *Player Collision Bit Mask*.
 
 #Contact Bit Masks
 
-A contact doesn't produce a physical interaction but it is noticed by the physics engine. You want to know when the player (1) makes contact with the goal (8) becuase this will score a point. You also want to know when the player hits obstacles (2) or the ground (4) because this ends the game. 
+A contact doesn't produce a physical interaction but it is noticed by the physics engine. You want to know when the player (1) makes contact with the goal (8) becuase this will score a point. You also want to know when the player hits obstacles (2) or the ground (4) because this ends the game.
 
 - `0010` = 2 Obstacles  
 - `0100` = 4 Ground     
 - `1000` = 8 Goal       
 - `1110` = 14 **Contact Bit Mask for player**  
 
-Contact for player is 2+4+8 = 14. 
+Contact for player is 2+4+8 = 14.
 
 Any binary value with `1110` would work here. For example `15` (`1111`), or even `4294967295` which is:
 
-`11111111111111111111111111111111` = 2^32 = 4294967295. You may have noticed this is the default value in the editor. These default settings are why the bunny collides with the ground currently. 
+`11111111111111111111111111111111` = 2^32 = 4294967295. You may have noticed this is the default value in the editor. These default settings are why the bunny collides with the ground currently.
 
 #Setup physics
 
@@ -118,16 +118,18 @@ Currently the obstacles don't use physics. You will apply physics in the next st
 >
 > ![Carrot physics](../Tutorial-Images/xcode_spritekit_obstacle_physics_collision_properties.png)
 >
-> Set the *Category Mask* to `2` (obstacle category) and the *Contact Mask* to `1` (player category). 
-> With these settings obstacles should collide with players. 
+> Set the *Category Mask* to `2` (obstacle category) and the *Contact Mask* to `1` (player category).
+> With these settings obstacles should collide with players.
 >
-> *Be sure to apply these steps to both carrots.* 
+> *Be sure to apply these steps to both carrots.*
 >
 
+<!--  -->
+
 > [action]
-> Select the goal object. Choose `Bounding Rectangle` as the *Body Type*. Uncheck the 4 boxes that appear below. 
+> Select the goal object. Choose `Bounding Rectangle` as the *Body Type*. Uncheck the 4 boxes that appear below.
 >
-> Set the *Category Mask* to `8` and the *Contact Mask* to `1`. 
+> Set the *Category Mask* to `8` and the *Contact Mask* to `1`.
 >
 > ![Goal physics](../Tutorial-Images/xcode_spritekit_goal_physics_collision_properties.png)
 >
@@ -157,13 +159,13 @@ Check back if you don't remember the *Category Mask* value we decided to use.  W
 
 Run your game... The bunny will now collide with the obstacles yet thankfully be able to flap through the goal gap.  Well if you're good enough :]
 
-Currently the bunny will get pushed off the screen if you collide with a carrot. Don't worry about this it's a physics interaction that you set up. You will be taking care of this in a later step. For now just restart the simulator and try again. 
+Currently the bunny will get pushed off the screen if you collide with a carrot. Don't worry about this it's a physics interaction that you set up. You will be taking care of this in a later step. For now just restart the simulator and try again.
 
 #Physics Contact Delegate
 
 If the bunny collides with the ground, an obstacle or passes through the goal of an obstacle, you want to know about. Next you will implement the *Physics Contact Delegate* so your code will be informed whenever one of these collision contacts takes place.
 
-Remember earlier when you set the *Contact Bit Mask*? Here you informed the physics system which contacts you were interested in, and through the contact delegate you will be informed when they occur. 
+Remember earlier when you set the *Contact Bit Mask*? Here you informed the physics system which contacts you were interested in, and through the contact delegate you will be informed when they occur.
 
 > [action]
 > Open *GameScene.swift*. You need to declare the *GameScene* class will implement the *SKPhysicsContactDelegate* protocol methods.
@@ -366,7 +368,7 @@ func didBeginContact(contact: SKPhysicsContact) {
 
 Notice the check of the **gameState** to ensure that the code will not be called more than once, when the player has died.  The bunnies physics are effectively disabled by stopping `rotation`, reseting `angularVelocity` and removing the flapping asprite frame animation with the use of `removeAllActions()` method.  The button is then activated and presented to the player  with a simple `MSButtonNodeStateActive` state change.
 
-Run the game... When the player dies the button should appear and you can restart play. **NOTE!** for now hitting anythi, including the goal, will end the game. For the next few steps the bunny will NOT be able to pass through the goal! You will take care of this when you set up scoring in section 8. 
+Run the game... When the player dies the button should appear and you can restart play. **NOTE!** for now hitting anythi, including the goal, will end the game. For the next few steps the bunny will NOT be able to pass through the goal! You will take care of this when you set up scoring in section 8.
 
 #Shutting down the world
 
@@ -393,7 +395,7 @@ Can you figure out how to disable touch?
 if gameState != .active { return }
 ```
 
-Run the game... Death truly should be final for our bunny. In these last two code snippets the if statement checks the valeu of gameState, if the value is .active `return` ends the function. In this case all of subsequent code is *not* run. 
+Run the game... Death truly should be final for our bunny. In these last two code snippets the if statement checks the valeu of gameState, if the value is .active `return` ends the function. In this case all of subsequent code is *not* run.
 
 #Death actions
 
@@ -415,7 +417,7 @@ hero.run(heroDeath)
 ```
 >
 
-The `runBlock` action lets you define your own custom action and in this case, manually rotate the bunny face down. With actions you can animate sprites, plays sounds, and more. Actions are a versatile and felxible tool. 
+The `runBlock` action lets you define your own custom action and in this case, manually rotate the bunny face down. With actions you can animate sprites, plays sounds, and more. Actions are a versatile and felxible tool.
 
 Run the game... The bunny should be face down now upon any collision. It's all about those little bits of polish :]
 
@@ -449,7 +451,7 @@ It would be nice to add an old school style Star Trek camera shake to emphasize 
 
 ##Shake all the nodes
 
-Time to apply this action to your scene. 
+Time to apply this action to your scene.
 
 > [action]
 > Open *GameScene.swift* and add the following code after the death action (in didBegin()).
@@ -484,8 +486,6 @@ You may have noticed the game is a little difficult, perhaps too difficult.  It 
 >
 
 
-<!-- 
-
 When the bunny is falling and the player touches the screen, the touch feels a little sluggish.  This is due to the cumulative downward velocity generated by the bunny's fall.  If you reset the vertical velocity at the point of touch this might make it feel more responsive.
 
 > [action]
@@ -505,9 +505,7 @@ Run the game... That little change has made the core mechanic feel much more sat
 > Open *GameScene.swift* then select all your code with *Cmd+a*, then press *Ctrl+i* to Re-Indent.
 >
 
--->
-
-So far the Bunny moves and the game play is almost complete. At this point the game ends if the Bunny hist *anything* which includes the **goal**! You will take of this last detail in the next section when implement the score. You also may see the bunny get bounced off the screen when it hits something. You will take care of this later also. 
+So far the Bunny moves and the game play is almost complete. At this point the game ends if the Bunny hist *anything* which includes the **goal**! You will take of this last detail in the next section when implement the score. You also may see the bunny get bounced off the screen when it hits something. You will take care of this later also.
 
 #Summary
 

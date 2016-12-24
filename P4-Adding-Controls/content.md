@@ -11,10 +11,10 @@ Before you can control the bunny in Swift code, you first need to make a connect
 
 If you recall you changed the name of the bunny sprite to `hero` in *Hero.sks*, this gives you a way to easily find this node in the *GameScene* scene graph.
 
-You will now be doing work in *GameScene.swift* this file contains the code that runs the game. The file created with the project has some default code that we want to remove. 
+You will now be doing work in *GameScene.swift* this file contains the code that runs the game. The file created with the project has some default code that we want to remove.
 
 > [action]
-> Open *GameScene.swift* by clicking it in the project navigator on the left. Delete the code in side the `GameScene` class. 
+> Open *GameScene.swift* by clicking it in the project navigator on the left. Delete the code in side the `GameScene` class.
 >
 > It should look like this when you are done:
 >
@@ -24,7 +24,7 @@ import GameplayKit
 >
 class GameScene: SKScene {
     /* Game Code Here */
-> 
+>
 }
 ```
 >
@@ -68,7 +68,7 @@ override func didMove(to view: SKView) {
 The goal is to have the bunny hop every time we touch the screen, which will keep the bunny flying high.
 
 > [action]
-> In *GameScene.swift*, add a touchesBegan event. This event notifies `GameScene` when a touch makes contact with the screen. Inside the `GameScene` class below (not inside!) `didMove(to view:)` start typing `touchesBegan` the name should appear on a popup menu, hit the *return/enter* key to auto-complete this function. 
+> In *GameScene.swift*, add a touchesBegan event. This event notifies `GameScene` when a touch makes contact with the screen. Inside the `GameScene` class below (not inside!) `didMove(to view:)` start typing `touchesBegan` the name should appear on a popup menu, hit the *return/enter* key to auto-complete this function.
 >
 > Add the following inside `touchesBegan(touches:)`:
 >
@@ -91,6 +91,13 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 > You'll notice the keyword `override` appears before `func` in the declaration of this method. An important concept in object-oriented programming is the idea of inheritance - that is, a child class inherits methods and properties from its parent class.
 > We must use the `override` keyword to indicate that our child class will override its parent's implementation of `touchesBegan(...)`
 
+<!--  -->
+
+> [info]
+> You'll also notice a lot of `?` and `!` when working with Swift on apps and games. For now, enter them as the tutorial tells you to. These characters are used when working with "optionals". Optionals are a bit more advanced Swift topic that you can explore after the winter academy ends. See the Dictionaries & Optionals assignment later in this course.
+>
+> You can think of `hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))` as saying "if hero has a physicsBody, call the applyImpulse method, otherwise do nothing".
+
 Now sit back and run your game and try out the new touch control...
 
 #Adding a speed limit
@@ -98,7 +105,7 @@ Now sit back and run your game and try out the new touch control...
 It works, yet it doesn't feel right.  As you may have noticed while testing the touch implementation, when you touch the screen repeatedly, the impulses accumulate and the bunny blasts out of the screen. Gone for seconds or even (seemingly) forever.  To make the game playable, you will want to limit the vertical upward velocity. The best way to limit the bunny's speed is by modifying it in the *update* method, which is called every frame.
 
 > [action]
-> Add the update method. In the GameScene class start typing update, when the popup shows up find: `update(_ currentTime:)` on the menu and choose it by pressing the *return* key. 
+> Add the update method. In the GameScene class start typing update, when the popup shows up find: `update(_ currentTime:)` on the menu and choose it by pressing the *return* key.
 >
 >  
 >

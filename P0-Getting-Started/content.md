@@ -21,7 +21,3 @@ The final game will look like this:
 ![The end result](../Tutorial-Images/finalProject.gif)
 
 Now let's get started with *Hoppy Bunny Swift!*
-
-#Feedback
-
-If you have feedback on this tutorial or find any mistakes, please open issues on the [GitHub Repository](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift).

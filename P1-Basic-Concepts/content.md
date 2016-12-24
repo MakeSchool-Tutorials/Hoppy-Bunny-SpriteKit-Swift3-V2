@@ -3,7 +3,7 @@ title: Basic concepts of a side scroller
 slug: basic-concepts
 ---
 
-If you have never built a side scroller before, this introduction will help you understand the basic concepts. You will be tackling this by constructing an obstacle treadmill.  The player effectively flys on the spot and must navigate the obstacles coming towards them by moving up or down.
+If you have never built a side scroller before, this introduction will help you understand the basic concepts. You will be tackling this by constructing an obstacle treadmill.  The player effectively flies on the spot and must navigate the obstacles coming towards them by moving up or down.
 
 You will learn to implement the following:
 
@@ -26,7 +26,7 @@ Time to make a SpriteKit project in Xcode and get started with Hoppy Bunny!
 ##Adding artwork
 
 > [action]
-> After the project is created, you should [download our art pack for this game](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift/raw/master/assets.zip).
+> After the project is created, you should [download our art pack for this game](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift3-V2/raw/master/assets.zip).
 > Next you will add the art pack you just downloaded to your Xcode project by first unpacking the archive.
 > Select the `Assets.xcassets` folder in Xcode project navigator, then drag the downloaded assets into Xcode as shown below:
 >

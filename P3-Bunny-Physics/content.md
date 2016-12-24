@@ -10,7 +10,7 @@ Time to setup physics for your game world and game play objects.
 You will be using the powerful physics engine built into SpriteKit, thankfully it's as easy as ticking a box to enable physics for each of our game objects.
 I recommend you have a read of [Apple's Physics Documentation](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW1) as physics plays a key role in many games, a game may not even appear to be physics based yet will often use physics for collision detection as this on its own is a powerful feature.
 
-##Make the ground static 
+##Make the ground static
 
 > [action]
 > Select the ground node, ensure the *Attributes inspector* is open and scroll down until you see the *Physics Definition* option.
@@ -26,8 +26,8 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 > Open *Hero.sks* and select the Bunny sprite. Find the physics definition section and Set *Body Type* to `Bounding circle`.
 > You should notice a faint circle around the bunny to show the physics body.
 > Next check the following boxes *Dynamic*, *Allow Rotation* and *Affected By Gravity*. (By default they should be checked).
-> 
-> Set *Friction* to `0`. This will prevent the Bunny from sliding along the ground, this will help as the tutorial progresses. 
+>
+> Set *Friction* to `0`. This will prevent the Bunny from sliding along the ground, this will help as the tutorial progresses.
 >
 > ![Enabling bunny physics](../Tutorial-Images/xcode_hero_physics.png)
 >
@@ -56,7 +56,7 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 
 ##Gravity
 
-If you click outside of our *GameScene* yellow box and check the *Attributes inspector* you will see our physics world will default to approx Earth's gravity `-9.8`.
+If you click outside of our *GameScene* yellow box and check the *Attributes inspector* you will see our physics world will default to approximate Earth's gravity `-9.8`.
 ![GameScene Gravity](../Tutorial-Images/xcode_gamescene_gravity.png)
 
 > [info]
