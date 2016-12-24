@@ -83,9 +83,6 @@ scrollSprite(groundB, speed: 5)
 **Challenge**
 Can you get the clouds to move past? What about the crystals?
 
-
-<!--
-
 #Ready to rock and scroll
 
 To control the speed of this conveyor belt you will want to add a new *scrollSpeed* property to the *GameScene* class.
@@ -97,6 +94,8 @@ To control the speed of this conveyor belt you will want to add a new *scrollSpe
 let scrollSpeed: CGFloat = 100
 ```
 >
+
+<!--  -->
 
 ##Virtual scroll layer
 
@@ -110,7 +109,11 @@ to modify the *GameScene* to create a virtual layer for all the objects you wish
 > ![Add empty node](../Tutorial-Images/xcode_add_empty_node_scroll.png)
 >
 
+<!--  -->
+
 Next you need to create a code connection for the *scrollLayer*
+
+<!--  -->
 
 > [action]
 > Open *GameScene.swift* and add the following after the `hero` property declaration.
@@ -120,6 +123,7 @@ var scrollLayer: SKNode!
 ```
 >
 
+<!--  -->
 
 Next you need to create the code connection to the Scene Editor object.  This step is very similar to creating the *hero* code connection, although this time there is no need to do a recursive node search as this node sits directly below the *GameScene*.
 
@@ -130,6 +134,7 @@ Next you need to create the code connection to the Scene Editor object.  This st
 scrollLayer = self.childNode(withName: "scrollLayer")
 ```
 >
+<!--  -->
 
 #Scroll World
 To help organize your code, let's create a new method called **scrollWorld** and call this in the `update(...)` method.
@@ -159,7 +164,7 @@ scrollWorld()
 > Explicitly using the variable `scrollSpeed` alleviates this problem. They also offer us flexibility. Imagine we were writing a larger program which used `scrollSpeed` in several places and instead of using a variable, we used `100` every time. What happens if we decide our scroll speed is a little slow? We will need to visit every place we wrote `100` and change it. It's not hard to understand how this could quickly get messy and inefficient.
 >
 
-Run the game...
+Run the game.
 
 #Adding objects to scroll
 
@@ -171,7 +176,7 @@ Oh no scrolling?  Now that you have a virtual conveyor belt system, you need to 
 > ![Modify sprite parent](../Tutorial-Images/xcode_spritekit_add_more_ground.png)
 >
 
-Run the game...  The ground should be scrolling, keep watching...
+Run the game.  The ground should be scrolling, keep watching...
 
 > ![Ground scroll](../Tutorial-Images/animated_scroll_ground.gif)
 
@@ -190,7 +195,7 @@ The first step will be adding a second ground sprite to the *GameScene.sks*
 > You should snap it to the end of the first ground piece.
 >
 
-Run the game...
+Run the game.
 
 The ground will now scroll both grounds and so it will take a bit longer for the bunny to fall into the abyss.
 The power of this setup is you can simply add new objects to the *scrollLayer* and they will scroll.  However, we want to ensure our ground sprites will loop forever, this is an infinite flapper after all.
@@ -228,20 +233,7 @@ Once you have this world space position, you check if the ground sprite is outsi
 
 This creates the ground's endless repeating effect.
 
-Run the game... The ground should now scroll for eternity.  This is hard to test :]
-
-#Summary
-
-The game now has a sense of movement, you've learnt:
-
-- To create an endless scrolling mechanic
-- Convert object positions between different node spaces
-
-In the next chapter it's time to add the challenge of obstacles.
-
-#Run the game
-
-The ground is now scrolling endlessly.
+Run the game. The ground should now scroll for eternity.  This is hard to test :]
 
 #Summary
 
@@ -250,3 +242,5 @@ The game now has a sense of the bunny moving through space. You've learned:
 - A helper function that takes parameters.
 - Move objects using their position.x property.
 - Create an endless scrolling mechanic.
+
+In the next chapter it's time to add the challenge of obstacles.

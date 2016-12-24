@@ -11,6 +11,7 @@ You are going to be creating obstacles for the player to navigate and implementi
 > Create a new *SpriteKit Scene File* by selecting `File > New > File > SpriteKit Scene`:
 >
 > ![Selecting the SKS File](../Tutorial-Images/xcode_add_sks.png)
+>
 > Save the file as *Obstacle.sks*
 >
 > ![Saving the SKS File](../Tutorial-Images/xcode_add_sks_obstacle.png)
@@ -20,6 +21,7 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 > [action]
 > Modify the size and anchor point of this new obstacle scene properties as shown:
 > ![Modify the obstacle scene size](../Tutorial-Images/xcode_obstacle_scene_size.png)
+>
 > Set the *Anchor Point* to `(0.5, 0.5)` and *Size* to `(51, 820)`.
 >
 > Drag *carrot_top.png* and *carrot_bottom.png* from your *Media Library*, and snap the carrots in place.
@@ -72,9 +74,9 @@ Now this hopefully look a lot like this.
 #Dynamic obstacle generation
 
 Time to learn about dynamic obstacle generation or DOG for short :]
-You added an a copy *obstacle.sks* to your scene. This is a sprite node. Your game will copy this node to create a relentless stream of obstacles for the player to avoid. To do this you will need a reference to the source obstacle.
+You added an a copy *Obstacle.sks* to your scene. This is a sprite node. Your game will copy this node to create a relentless stream of obstacles for the player to avoid. To do this you will need a reference to the source obstacle.
 
-In the image above you may have noticed that the obstacel was placed outside the visible area of the game scene. This obstacle will always sit outside of view and act as a source for obstacles that will move across the screen.
+In the image above you may have noticed that the obstacle was placed outside the visible area of the game scene. This obstacle will always sit outside of view and act as a source for obstacles that will move across the screen.
 
 > [action]
 > Add variable at the top of your class to hold a reference to the source obstacle:
@@ -237,13 +239,13 @@ Can you think of how to do this?
 spawnTimer+=fixedDelta
 ```
 
-Now run your game...  You should obstacles being generated every `1.5` seconds and with varying vertical positions! You're getting closer to completing *Hoppy Bunny*!
+Now run your game.  You should obstacles being generated every `1.5` seconds and with varying vertical positions! You're getting closer to completing *Hoppy Bunny*!
 
 #Summary
 
 The gaming is really coming together now, you've learnt to:
 
-- Building a multi object obstacle
+- Building a multi-object obstacle
 - Dynamically generating obstacles in the scene
 - Randomizing obstacle properties
 - Removing objects from a scene when no longer required

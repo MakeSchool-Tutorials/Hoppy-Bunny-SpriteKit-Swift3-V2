@@ -100,7 +100,7 @@ When a collision takes place between two bodies the information is stored in a *
 
 With the reference to *SKSpriteNode* node you can check for the *Name* of `goal`. You can then update the players *points* and use that to update the **score label**.  After that you *`return`* from the `didBeginContact(...)` method, otherwise the game would end. Important! a function ends when it hits a return statement!
 
-Run the game... With a bit of skill you should be able to pass through the goal and get a point. You can always make the goal area bigger for testing :]
+Run the game. With a bit of skill you should be able to pass through the goal and get a point. You can always make the goal area bigger for testing :]
 
 #Summary
 

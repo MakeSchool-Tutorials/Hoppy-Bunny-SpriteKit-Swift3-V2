@@ -39,6 +39,8 @@ Next you will add a code connection to the `hero` in your `GameScene` Class.
 class GameScene: SKScene {
 >
   var hero: SKSpriteNode!
+>
+}
 ```
 >
 
@@ -98,7 +100,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 >
 > You can think of `hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))` as saying "if hero has a physicsBody, call the applyImpulse method, otherwise do nothing".
 
-Now sit back and run your game and try out the new touch control...
+Now sit back and run your game and try out the new touch control.
 
 #Adding a speed limit
 
@@ -128,6 +130,11 @@ You've added a simple yet effective modification.
 
 - Grab the y velocity value of our bunny.
 - Check this value and if necessary limit it to 400.
+
+<!--  -->
+
+> [info]
+> You can think of `let velocityY = hero.physicsBody?.velocity.dy ?? 0` as saying "set velocityY to the hero's y velocity or to 0 if it has none".
 
 There is no need to limit the falling speed or modify the x velocity as the bunny should never move horizontally.
 
@@ -173,7 +180,7 @@ You need to limit the rotation of the bunny and also perform a downward rotation
 <!--  -->
 
 > [action]
-> [Download CGFloat+Extensions.swift](../CGFloat+Extensions.swift) and drag this file into your project.
+> [Download CGFloat+Extensions.swift](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift3-V2/raw/master/CGFloat+Extensions.swift) and drag this file into your project.
 > Ensure *Copy items if needed* is checked.
 >
 > ![Add file](../Tutorial-Images/xcode_add_file.png)
@@ -202,7 +209,8 @@ sinceTouch += fixedDelta
 ```
 >
 
-First thing you will notice are the red errors, you need to define the value for `fixedDelta`.  
+First thing you will notice are the red errors, you need to define the value for `fixedDelta`.
+
 What is *delta*? Delta is the difference in time taken between rendering frames. The target FPS (Frames Per Second) is 60, which makes everything feel silky smooth, an optimal fixed delta time would be `1 second / 60 frames = 0.01666666666`.  For simplicity we will be using this value. However, in practice for more complex scenes we would calculate a more accurate delta.
 
 > [action]
@@ -224,7 +232,7 @@ There are a couple things going on here:
 > If you want to experiment with clamp values, a handy way is to use the Scene Editor to quickly visualize different values and then apply them in code. Click on *hero* and have a play with the *Z-Rotation* value, just remember to set it back to `0` when you're finished playing.
 >
 
-Now run your game again... The behavior should hopefully be similar to this:
+Now run your game again. The behavior should hopefully be similar to this:
 
 ![Bunny rotating](../Tutorial-Images/simulator_bunnyRotation.gif)
 

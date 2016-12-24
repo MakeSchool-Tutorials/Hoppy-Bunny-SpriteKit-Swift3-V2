@@ -12,7 +12,7 @@ Let's get started setting up the main game scene, SpritKit Scene Editor is a pow
 >
 > It's helpful to see the scene size, zoom out so you can see the yellow border which represents the scene size. Select `Editor / Zoom Out` or use the shortcut shown.
 >
->The default project may have a Label in the center with the Text "Hello World". Click it to select it and press `delete` on the keyboard. 
+>The default project may have a Label in the center with the Text "Hello World". Click it to select it and press `delete` on the keyboard.
 >
 > Next modify the size parameters as shown in the *Attributes inspector panel* set width to 320 and height to 568 `(width: 320, height: 568)`
 >
@@ -21,7 +21,7 @@ Let's get started setting up the main game scene, SpritKit Scene Editor is a pow
 
 Remember the device resolution guide in the previous chapter? You will be using a common design size of 320 x 568, this gives you a nice portrait view, perfectly suited to the artwork.  You may be wondering what about supporting other devices?
 
-Thankfully SpriteKit has your back and can automatically scale the view to fit other devices. This size will scale to fit iPhone 4, 5, 6, and 7. 
+Thankfully SpriteKit has your back and can automatically scale the view to fit other devices. This size will scale to fit iPhone 4, 5, 6, and 7.
 
 > [info]
 > Have a look through the code in *GameViewController.swift*.  In particular:
@@ -37,7 +37,7 @@ scene.scaleMode = .aspectFill
 
 ##Move the center to the lower left
 
-To make it easier to position objects on the screen you will move the center point of the scene to the lower left. 
+To make it easier to position objects on the screen you will move the center point of the scene to the lower left.
 
 > [action]
 > Set Achor Point x and y to 0 (x: 0, y: 0).
@@ -48,13 +48,13 @@ To make it easier to position objects on the screen you will move the center poi
 ##Set the Background Color
 
 > [action]
-> With *GameScene.sks* set the color by clicking the color selector near the top of the property inspector. Set the color to a nice sky blue. You can use 
+> With *GameScene.sks* set the color by clicking the color selector near the top of the property inspector. Set the color to a nice sky blue. You can use
 > your own color or use (red: 72, green: 192, blue: 203).
 >
 > ![Adding background image](../Tutorial-Images/Xcode-Background-color.png)
 >
 
-<!-- 
+<!--
 ##Add the ground image
 
 > [action]
@@ -89,16 +89,16 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 > Because bunnies are heroes, save the file as `Hero.sks`
 >
 > ![Saving the SpriteKit Scene fike](../Tutorial-Images/xcode_add_sks_hero.png)
->)
+>
 
 ##Add the bunny
 
 > [action]
 > Select *Hero.sks* in the *Project navigator*
 >
-> Drag *bunny1.png* into scene:
+> Drag *bunny1.png* into scene.
 >
-> You may not be able to see the bunny, if not `Zoom Out` the scene, center your view on the bunny and `Zoom In` a little.
+> You may not be able to see the bunny, if not `Zoom Out` the scene, center your view on the bunny and then `Zoom In` a little.
 >
 > You will be connecting the bunny in code later so you need a way to reference it.  This is typically done using the *Name* property, so set *Name* to `hero`.
 >
@@ -121,9 +121,10 @@ Great, you have a static bunny.  However, we want this bunny to fly and the bunn
 You are going to setup a sprite frame based animation ~`0.5` seconds long and repeat forever.
 
 > [action]
-> Open *Hero.sks*, open the Timeline if it is not open already ![Timeline](../Tutorial-Images/timeline.png).
-> Next open select the *Object library* panel ![Object Library].
-> !(../Tutorial-Images/object-library.png) and look for the *AnimateWithTextures Action* and drag this
+> Open *Hero.sks*, open the Timeline if it is not open already ![Timeline](../Tutorial-Images/timeline.png)
+>
+> Next open select the *Object library* panel ![Object Library](../Tutorial-Images/object-library.png)
+> and look for the *AnimateWithTextures Action* and drag this
 > into the start of the bunny *Timeline* as shown:
 >
 > ![Adding the animation action](../Tutorial-Images/xcode_hero_add_action.png)
