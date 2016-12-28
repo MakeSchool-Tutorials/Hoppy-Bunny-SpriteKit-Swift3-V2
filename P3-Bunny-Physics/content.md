@@ -82,17 +82,17 @@ Let's check that gravity is running correctly, SpriteKit Scene editor allows you
 >
 ```
 import SpriteKit
->
+
 class GameScene: SKScene {
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         /* Setup your scene here */
     }
->
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       /* Called when a touch begins */
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        /* Called when a touch begins */
     }
->
-    override func update(currentTime: CFTimeInterval) {
+    
+    override func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
     }
 }
