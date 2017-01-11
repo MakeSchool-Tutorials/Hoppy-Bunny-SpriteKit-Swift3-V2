@@ -67,7 +67,7 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create your fir
 
 ##Implementing Scoring
 
-- **Goals using physics sensor**: Physics sensor goals were placed between obstacles so you can use the `didBeginContact` delegate method to detect when a player passed an obstacle.
+- **Goals using physics sensor**: Physics sensor goals were placed between obstacles so you can use the `didBegin(_ contact:)` delegate method to detect when a player passed an obstacle.
 
 - **Updating a label**: Converting numerical points scoring to a string for display via a label.
 

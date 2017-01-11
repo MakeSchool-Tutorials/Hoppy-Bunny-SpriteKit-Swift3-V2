@@ -190,7 +190,7 @@ The *GameScene* class is now ready to implement the contact delegate, first you 
 physicsWorld.contactDelegate = self
 ```
 
-Finally, you can implement the *didBeginContact* method that will be called whenever a collision takes place that you want to know about e.g. The ones with a *contactMask* of `1`.
+Finally, you can implement the *didBegin(_ contact:)* method that will be called whenever a collision takes place that you want to know about e.g. The ones with a *contactMask* of `1`.
 
 > [action]
 > Add this new method to the *GameScene* class:
@@ -344,7 +344,7 @@ Great you now have some rudimentary game management in place, time to kill the b
 > Replace the `didBegin(_ contact:)` method as shown:
 >
 ```
-func didBeginContact(contact: SKPhysicsContact) {
+func didBegin(_ contact: SKPhysicsContact) {
   /* Hero touches anything, game over */
 >
   /* Ensure only called while game running */
@@ -403,7 +403,7 @@ Run the game. Death truly should be final for our bunny. In these last two code 
 It would look better if the bunny fell face first upon hitting an obstacle.  A powerful way to do achieve this is using *SKActions*, you've already used actions to setup the the flappy animation frames.
 
 > [action]
-> Add the following code after you stopped the hero's actions with the `removeAllActions()` method in `didBeginContact(...)`:
+> Add the following code after you stopped the hero's actions with the `removeAllActions()` method in `didBegin(...)`:
 >
 ```
 /* Create our hero death action */
