@@ -5,7 +5,7 @@ slug: adding-obstacles
 
 You are going to be creating obstacles for the player to navigate and implementing a mechanic to randomize their position to challenge the player.
 
-#Creating the obstacle
+# Creating the obstacle
 
 > [action]
 > Create a new *SpriteKit Scene File* by selecting `File > New > File > SpriteKit Scene`:
@@ -45,7 +45,7 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 > The default height of `820` (iPhone 5) was no coincidence as the assets were designed to fill an iPhone 5 screen height, leaving a suitable `140` pixel gap for the player to pass through.
 >
 
-##Adding an obstacle
+## Adding an obstacle
 
 You can test if you've setup the obstacle correctly by adding it to the *GameScene*.
 
@@ -71,7 +71,7 @@ Now this hopefully look a lot like this.
 
 ![Checking the obstacles](../Tutorial-Images/xcode_obstacle_added_gamescene.png)
 
-#Dynamic obstacle generation
+# Dynamic obstacle generation
 
 Time to learn about dynamic obstacle generation or DOG for short :]
 You added an a copy *Obstacle.sks* to your scene. This is a sprite node. Your game will copy this node to create a relentless stream of obstacles for the player to avoid. To do this you will need a reference to the source obstacle.
@@ -94,7 +94,7 @@ obstacleSource = self.childNode(withName: "obstacle")
 ```
 >
 
-##Obstacle layer
+## Obstacle layer
 
 It will useful to create a layer to hold all of the obstacles. You can do this with a node in GameScene. By attaching all of the obstacles to a parent node they will draw at the z position of that node, and allow you to move all of the obstacles by moving the node.
 
@@ -114,7 +114,7 @@ It will useful to create a layer to hold all of the obstacles. You can do this w
 >
 > You can thank me later :]
 
-##Connecting the obstacle layer
+## Connecting the obstacle layer
 
 You'll need to code connect the obstacle layer object.
 
@@ -133,7 +133,7 @@ var obstacleLayer: SKNode!
 obstacleLayer = self.childNode(withName: "obstacleLayer")
 ```
 
-##Spawn Timer
+## Spawn Timer
 
 You will add a timer property to help manage the rate of obstacle generation. Each time period we will generate a new obstacle. The time you choose is important to game play, too slow it's boring, too fast it's too hard.
 
@@ -145,7 +145,7 @@ var spawnTimer: CFTimeInterval = 0
 ```
 >
 
-#Obstacle scrolling
+# Obstacle scrolling
 
 You are going to create another conveyor belt solution for the newly added *ObstacleLayer*.
 
@@ -190,7 +190,7 @@ updateObstacles()
 
 Running the game now will not do much. The `obstacleSource` node is not attached to the obstacleLayer. So it doesn't move. You are using this node as the source from which you will create an endless supply of copies.
 
-#Spawning endless randomized obstacles
+# Spawning endless randomized obstacles
 
 The next task will be to continuously spawn obstacles by copying the source obstacle you created in GameScene.sks.
 
@@ -241,7 +241,7 @@ spawnTimer+=fixedDelta
 
 Now run your game.  You should obstacles being generated every `1.5` seconds and with varying vertical positions! You're getting closer to completing *Hoppy Bunny*!
 
-#Summary
+# Summary
 
 The gaming is really coming together now, you've learnt to:
 

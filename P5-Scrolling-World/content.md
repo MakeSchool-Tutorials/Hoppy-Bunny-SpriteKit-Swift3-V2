@@ -7,7 +7,7 @@ Time for you to bring this world to life, you will be creating a conveyor belt s
 
 ![Conveyor Belt](https://media.giphy.com/media/WFkbyRl2Ke1oY/giphy.gif)
 
-#Scrolling Sprites
+# Scrolling Sprites
 
 To scroll sprites we you will move a sprite to the left until gets off the screen, then move it twice it's width to the right where it will start crossing the screen again.
 
@@ -34,7 +34,7 @@ func scrollSprite(_ sprite: SKSpriteNode, speed: CGFloat) {
 > To create an endless scrolling ground plane you will two sections.
 >
 
-#Creating endless ground
+# Creating endless ground
 
 > [action]
 > Open *GameScene.sks* select the ground and give it the name `groundA`.
@@ -83,7 +83,7 @@ scrollSprite(groundB, speed: 5)
 **Challenge**
 Can you get the clouds to move past? What about the crystals?
 
-#Ready to rock and scroll
+# Ready to rock and scroll
 
 To control the speed of this conveyor belt you will want to add a new *scrollSpeed* property to the *GameScene* class.
 
@@ -97,7 +97,7 @@ let scrollSpeed: CGFloat = 100
 
 <!--  -->
 
-##Virtual scroll layer
+## Virtual scroll layer
 
 You will need to use this property to manipulate the scroll speed of the conveyor belt, before you do this you need
 to modify the *GameScene* to create a virtual layer for all the objects you wish to scroll.  
@@ -136,7 +136,7 @@ scrollLayer = self.childNode(withName: "scrollLayer")
 >
 <!--  -->
 
-#Scroll World
+# Scroll World
 To help organize your code, let's create a new method called **scrollWorld** and call this in the `update(...)` method.
 
 > [action]
@@ -166,7 +166,7 @@ scrollWorld()
 
 Run the game.
 
-#Adding objects to scroll
+# Adding objects to scroll
 
 Oh no scrolling?  Now that you have a virtual conveyor belt system, you need to put some objects on it :]
 
@@ -182,7 +182,7 @@ Run the game.  The ground should be scrolling, keep watching...
 
 **For some reason the crystals get messed up in the gif**
 
-##Loop the ground
+## Loop the ground
 
 Argh eventually you will run out of ground and the bunny will fall into the endless despair of the abyss.
 
@@ -225,7 +225,7 @@ for ground in scrollLayer.children as! [SKSpriteNode] {
 ```
 >
 
-##Relative node position
+## Relative node position
 
 This code retrieves the current screen position for each ground sprite. Since the ground sprites aren't children of the *GameScene*, you need to convert their relative position inside the *scrollLayer* to *GameScene* co-ordinate space using the `convertpoint(...)` method.
 
@@ -235,7 +235,7 @@ This creates the ground's endless repeating effect.
 
 Run the game. The ground should now scroll for eternity.  This is hard to test :]
 
-#Summary
+# Summary
 
 The game now has a sense of the bunny moving through space. You've learned:
 

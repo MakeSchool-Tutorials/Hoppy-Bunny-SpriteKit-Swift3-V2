@@ -5,7 +5,7 @@ slug: implementing-points
 
 There is one thing missing, the player's score! It's not much fun dodging obstacles without any reward.
 
-#Adding the score label
+# Adding the score label
 
 > [action]
 > Drag a *Label* object into the *GameScene.sks*, set the *Name* to `scoreLabel` and set the font to something you like and will also be easy for the player to read.
@@ -42,7 +42,7 @@ scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
 
 Great the connection has been made, if you did it yourself, virtual high five.
 
-##Tracking score
+## Tracking score
 
 The *scoreLabel* will display game score.  However, as it stands there is no way to track this, let's add a score counter.
 
@@ -102,7 +102,7 @@ With the reference to *SKSpriteNode* node you can check for the *Name* of `goal`
 
 Run the game. With a bit of skill you should be able to pass through the goal and get a point. You can always make the goal area bigger for testing :]
 
-#Summary
+# Summary
 
 Congratulations on finishing *Hoppy Bunny*, give the person next to you a high five.
 

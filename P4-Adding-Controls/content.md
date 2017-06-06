@@ -5,7 +5,7 @@ slug: adding-controls
 
 So far the bunny drops to the ground quickly and there is nothing the player can do about it, this would make for a pretty poor game experience.  In this section you are going to add player touch controls for the bunny and tweak the physics engine to ensure the physics are balanced with fun.
 
-#Code Connections
+# Code Connections
 
 Before you can control the bunny in Swift code, you first need to make a connection between the SpriteKit Scene object and the code.
 
@@ -65,7 +65,7 @@ override func didMove(to view: SKView) {
 > You need to perform a recursive search as the hero node is not directly in the *GameScene*, even though you can see it in the scene editor. In the *GameScene* you added a `Reference node` which holds the bunny (it could easily be pointed to another *SpriteKit Scene* if we had one). You are making use of the `//` search operator to ensure the search will check all  nodes recursively in our scene.
 >
 
-#Adding touch
+# Adding touch
 
 The goal is to have the bunny hop every time we touch the screen, which will keep the bunny flying high.
 
@@ -102,7 +102,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
 Now sit back and run your game and try out the new touch control.
 
-#Adding a speed limit
+# Adding a speed limit
 
 It works, yet it doesn't feel right.  As you may have noticed while testing the touch implementation, when you touch the screen repeatedly, the impulses accumulate and the bunny blasts out of the screen. Gone for seconds or even (seemingly) forever.  To make the game playable, you will want to limit the vertical upward velocity. The best way to limit the bunny's speed is by modifying it in the *update* method, which is called every frame.
 
@@ -142,7 +142,7 @@ Test your app now. The bunny should have a nice bump up each time you touch the 
 
 ![Bunny Test gif](../Tutorial-Images/p04-bunny-physics-test.gif)
 
-#Make the bunny rotate
+# Make the bunny rotate
 
 One of the nice visual touches in Flappy Bird is the way the bird rotates. When the player does not touch the screen for a little while, the bird turns towards the ground. Touching the screen makes the bird turn upwards again. You are going to imitate this behavior in Hoppy Bunny!
 
@@ -236,7 +236,7 @@ Now run your game again. The behavior should hopefully be similar to this:
 
 ![Bunny rotating](../Tutorial-Images/simulator_bunnyRotation.gif)
 
-#Summary
+# Summary
 
 You've made some real progress in this chapter and learnt to:
 

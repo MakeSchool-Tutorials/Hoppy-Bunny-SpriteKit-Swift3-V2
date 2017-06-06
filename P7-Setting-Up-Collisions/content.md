@@ -9,7 +9,7 @@ Have a look at Apple's documentation on the subject of [Working with Collisions 
 
 In this tutorial you will setup physics collisions and contacts in the scene editor, in later tutorials you will expand this knowledge implementing physics setup in code.
 
-#Quick overview of physics
+# Quick overview of physics
 
 SpriteKit has a high performance physics engine built in. It allows you to create games with objects that collide, bounce, and move like objects in the real world. The physics engine does this by assigning objects properties like velocity, friction, elasticity, and more.
 
@@ -21,19 +21,19 @@ Physics objects have few properties that determine how they interact with each o
 - Contact Bit Mask
 - Collision Bit Mask
 
-#Category bit mask
+## Category bit mask
 
 This value identifies which category a physics object belongs to. You will assign each object a category so the physics engine can assign the appropriate interactions.
 
-#Contact Bit Mask
+## Contact Bit Mask
 
 The contact bit mask determines which category an object produces contact events for. It's important to understand that contact events *do not produce a physical collision!*. In other words a contact only tells you that two objects made contact. Objects that make contact might bounce or might pass through one another. How they interact is determined by the *Collision Bit Mask*.
 
-#Collision Bit Mask
+## Collision Bit Mask
 
 The collision bit mask determines which category of objects a physics object collides with. A collision is a physical interaction. When an object collides with another object it there is a physical effect! For example one object may bounce off the other or knock the other object over (Think about Angry Birds).
 
-#Physics Categories values
+# Physics Categories values
 
 Physics categories are read as binary values with a value of 2 to the power of 32. So 0 would look like:
 
@@ -79,7 +79,7 @@ Let's give them each a unique binary value. They each need a value with a 1 in a
 
 These are each unique categories because they each have a 1 in a unique column. In the scene editor you will enter the integer value for the binary number (`00000100` = 4).
 
-#Collision Bit Masks
+# Collision Bit Masks
 
 When you set the collision bit mask you are deciding which objects will produce a physical collision. In your game you want the bunny/hero (1) to collide with the carrots/obstacle (2) and the ground (4). So the Collision Bit Mask for the player is 7.
 
@@ -93,7 +93,7 @@ Notice that 1+2+4 = 7. Also notice that in binary the number 7 shares a 1 in the
 
 You don't want the player (1) to collide with goal (8)! Notice the goal Category Bit Mask in binary doesn't share a 1 in any of the columns with the *Player Collision Bit Mask*.
 
-#Contact Bit Masks
+# Contact Bit Masks
 
 A contact doesn't produce a physical interaction but it is noticed by the physics engine. You want to know when the player (1) makes contact with the goal (8) because this will score a point. You also want to know when the player hits obstacles (2) or the ground (4) because this ends the game.
 
@@ -108,7 +108,7 @@ Any binary value with `1110` would work here. For example `15` (`1111`), or even
 
 `11111111111111111111111111111111` = 2^32 = 4294967295. You may have noticed this is the default value in the editor. These default settings are why the bunny collides with the ground currently.
 
-#Setup physics
+# Setup physics
 
 Currently the obstacles don't use physics. You will apply physics in the next step:
 
@@ -136,7 +136,7 @@ Currently the obstacles don't use physics. You will apply physics in the next st
 > Goal objets are category 8, and contact Players (category 1).
 >
 
-#Bunny physics
+# Bunny physics
 
 > [action]
 > Open *Hero.sks* and `click` on the bunny. The Body Type should `Bounding Circle`. Below this
@@ -145,7 +145,7 @@ Currently the obstacles don't use physics. You will apply physics in the next st
 > ![Bunny physics](../Tutorial-Images/xcode_spritekit_bunny_physics_properties.png)
 >
 
-#Ground physics
+# Ground physics
 
 You need to setup the ground sprite physics, do you think you can tackle this yourself?
 Check back if you don't remember the *Category Mask* value we decided to use.  What value do you think you'll need for the *Contact Mask?*
@@ -161,7 +161,7 @@ Run your game. The bunny will now collide with the obstacles yet thankfully be a
 
 Currently the bunny will get pushed off the screen if you collide with a carrot. Don't worry about this it's a physics interaction that you set up. You will be taking care of this in a later step. For now just restart the simulator and try again.
 
-#Physics Contact Delegate
+# Physics Contact Delegate
 
 If the bunny collides with the ground, an obstacle or passes through the goal of an obstacle, you want to know about. Next you will implement the *Physics Contact Delegate* so your code will be informed whenever one of these collision contacts takes place.
 
@@ -178,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 ```
 >
 
-##Delegate Support
+## Delegate Support
 
 The *GameScene* class is now ready to implement the contact delegate, first you should inform the delegate which class will take responsibility for handling the messages.   You should assign *GameScene* as the collision delegate.
 
@@ -205,7 +205,7 @@ func didBegin(_ contact: SKPhysicsContact) {
 
 Run the game. Any time you collide with the ground, a carrot or a goal sensor the *TODO* message will be logged to the console.
 
-#Game over
+# Game over
 
 Instead of simply showing a message in the console, it would be nice to think about the game over scenario.
 
@@ -215,7 +215,7 @@ This might consist of:
 - The game Scene shakes
 - A restart game button
 
-##Adding a button
+## Adding a button
 
 There is no pre-made button object in SpriteKit so you will need to get creative and create our own solution. To help we've provided a starting point for you with a custom class called *MSButtonNode*.
 
@@ -255,7 +255,7 @@ buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
 ```
 >
 
-##Selection handler
+## Selection handler
 
 The code connection is ready, if you run the game you can touch the button, it looks like it was touched yet nothing happens.  You need to add some code to be executed upon user touch.
 
@@ -286,7 +286,7 @@ This code loads in a fresh copy of the *GameScene.sks*, ensures the correct *sca
 
 You should now be able to run the game. If the bunny gets knocked off the screen tap restart and the bunny is back and the game restarts!
 
-##Hide the button
+## Hide the button
 
 Great you have a button, might be an idea to hide it once the game is in-play.
 
@@ -303,7 +303,7 @@ You want the button to be visible when the bunny dies, let's look at how we impl
 
 It would be really useful to know the current state of the game.  Has the game started, is the player dead etc?
 
-#Game State
+# Game State
 
 State management is a great way to do this, take a look at `MSButtonNode.swift`.  A `state` property is used to track if the button is `Active,Hidden or Selected`.
 
@@ -336,7 +336,7 @@ var gameState: GameSceneState = .active
 ```
 >
 
-#Bunny death
+# Bunny death
 
 Great you now have some rudimentary game management in place, time to kill the bunny!
 
@@ -371,7 +371,7 @@ Notice the check of the **gameState** to ensure that the code will not be called
 
 Run the game. When the player dies the button should appear and you can restart play. **NOTE!** for now hitting anything, including the goal, will end the game. For the next few steps the bunny will NOT be able to pass through the goal! You will take care of this when you set up scoring in section 8.
 
-#Shutting down the world
+# Shutting down the world
 
 It's not perfect yet as the bunny will still respond every so slightly to touch and the world will continue to scroll by.
 
@@ -398,7 +398,7 @@ if gameState != .active { return }
 
 Run the game. Death truly should be final for our bunny. In these last two code snippets the if statement checks the value of gameState, if the value is .active `return` ends the function. In this case all of subsequent code is *not* run.
 
-#Death actions
+# Death actions
 
 It would look better if the bunny fell face first upon hitting an obstacle.  A powerful way to do achieve this is using *SKActions*, you've already used actions to setup the the flappy animation frames.
 
@@ -422,7 +422,7 @@ The `runBlock` action lets you define your own custom action and in this case, m
 
 Run the game. The bunny should be face down now upon any collision. It's all about those little bits of polish :]
 
-#Shake it
+# Shake it
 
 It would be nice to add an old school style Star Trek camera shake to emphasize the impact.  This time you will create your own *GameEffects.sks* **SpriteKit Action file**, this enables you to store multiple effects that can be reused on any node.
 
@@ -450,7 +450,7 @@ It would be nice to add an old school style Star Trek camera shake to emphasize 
 > - Set *Timing Function* to `Ease Out`, set *Offset* to `(4,2)`
 >
 
-##Shake all the nodes
+## Shake all the nodes
 
 Time to apply this action to your scene.
 
@@ -476,7 +476,7 @@ Run the game.  When the bunny dies the screen should give a short shake.
 > [info]
 > I encourage you to make this effect as crazy as you like, experimentation is the best way to learn what works.  Often it's the happy little accidents lead you onto something awesome.
 
-#Physics tweaking
+# Physics tweaking
 
 You may have noticed the game is a little difficult, perhaps too difficult.  It feels like the bunny falls too hard initially and applying the touch impulse doesn't feel quite right.
 
@@ -508,7 +508,7 @@ Run the game. That little change has made the core mechanic feel much more satis
 
 So far the Bunny moves and the game play is almost complete. At this point the game ends if the Bunny hist *anything* which includes the **goal**! You will take of this last detail in the next section when implement the score. You also may see the bunny get bounced off the screen when it hits something. You will take care of this later also.
 
-#Summary
+# Summary
 
 Wow, a lot of ground has been covered in this chapter:
 

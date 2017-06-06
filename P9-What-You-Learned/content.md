@@ -13,7 +13,7 @@ Let's take a look at what you have learned so far.
 
 At the beginning of the Hoppy Bunny tutorials you learned how to create your first SpriteKit game project in Xcode.
 
-##Setting Up the Gameplay Scene
+## Setting Up the Gameplay Scene
 
 - **Importing assets**: You can drag assets directly into the `Assets.xcassets` folder in the *Project Navigator*.
 
@@ -23,7 +23,7 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create your fir
 
 - **Sprite frame action animations**: You can create sprite frame animations in the Timeline, using *SKActions* such as *AnimateWithTextures*.
 
-##Letting the Bunny Fall
+## Letting the Bunny Fall
 
 - **Static physics bodies**: Static physics bodies never move. They are great for ground and obstacles.
 
@@ -31,7 +31,7 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create your fir
 
 - **SKS Reference Nodes**: SKS files can be added to other SKS files via reference nodes. This will allow you to reuse game elements.
 
-##Adding Controls and Tuning Physics
+## Adding Controls and Tuning Physics
 
 - **Gravity property**: The gravitational constant of the physics engine can be set through the attributes panel for the Scene.
 
@@ -45,19 +45,19 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create your fir
 
 - **Impulses**: `applyImpulse` adds directly to the velocity property of a physics body. `applyAngularImpulse` adds directly to the angular velocity property of a physics body.
 
-##Scrolling the World
+## Scrolling the World
 
 - **Implementing a conveyor belt**: You implemented a conveyor belt system by moving *Scrolling Layer* nodes with child objects attached such as Obstacles and ground.
 
 - **Looping elements**: The ground was looped once it went off screen. You added a second ground image so that at least one full ground was always visible.
 
-##Adding Obstacles
+## Adding Obstacles
 
 - **Endless generation**: You generated obstacles using a timer so that there was one always waiting just off screen. Once an obstacle left the screen, you removed it.
 
 - **Random placement**: When you generated an obstacle, you randomized it's y-position value.
 
-##Setting Up Collisions
+## Setting Up Collisions
 
 - **Physics sensors**: Physics sensors detect and trigger collision events but do you physically affect the collisions. It's as if the physics bodies can pass through other physics bodies. These are useful for trigger events.
 
@@ -65,13 +65,13 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create your fir
 
 - **Game state**: It is useful to have a game state to manage the game e.g Active or Game Over
 
-##Implementing Scoring
+## Implementing Scoring
 
 - **Goals using physics sensor**: Physics sensor goals were placed between obstacles so you can use the `didBegin(_ contact:)` delegate method to detect when a player passed an obstacle.
 
 - **Updating a label**: Converting numerical points scoring to a string for display via a label.
 
-#Solution
+# Solution
 
 [Download Hoppy Bunny](https://github.com/soggybag/HoppyBunny/archive/master.zip).
 

@@ -14,7 +14,7 @@ You will learn to implement the following:
 - Implement physics based collision detection
 - Create your own custom button class
 
-#Create a new project
+# Create a new project
 
 Time to make a SpriteKit project in Xcode and get started with Hoppy Bunny!
 
@@ -23,7 +23,7 @@ Time to make a SpriteKit project in Xcode and get started with Hoppy Bunny!
 >
 > ![Select New game project](../Tutorial-Images/xcode_new_project.png)
 
-##Adding artwork
+## Adding artwork
 
 > [action]
 > After the project is created, you should [download our art pack for this game](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift3-V2/raw/master/assets.zip).
@@ -32,7 +32,7 @@ Time to make a SpriteKit project in Xcode and get started with Hoppy Bunny!
 >
 > ![Dragging assets into project](../Tutorial-Images/xcode_add_artwork.png)
 
-##Asset Scale
+## Asset Scale
 
 This would be good time to touch on the subject of asset scale. You may have noticed when you select an asset in **Assets.xcassets** you are presented with *1x 2x 3x Scale* options and by default they will be set to *1x Scale* as the filename contains no implied scale e.g. `@2x` or `@3x`
 
@@ -44,5 +44,6 @@ In particular look at the *Rendered Pixels* section and notice the reference to 
 > Ensure you have the *Assets.xcassets* selected in the *Project Navigator* and then select each asset file and drag them from *1x* to *2x*.
 > You can remove the spaceship asset, you will not need it.
 
-#Summary
+# Summary
+
 Great, you've setup a basic project and added the artwork. In the next section it's time to start building our game.

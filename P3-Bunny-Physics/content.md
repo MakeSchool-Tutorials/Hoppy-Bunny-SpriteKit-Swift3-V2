@@ -5,12 +5,12 @@ slug: bunny-physics
 
 Time to setup physics for your game world and game play objects.
 
-#SpriteKit Physics
+# SpriteKit Physics
 
 You will be using the powerful physics engine built into SpriteKit, thankfully it's as easy as ticking a box to enable physics for each of our game objects.
 I recommend you have a read of [Apple's Physics Documentation](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW1) as physics plays a key role in many games, a game may not even appear to be physics based yet will often use physics for collision detection as this on its own is a powerful feature.
 
-##Make the ground static
+## Make the ground static
 
 > [action]
 > Select the ground node, ensure the *Attributes inspector* is open and scroll down until you see the *Physics Definition* option.
@@ -20,7 +20,7 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 > ![Create the static ground physics body](../Tutorial-Images/xcode_ground_physics.png)
 >
 
-##Enable bunny physics
+## Enable bunny physics
 
 > [action]
 > Open *Hero.sks* and select the Bunny sprite. Find the physics definition section and Set *Body Type* to `Bounding circle`.
@@ -39,7 +39,7 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 > Circles provide the best performance and if you can get away with just a circle then use it, the trick is using the most efficient shape for the job at hand.
 >
 
-##Adding the bunny to the world
+## Adding the bunny to the world
 
 > [action]
 > To add the bunny to the game, drag the *Hero.sks* file into the scene. This will automatically create a *Reference node*  pointing to the *Hero.sks*
@@ -54,7 +54,7 @@ I recommend you have a read of [Apple's Physics Documentation](https://developer
 > [info]
 > Often *Reference node* are not displayed properly when initially placed into a scene, a quick *Save* of the scene should rectify this.
 
-##Gravity
+## Gravity
 
 If you click outside of our *GameScene* yellow box and check the *Attributes inspector* you will see our physics world will default to approximate Earth's gravity `-9.8`.
 ![GameScene Gravity](../Tutorial-Images/xcode_gamescene_gravity.png)
@@ -62,7 +62,7 @@ If you click outside of our *GameScene* yellow box and check the *Attributes ins
 > [info]
 > Also notice the *Debug Drawing* options in the inspector, the *Show Physics Boundaries* is handy to check that your > physics is where you think it should be. This creates the faint blue outlines.
 
-##Adding the crystals
+## Adding the crystals
 
 > [action]
 > Let's add some pretty crystals above the ground to complete the visual appeal of *Hoppy Bunny Swift* by dragging `bg_crystals.png` into the scene:
@@ -72,7 +72,7 @@ If you click outside of our *GameScene* yellow box and check the *Attributes ins
 > Snap it top the top of *ground*.
 
 
-#Check your progress
+# Check your progress
 
 Let's check that gravity is running correctly, SpriteKit Scene editor allows you to check this without having to run the game. Select `Animate` in *GameScene.sks* as you did before in *Hero.sks*, you should see the animated hero succumb to the gravity and fall to the ground.  If it doesn't please go back and double check your work so far :]
 
@@ -137,7 +137,7 @@ You can easily set the *Z-Position* of your sprites in the *Attributes inspector
 >
 > ![Z Position Fixed](../Tutorial-Images/xcode_zorder_fixed.png)
 
-#Summary
+# Summary
 
 It's coming along nicely now, so what did you learn?
 

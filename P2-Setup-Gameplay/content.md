@@ -5,7 +5,7 @@ slug: setup-gameplay
 
 Let's get started setting up the main game scene, SpritKit Scene Editor is a powerful Xcode tool that lets you rapidly layout the scene.
 
-#Setting the stage
+# Setting the stage
 
 > [action]
 > Select *GameScene.sks* from the *Project navigator*:
@@ -35,7 +35,7 @@ scene.scaleMode = .aspectFill
 > If you `option+click` *scaleMode* and look at the *Quick Help inspector* panel you can find out more about the scaling options available.
 >
 
-##Move the center to the lower left
+## Move the center to the lower left
 
 To make it easier to position objects on the screen you will move the center point of the scene to the lower left.
 
@@ -45,17 +45,15 @@ To make it easier to position objects on the screen you will move the center poi
 > ![Adding background image](../Tutorial-Images/Xcode-set-anchor-point.png)
 >
 
-##Set the Background Color
+## Set the Background Color
 
 > [action]
 > With *GameScene.sks* set the color by clicking the color selector near the top of the property inspector. Set the color to a nice sky blue. You can use
 > your own color or use (red: 72, green: 192, blue: 203).
 >
 > ![Adding background image](../Tutorial-Images/Xcode-Background-color.png)
->
 
-<!--
-##Add the ground image
+## Add the ground image
 
 > [action]
 > Open the media library by clicking the small film strip in the lower right. ![Adding the ground image](../Tutorial-Images/media-library.png)
@@ -64,11 +62,10 @@ To make it easier to position objects on the screen you will move the center poi
 >
 > ![Adding the ground image](../Tutorial-Images/xcode_gamescene_add_ground.png)
 >
-
 You'll notice the ground image extends beyond the screen border. Don't worry about it, you will be scrolling the ground later to create that endless runner effect.
--->
 
-##Add the clouds
+
+## Add the clouds
 
 > [action]
 > Drag in *clouds.png* to the scene
@@ -77,7 +74,7 @@ You'll notice the ground image extends beyond the screen border. Don't worry abo
 > ![Adding the clouds](../Tutorial-Images/xcode_gamescene_add_clouds.png)
 >
 
-#Creating the Bunny Scene
+# Creating the Bunny Scene
 
 Now you're going to create a new *SpriteKit Scene File* for the bunny and animate it.
 
@@ -91,7 +88,7 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 > ![Saving the SpriteKit Scene fike](../Tutorial-Images/xcode_add_sks_hero.png)
 >
 
-##Add the bunny
+## Add the bunny
 
 > [action]
 > Select *Hero.sks* in the *Project navigator*
@@ -115,7 +112,7 @@ Now you're going to create a new *SpriteKit Scene File* for the bunny and animat
 > ![Adding the bunny](../Tutorial-Images/hero-scene-size.png)
 >
 
-##Animating the bunny
+## Animating the bunny
 
 Great, you have a static bunny.  However, we want this bunny to fly and the bunny can fly by flapping it's ears!
 You are going to setup a sprite frame based animation ~`0.5` seconds long and repeat forever.
@@ -147,7 +144,7 @@ You are going to setup a sprite frame based animation ~`0.5` seconds long and re
 > ![Preview the animation](../Tutorial-Images/xcode_timeline_animate.png)
 >
 
-#Summary
+# Summary
 
 The game is already starting to take shape, you learnt to:
 
