@@ -28,10 +28,10 @@ func scrollSprite(_ sprite: SKSpriteNode, speed: CGFloat) {
 >
 > This needs a little explanation. The `scrollSprite()` method takes two parameters: sprite, the sprite to scroll,
 > and speed, the distance in pixels to move the sprite to the left. Then the function checks the x position
-> of the sprite. If the x position is less than negative have the width the function moves the sprite
-> twice it's width to the right. The x coordinates counts positive going to the right, and negative going to the left. This means when a sprite's x position is negative have of it's width we know it's gotten all the way off the screen to the left.
+> of the sprite. If the x position is less than negative half the width the function moves the sprite
+> twice it's width to the right. The x coordinates counts positive going to the right, and negative going to the left. This means when a sprite's x position is negative half of it's width we know it's gotten all the way off the screen to the left.
 >
-> To create an endless scrolling ground plane you will two sections.
+> To create an endless scrolling ground plane you will use two sections.
 >
 
 # Creating endless ground
