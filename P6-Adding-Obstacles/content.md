@@ -80,7 +80,10 @@ In the image above you may have noticed that the obstacle was placed outside the
 
 > [action]
 > Add variable at the top of your class to hold a reference to the source obstacle:
-> `var obstacleSource: SKNode!`
+>
+```
+var obstacleSource: SKNode!
+```
 >
 
 <!--  -->
