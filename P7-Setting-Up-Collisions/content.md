@@ -139,7 +139,7 @@ Currently the obstacles don't use physics. You will apply physics in the next st
 # Bunny physics
 
 > [action]
-> Open *Hero.sks* and `click` on the bunny. The Body Type should `Bounding Circle`. Below this
+> Open *Hero.sks* and `click` on the bunny. The Body Type should be `Bounding Circle`. Below this
 > set *Category Mask* to `1`, *Collision Mask* to `7` and the *Contact Mask* to `15` (or `4294967295` this is 2^32 if you prefer).
 >
 > ![Bunny physics](../Tutorial-Images/xcode_spritekit_bunny_physics_properties.png)
