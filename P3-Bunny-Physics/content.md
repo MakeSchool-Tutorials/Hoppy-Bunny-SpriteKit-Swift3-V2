@@ -105,7 +105,7 @@ Now it's time to hit `Run` and see your game running in action.
 ![Run Project](../Tutorial-Images/xcode_select_simulator.png)
 
 > [info]
-> I tend to run with iPhone 6 simulator as it's a little faster than the default 6s, a handy tip is also try `cmd+2` or `cmd+3` to reduce the scale to improve simulator performance.
+> I tend to run with iPhone 6 simulator as it's a little faster than the default 7, a handy tip is also try `cmd+2` or `cmd+3` to reduce the scale to improve simulator performance.
 > If you are setup to test on device then please do so, this will offer the best performance of all and would be
 > what your player would see. Physics based games are best ran on device.
 
