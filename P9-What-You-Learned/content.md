@@ -71,9 +71,9 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create your fir
 
 - **Updating a label**: Converting numerical points scoring to a string for display via a label.
 
-# Solution
+<!-- # Solution
 
-[Download Hoppy Bunny](https://github.com/soggybag/HoppyBunny/archive/master.zip).
+[Download Hoppy Bunny](https://github.com/soggybag/HoppyBunny/archive/master.zip). -->
 
 # Challenges
 

@@ -8,7 +8,7 @@ Time to setup physics for your game world and game play objects.
 # SpriteKit Physics
 
 You will be using the powerful physics engine built into SpriteKit, thankfully it's as easy as ticking a box to enable physics for each of our game objects.
-I recommend you have a read of [Apple's Physics Documentation](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW1) as physics plays a key role in many games, a game may not even appear to be physics based yet will often use physics for collision detection as this on its own is a powerful feature.
+I recommend you have a read of [Apple's Physics Documentation](https://developer.apple.com/documentation/spritekit#2242739) as physics plays a key role in many games, a game may not even appear to be physics based yet will often use physics for collision detection as this on its own is a powerful feature.
 
 ## Make the ground static
 

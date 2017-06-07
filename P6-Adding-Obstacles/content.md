@@ -41,7 +41,7 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 
 > [info]
 > So how did I know that the scene size should be exactly `51` pixels wide and `820` tall? Well, sometimes you
-> need to have a play in the visual editor and then adjust, I saw the carrot's had a width of `51` so I used that value.
+> need to play in the visual editor and then adjust, I saw the carrot's had a width of `51` so I used that value.
 > The default height of `820` (iPhone 5) was no coincidence as the assets were designed to fill an iPhone 5 screen height, leaving a suitable `140` pixel gap for the player to pass through.
 >
 
@@ -79,7 +79,7 @@ You added an a copy *Obstacle.sks* to your scene. This is a sprite node. Your ga
 In the image above you may have noticed that the obstacle was placed outside the visible area of the game scene. This obstacle will always sit outside of view and act as a source for obstacles that will move across the screen.
 
 > [action]
-> Add variable at the top of your class to hold a reference to the source obstacle:
+> Add a variable at the top of your GameScene class to hold a reference to the source obstacle:
 >
 ```
 var obstacleSource: SKNode!
@@ -99,7 +99,7 @@ obstacleSource = self.childNode(withName: "obstacle")
 
 ## Obstacle layer
 
-It will useful to create a layer to hold all of the obstacles. You can do this with a node in GameScene. By attaching all of the obstacles to a parent node they will draw at the z position of that node, and allow you to move all of the obstacles by moving the node.
+It will be useful to create a layer to hold all of the obstacles. You can do this with a node in GameScene. By attaching all of the obstacles to a parent node they will draw at the z position of that node, and allow you to move all of the obstacles by moving the node.
 
 > [action]
 > Open *GameScene.sks* open and drag an *Empty* node into the scene.
@@ -168,7 +168,8 @@ func updateObstacles() {
        let obstaclePosition = obstacleLayer.convert(obstacle.position, to: self)
 >
        /* Check if obstacle has left the scene */
-       if obstaclePosition.x <= 0 {
+       if obstaclePosition.x <= -26 {
+       // 26 is one half the width of an obstacle
 >
            /* Remove obstacle node from obstacle layer */
            obstacle.removeFromParent()

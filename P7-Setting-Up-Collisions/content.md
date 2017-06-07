@@ -5,8 +5,6 @@ slug: setting-up-collisions
 
 You are going to set up collision handling so that your game finally becomes a real game! At the moment the player passes through obstacles and lands on the ground. To make the game challenging the player will have to avoid the obstacles by maneuvering through the space between the carrots and avoid hitting the ground!
 
-Have a look at Apple's documentation on the subject of [Working with Collisions and Contacts.](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Physics/Physics.html#//apple_ref/doc/uid/TP40013043-CH6-SW14). It can be a little bit confusing when you first start, so don't worry if you don't understand everything at once.
-
 In this tutorial you will setup physics collisions and contacts in the scene editor, in later tutorials you will expand this knowledge implementing physics setup in code.
 
 # Quick overview of physics
