@@ -7,7 +7,8 @@ Time for you to bring this world to life, you will be creating a conveyor belt s
 
 ![Conveyor Belt](https://media.giphy.com/media/WFkbyRl2Ke1oY/giphy.gif)
 
-# Scrolling Sprites
+<!-- TODO: Consider rewriting the rest of the tutorial to use this method, currently inconsistent with the rest of the tutorial though :/ -->
+<!-- # Scrolling Sprites
 
 To scroll sprites we you will move a sprite to the left until gets off the screen, then move it twice it's width to the right where it will start crossing the screen again.
 
@@ -81,7 +82,7 @@ scrollSprite(groundB, speed: 5)
 **Note!** It's important that the ground sprites both have the same speed! If the speeds are different one ground sprite will faster than then the other. With this in mind feel free to play with the speed value (5) to adjust the speed of the ground.
 
 **Challenge**
-Can you get the clouds to move past? What about the crystals?
+Can you get the clouds to move past? What about the crystals? -->
 
 # Ready to rock and scroll
 
