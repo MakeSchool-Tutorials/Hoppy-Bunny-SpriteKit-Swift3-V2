@@ -373,7 +373,7 @@ Run the game. When the player dies the button should appear and you can restart 
 
 # Shutting down the world
 
-It's not perfect yet as the bunny will still respond every so slightly to touch and the world will continue to scroll by.
+It's not perfect yet as the bunny will still respond ever so slightly to touch and the world will continue to scroll by.
 
 To disable scrolling and touch, you can once again make use of the *gameState* property.
 
@@ -440,8 +440,6 @@ It would be nice to add an old school style Star Trek camera shake to emphasize 
 > Now you have an empty action timeline ready for some actions, drag across the *Move action* from the *Object Library*.  Set the *Duration* to `0.2` seconds.
 >
 > ![Add Move Action](../Tutorial-Images/xcode_spritekit_action_add_move.png)
->
-> **Sadly it does not yet seem possible (As of Xcode 7.2.1) to preview this action on the scene from within the scene editor :[**
 >
 > Copy and paste this action two times and then modify all three actions as follows.
 >
