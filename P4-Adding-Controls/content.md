@@ -88,13 +88,6 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 > You'll notice the keyword `override` appears before `func` in the declaration of this method. An important concept in object-oriented programming is the idea of inheritance - that is, a child class inherits methods and properties from its parent class.
 > We must use the `override` keyword to indicate that our child class will override its parent's implementation of `touchesBegan(...)`
 
-<!--  -->
-
-> [info]
-> You'll also notice a lot of `?` and `!` when working with Swift on apps and games. For now, enter them as the tutorial tells you to. These characters are used when working with "optionals". Optionals are a bit more advanced Swift topic that you can explore after the winter academy ends. See the Dictionaries & Optionals assignment later in this course.
->
-> You can think of `hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))` as saying "if hero has a physicsBody, call the applyImpulse method, otherwise do nothing".
-
 Now sit back and run your game and try out the new touch control.
 
 # Adding a speed limit
