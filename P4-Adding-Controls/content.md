@@ -11,24 +11,6 @@ Before you can control the bunny in Swift code, you first need to make a connect
 
 If you recall you changed the name of the bunny sprite to `hero` in *Hero.sks*, this gives you a way to easily find this node in the *GameScene* scene graph.
 
-You will now be doing work in *GameScene.swift* this file contains the code that runs the game. The file created with the project has some default code that we want to remove.
-
-> [action]
-> Open *GameScene.swift* by clicking it in the project navigator on the left. Delete the code in side the `GameScene` class.
->
-> It should look like this when you are done:
->
-```
-import SpriteKit
-import GameplayKit
->
-class GameScene: SKScene {
-    /* Game Code Here */
->
-}
-```
->
-
 Next you will add a code connection to the `hero` in your `GameScene` Class.
 
 > [action]
@@ -36,10 +18,23 @@ Next you will add a code connection to the `hero` in your `GameScene` Class.
 > Add the hero property to the top of the *GameScene* class.
 >
 ```
+import SpriteKit
+>
 class GameScene: SKScene {
 >
-  var hero: SKSpriteNode!
+    var hero: SKSpriteNode!
 >
+    override func didMove(to view: SKView) {
+        /* Setup your scene here */
+    }
+>
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        /* Called when a touch begins */
+    }
+>
+    override func update(_ currentTime: TimeInterval) {
+        /* Called before each frame is rendered */
+    }
 }
 ```
 >
