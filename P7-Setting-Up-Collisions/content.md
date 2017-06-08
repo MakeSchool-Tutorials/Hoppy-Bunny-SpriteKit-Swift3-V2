@@ -131,7 +131,7 @@ Currently the obstacles don't use physics. You will apply physics in the next st
 >
 > ![Goal physics](../Tutorial-Images/xcode_spritekit_goal_physics_collision_properties.png)
 >
-> Goal objets are category 8, and contact Players (category 1).
+> Goal objects are category 8, and contact Players (category 1).
 >
 
 # Bunny physics
