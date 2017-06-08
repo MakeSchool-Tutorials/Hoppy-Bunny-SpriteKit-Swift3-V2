@@ -212,7 +212,7 @@ let fixedDelta: CFTimeInterval = 1.0 / 60.0 /* 60 FPS */
 There are a couple things going on here:
 
 - You check if more than a tenth of a second has passed since the last touch. If so apply an angular rotation impulse to tip the bunny over.
-- You apply a clamp to the *Z-Rotation* to ensure the bunny says within the range we want.
+- You apply a clamp to the *Z-Rotation* to ensure the bunny stays within the range we want.
 - You apply a clamp to the *angularVelocity* to ensure the value does not get out of control.
 - You add the *delta* (change in time) to the *sinceTouch* value to capture how much time has passed since the last touch event.
 
