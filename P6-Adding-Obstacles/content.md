@@ -50,7 +50,7 @@ You will be constructing the obstacle with two carrots, one at the top and one a
 You can test if you've setup the obstacle correctly by adding it to the *GameScene*.
 
 > [action]
-> Open *GameScene.sks* and drag *Obstace.sks* into the scene, if you don't see anything, do a quick *Save* to refresh SpriteKit.
+> Open *GameScene.sks* and drag *Obstacle.sks* into the scene, if you don't see anything, do a quick *Save* to refresh SpriteKit.
 >
 > I'm sure you noticed the obstacle is sitting behind the crystals, you will want it to sit in front of the crystals yet also sit behind the ground.  
 
