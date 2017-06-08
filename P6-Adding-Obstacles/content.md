@@ -74,7 +74,7 @@ Now this hopefully look a lot like this.
 # Dynamic obstacle generation
 
 Time to learn about dynamic obstacle generation or DOG for short :]
-You added an a copy *Obstacle.sks* to your scene. This is a sprite node. Your game will copy this node to create a relentless stream of obstacles for the player to avoid. To do this you will need a reference to the source obstacle.
+You added a copy of *Obstacle.sks* to your scene. This is a sprite node. Your game will copy this node to create a relentless stream of obstacles for the player to avoid. To do this you will need a reference to the source obstacle.
 
 In the image above you may have noticed that the obstacle was placed outside the visible area of the game scene. This obstacle will always sit outside of view and act as a source for obstacles that will move across the screen.
 
