@@ -161,7 +161,7 @@ Currently the bunny will get pushed off the screen if you collide with a carrot.
 
 # Physics Contact Delegate
 
-If the bunny collides with the ground, an obstacle or passes through the goal of an obstacle, you want to know about. Next you will implement the *Physics Contact Delegate* so your code will be informed whenever one of these collision contacts takes place.
+If the bunny collides with the ground, an obstacle, or passes through the goal of an obstacle, you want to know about it. Next you will implement the *Physics Contact Delegate* so your code will be informed whenever one of these collision contacts takes place.
 
 Remember earlier when you set the *Contact Bit Mask*? Here you informed the physics system which contacts you were interested in, and through the contact delegate you will be informed when they occur.
 
@@ -502,7 +502,7 @@ Run the game. That little change has made the core mechanic feel much more satis
 > Open *GameScene.swift* then select all your code with *Cmd+a*, then press *Ctrl+i* to Re-Indent.
 >
 
-So far the Bunny moves and the game play is almost complete. At this point the game ends if the Bunny hist *anything* which includes the **goal**! You will take of this last detail in the next section when implement the score. You also may see the bunny get bounced off the screen when it hits something. You will take care of this later also.
+So far the Bunny moves and the game play is almost complete. At this point the game ends if the Bunny hist *anything* which includes the **goal**! You will take care of this last detail in the next section when implement the score. You also may see the bunny get bounced off the screen when it hits something. You will take care of this later also.
 
 # Summary
 
