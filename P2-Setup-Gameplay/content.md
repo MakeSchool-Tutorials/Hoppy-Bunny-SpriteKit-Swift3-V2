@@ -40,7 +40,7 @@ scene.scaleMode = .aspectFill
 To make it easier to position objects on the screen you will move the center point of the scene to the lower left.
 
 > [action]
-> Set Achor Point x and y to 0 (x: 0, y: 0).
+> Set Anchor Point of both x and y to 0.
 >
 > ![Adding background image](../Tutorial-Images/Xcode-set-anchor-point.png)
 >
