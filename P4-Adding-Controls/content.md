@@ -183,14 +183,14 @@ Next you will apply the `clamp(...)` function to limit the rotation of the bunny
 >
 ```
 /* Apply falling rotation */
-if sinceTouch > 0.1 {
+if sinceTouch > 0.2 {
     let impulse = -20000 * fixedDelta
     hero.physicsBody?.applyAngularImpulse(CGFloat(impulse))
 }
 >
 /* Clamp rotation */
 hero.zRotation.clamp(v1: CGFloat(-90).degreesToRadians(), CGFloat(30).degreesToRadians())
-hero.physicsBody?.angularVelocity.clamp(v1: -2, 2)
+hero.physicsBody?.angularVelocity.clamp(v1: -1, 3)
 >
 /* Update last touch timer */
 sinceTouch += fixedDelta
