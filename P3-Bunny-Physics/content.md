@@ -1,5 +1,5 @@
 ---
-title: You've go to let the bunny fly!
+title: You've got to let the bunny fly!
 slug: bunny-physics
 ---
 
