@@ -22,6 +22,8 @@ Time to make a SpriteKit project in Xcode and get started with Hoppy Bunny!
 > Your first step is to create a new SpriteKit Xcode project, open Xcode and select `Create a new Xcode project`. Then select `iOS > Application > Game` as shown below:
 >
 > ![Select New game project](../Tutorial-Images/xcode_new_project.png)
+>
+> On the next screen, Give your product a name (i.e. "hoppy-bunny"), and make sure you select `Storyboard` as the User Interface
 
 ## Adding artwork
 
@@ -42,8 +44,7 @@ In particular look at the *Rendered Pixels* section and notice the reference to 
 
 > [action]
 > Ensure you have the *Assets.xcassets* selected in the *Project Navigator* and then select each asset file and drag them from *1x* to *2x*.
-> You can remove the spaceship asset, you will not need it.
 
 # Summary
 
-Great, you've setup a basic project and added the artwork. In the next section it's time to start building our game.
+Great, you've setup a basic project and added the artwork! In the next section it's time to start building our game.
