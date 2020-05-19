@@ -9,16 +9,17 @@ So far the bunny drops to the ground quickly and there is nothing the player can
 
 Before you can control the bunny in Swift code, you first need to make a connection between the SpriteKit Scene object and the code.
 
-If you recall you changed the name of the bunny sprite to `hero` in *Hero.sks*, this gives you a way to easily find this node in the *GameScene* scene graph.
+If you recall, you changed the name of the bunny sprite to `hero` in `Hero.sks`, this gives you a way to easily find this node in the *GameScene* scene graph.
 
 Next you will add a code connection to the `hero` in your `GameScene` Class.
 
 > [action]
-> Still in *GameScene.swift* setup the code connection.  
+> Still in `GameScene.swift` setup the code connection.  
 > Add the hero property to the top of the *GameScene* class.
 >
 ```
 import SpriteKit
+import GameplayKit
 >
 class GameScene: SKScene {
 >
@@ -39,7 +40,7 @@ class GameScene: SKScene {
 ```
 >
 
-You now have a property to use for connecting to our bunny object.  However, this alone will not do anything, you then need to add some code to find the bunny inside *GameScene.sks* and assign it to our newly added `hero` property.
+You now have a property to use for connecting to our bunny object.  However, this alone will not do anything, you then need to add some code to find the bunny inside `GameScene.sks` and assign it to our newly added `hero` property.
 
 > [action]
 > Add the following code to the `didMoveToView(...)` method:
@@ -49,7 +50,7 @@ override func didMove(to view: SKView) {
   /* Setup your scene here */
 >
   /* Recursive node search for 'hero' (child of referenced node) */
-  hero = self.childNode(withName: "//hero") as! SKSpriteNode
+  hero = (self.childNode(withName: "//hero") as! SKSpriteNode)
 }
 ```
 >
@@ -65,7 +66,7 @@ override func didMove(to view: SKView) {
 The goal is to have the bunny hop every time we touch the screen, which will keep the bunny flying high.
 
 > [action]
-> In *GameScene.swift*, add a touchesBegan event. This event notifies `GameScene` when a touch makes contact with the screen. Inside the `GameScene` class below (not inside!) `didMove(to view:)` start typing `touchesBegan` the name should appear on a popup menu, hit the *return/enter* key to auto-complete this function.
+> In `GameScene.swift`, add a `touchesBegan` event. This event notifies `GameScene` when a touch makes contact with the screen.
 >
 > Add the following inside `touchesBegan(touches:)`:
 >
@@ -92,12 +93,10 @@ Now sit back and run your game and try out the new touch control.
 
 # Adding a speed limit
 
-It works, yet it doesn't feel right.  As you may have noticed while testing the touch implementation, when you touch the screen repeatedly, the impulses accumulate and the bunny blasts out of the screen. Gone for seconds or even (seemingly) forever.  To make the game playable, you will want to limit the vertical upward velocity. The best way to limit the bunny's speed is by modifying it in the *update* method, which is called every frame.
+It works, yet it doesn't feel right.  As you may have noticed while testing the touch implementation, when you touch the screen repeatedly, the impulses accumulate and the bunny blasts out of the screen. Gone for seconds or even (seemingly) forever.  To make the game playable, you will want to limit the vertical upward velocity. The best way to limit the bunny's speed is by modifying it in the `update` method, which is called every frame.
 
 > [action]
-> Add the update method. In the GameScene class start typing update, when the popup shows up find: `update(_ currentTime:)` on the menu and choose it by pressing the *return* key.
->
->  
+> In `GameScene.swift`, add the following code to the `update` method:
 >
 ```
 override func update(_ currentTime: CFTimeInterval) {
@@ -141,7 +140,7 @@ There are a couple of things you will need to do to achieve this:
 - Limit the rotation between slightly up and 90 degrees down.
 
 > [action]
-> The first step is to add a property to keep track of the time since the last touch. Add this declaration just after our hero property declaration.
+> The first step is to add a property to keep track of the time since the last touch. Add this declaration just after our `hero` property declaration in `GameScene.swift`:
 >
 ```
 var sinceTouch : CFTimeInterval = 0
@@ -179,7 +178,7 @@ You need to limit the rotation of the bunny and also perform a downward rotation
 Next you will apply the `clamp(...)` function to limit the rotation of the bunny, limit the angular velocity and increment the new `sinceTouch` timer.
 
 > [action]
-> Add this code at end of the `update(...)` method:
+> In `GameScene.swift`, add this code at end of the `update(...)` method:
 >
 ```
 /* Apply falling rotation */
@@ -202,7 +201,7 @@ First thing you will notice are the red errors, you need to define the value for
 What is *delta*? Delta is the difference in time taken between rendering frames. The target FPS (Frames Per Second) is 60, which makes everything feel silky smooth, an optimal fixed delta time would be `1 second / 60 frames = 0.01666666666`.  For simplicity we will be using this value. However, in practice for more complex scenes we would calculate a more accurate delta.
 
 > [action]
-> Add the following code after the declaration of the `sinceTouch` property.
+> In `GameScene.swift`, add the following code after the declaration of the `sinceTouch` property.
 >
 ```
 let fixedDelta: CFTimeInterval = 1.0 / 60.0 /* 60 FPS */
@@ -226,12 +225,12 @@ Now run your game again. The behavior should hopefully be similar to this:
 
 # Summary
 
-You've made some real progress in this chapter and learnt to:
+You've made some real progress in this chapter and learned to:
 
-- Code connecting **GameScene** objects to swift game code
+- Code connecting **GameScene** objects to Swift game code
 - Add touch controls and apply physics forces
 - Importing additional Swift functionality
 - Clamping values to a range
-- Learnt about *delta* and adding time counters
+- Learned about *delta* and adding time counters
 
 Hopping up and down is fun, but it would be even better if there was a sense of movement. In the next chapter you are going to get things moving.
