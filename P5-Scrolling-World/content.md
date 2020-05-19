@@ -89,14 +89,11 @@ Can you get the clouds to move past? What about the crystals? -->
 To control the speed of this conveyor belt you will want to add a new *scrollSpeed* property to the *GameScene* class.
 
 > [action]
-> Add the following line to *GameScene.swift* after the *fixedDelta* property:
+> Add the following line to `GameScene.swift` after the `fixedDelta` property:
 >
 ```
 let scrollSpeed: CGFloat = 100
 ```
->
-
-<!--  -->
 
 ## Virtual scroll layer
 
@@ -104,7 +101,7 @@ You will need to use this property to manipulate the scroll speed of the conveyo
 to modify the *GameScene* to create a virtual layer for all the objects you wish to scroll.  
 
 > [action]
-> Drag an *Empty* node to the scene, set the position to `(0,0)`, set *Z-Position* to `2` and set the *Name*
+> In `GameScene.sks`, drag an *Empty* node to the scene (Hit that `+` again and find it under the Objet library!), set the position to `(0,0)`, set *Z-Position* to `2` and set the *Name*
 > to `scrollLayer`:
 >
 > ![Add empty node](../Tutorial-Images/xcode_add_empty_node_scroll.png)
@@ -117,31 +114,28 @@ Next you need to create a code connection for the *scrollLayer*
 <!--  -->
 
 > [action]
-> Open *GameScene.swift* and add the following after the `hero` property declaration.
+> Open `GameScene.swift` and add the following after the `hero` property declaration.
 >
 ```
 var scrollLayer: SKNode!
 ```
->
-
-<!--  -->
 
 Next you need to create the code connection to the Scene Editor object.  This step is very similar to creating the *hero* code connection, although this time there is no need to do a recursive node search as this node sits directly below the *GameScene*.
 
-> Add the following after the *hero* node code connection.
+> [action]
+> In `GameScene.swift`, add the following after the *hero* node code connection in the `didMove` function.
 >
 ```
 /* Set reference to scroll layer node */
 scrollLayer = self.childNode(withName: "scrollLayer")
 ```
->
-<!--  -->
 
 # Scroll World
+
 To help organize your code, let's create a new method called **scrollWorld** and call this in the `update(...)` method.
 
 > [action]
-> Add the following method at the end of the *GameScene* class (but before the last closing bracket):
+> In `GameScene.swift`, add the following method at the end of the *GameScene* class (but before the last closing bracket):
 >
 ```
 func scrollWorld() {
@@ -156,7 +150,6 @@ func scrollWorld() {
 /* Process world scrolling */
 scrollWorld()
 ```
->
 
 <!--  -->
 
@@ -169,17 +162,19 @@ Run the game.
 
 # Adding objects to scroll
 
-Oh no scrolling?  Now that you have a virtual conveyor belt system, you need to put some objects on it :]
+Oh, no scrolling?  Now that you have a virtual conveyor belt system, you need to put some objects on it :]
 
 > [action]
-> Open *GameScene.sks*, select the *ground* node in the scene editor and set the *Parent* value to `scrollLayer`, this modifies the hierarchy of the scene graph.  The *ground* node a child of the *scrollLayer* and thus any scrolling applied to the *scrollLayer* will affect any child nodes.
+> Open `GameScene.sks`, select the *ground* node in the scene editor and set the *Parent* value to `scrollLayer`, this modifies the hierarchy of the scene graph.
 >
-> ![Modify sprite parent](../Tutorial-Images/xcode_spritekit_add_more_ground.png)
+> The *ground* node is now a child of the *scrollLayer*, and thus any scrolling applied to the *scrollLayer* will affect any child nodes.
+>
+> ![Modify sprite parent](../Tutorial-Images/xcode_ground_child.png)
 >
 
 Run the game.  The ground should be scrolling, keep watching...
 
-> ![Ground scroll](../Tutorial-Images/animated_scroll_ground.gif)
+![Ground scroll](../Tutorial-Images/bad_crystal.png)
 
 **For some reason the crystals get messed up in the gif**
 
@@ -189,12 +184,12 @@ Argh eventually you will run out of ground and the bunny will fall into the endl
 
 You can make the ground loop by adding a second ground sprite and implementing an endless scrolling technique using both ground sprites. When a ground sprite leaves the left edge you'll move it back to the right edge of the screen to make the ground seem endlessly repeating.
 
-The first step will be adding a second ground sprite to the *GameScene.sks*
+The first step will be adding a second ground sprite to `GameScene.sks`
 
 > [action]
 > Duplicate the existing *ground* by `Edit -> Copy` then `Edit -> Paste`. This way all the properties of ground are already setup.
-> You should snap it to the end of the first ground piece.
->
+> You should snap it to the end of the first ground piece. so that it looks like the following image:
+> ![ground snapped](../Tutorial-Images/ground_copy.png)
 
 Run the game.
 
@@ -204,7 +199,7 @@ The power of this setup is you can simply add new objects to the *scrollLayer* a
 In the update method, you will perform a check against every ground object in the *scrollLayer* to see if it has moved outside of the left edge of the screen, if so you will then relocate it to back to the right edge.
 
 > [action]
-> Add the following code to the end of the `scrollWorld()` method:
+> In `GameScene.swift`, add the following code to the end of the `scrollWorld()` method:
 >
 ```
 /* Loop through scroll layer nodes */
