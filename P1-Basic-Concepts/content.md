@@ -23,7 +23,7 @@ Time to make a SpriteKit project in Xcode and get started with Hoppy Bunny!
 >
 > ![Select New game project](../Tutorial-Images/xcode_new_project.png)
 >
-> On the next screen, Give your product a name (i.e. "hoppy-bunny"), and make sure you select `Storyboard` as the User Interface
+> On the next screen, Give your product a name (i.e. "hoppy-bunny"), and make sure you select `Spritekit` as the Game Technology
 
 ## Adding artwork
 
