@@ -13,8 +13,8 @@ By the end of this tutorial, you should be able to...
 
 - Implement an endless scroller
 - Implement procedural level generation
+- Use SpriteKit
 - Use physics with SpriteKit
-- Use Swift with SpriteKit
 
 # The finished product
 
