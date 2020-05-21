@@ -106,7 +106,14 @@ It will be useful to create a layer to hold all of the obstacles. You can do thi
 > Set the position to `(0, 0)`, *Z-Position* to `1` and *Name* to `obstacleLayer`
 >
 > ![Creating the obstacle layer node](../Tutorial-Images/xcode_add_obstacle_layer.png)
+
+<!-- -->
+
+> [action]
 >
+> Make sure to set `obstacleLayer` to be the parent of the `obstacle` object!
+>
+> ![obstacle parent and child](../Tutorial-Images/xcode_obstacle_parent.png)
 
 <!-- -->
 
@@ -211,7 +218,7 @@ if spawnTimer >= 1.5 {
     obstacleLayer.addChild(newObstacle)
 >
     /* Generate new obstacle position, start just outside screen and with a random y value */
-    let randomPosition = CGPoint(x: 352, y: CGFloat.random(min: 234, max: 382))
+    let randomPosition =  CGPoint(x: 347, y: CGFloat.random(in: 234...382))
 >
     /* Convert new node position back to obstacle layer space */
     newObstacle.position = self.convert(randomPosition, to: obstacleLayer)

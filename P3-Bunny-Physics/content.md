@@ -135,6 +135,8 @@ You can easily set the *Z-Position* of your sprites in the *Attributes inspector
 >
 > ![Z Position Fixed](../Tutorial-Images/xcode_zorder_fixed.png)
 
+Well, almost perfect: you may have noticed your bunny isn't flapping its ears! We're going to fix that in the next chapter!
+
 # Summary
 
 It's coming along nicely now, so what did you learn?

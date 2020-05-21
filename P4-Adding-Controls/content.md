@@ -40,7 +40,7 @@ class GameScene: SKScene {
 ```
 >
 
-You now have a property to use for connecting to our bunny object.  However, this alone will not do anything, you then need to add some code to find the bunny inside `GameScene.sks` and assign it to our newly added `hero` property.
+You now have a property to use for connecting to our bunny object.  However, this alone will not do anything, you then need to add some code to find the bunny inside `GameScene.sks` and assign it to our newly added `hero` property. Once we've done that, we can change its `isPaused` property so that it can flap its ears again! This also allows us to use other animations with it as well.
 
 > [action]
 > Add the following code to the `didMoveToView(...)` method:
@@ -51,6 +51,9 @@ override func didMove(to view: SKView) {
 >
   /* Recursive node search for 'hero' (child of referenced node) */
   hero = (self.childNode(withName: "//hero") as! SKSpriteNode)
+>
+  /* allows the hero to animate when it's in the GameScene */
+  hero.isPaused = false
 }
 ```
 >
