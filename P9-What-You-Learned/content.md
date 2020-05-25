@@ -75,3 +75,22 @@ At the beginning of the Hoppy Bunny tutorials you learned how to create your fir
 
 [Download Hoppy Bunny](https://github.com/soggybag/HoppyBunny/archive/master.zip). -->
 
+
+# Stretch Challenges
+
+Now that you have gotten through the entire tutorial don't stop here! You can still modify the game to make it play better. You can change the art to make it more interesting and unique. Challenge your skills by trying some of the ideas here:
+
+> [challenge]
+>
+> - Make the clouds and crystals scroll past like the ground.
+>     - Adjust the speeds of each of these to make the effect look pleasing.
+> - Add a sound each time the bunny makes it through the goal.
+> - Change the art. Change the whole theme of the game by adding new art.
+> - Modify game play. There are many variables used in the game that can be changed.
+>     - The physics properties of the bunny. This will change the feel of the game and how it plays.
+>     - The speed of obstacles and how often they are created. This will change the pace of the game.
+>     - The vertical position of obstacles on the screen. This will change the difficulty.
+>     - The size of the goal area. This will also change the difficulty.
+> - Add different types of obstacles.
+>     - Having different types of obstacles will keep the game interesting.
+> - Add coins or prizes that can be picked up.
