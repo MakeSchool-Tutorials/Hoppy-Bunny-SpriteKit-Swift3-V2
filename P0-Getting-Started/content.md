@@ -1,11 +1,11 @@
 ---
-
 title: Getting started with Hoppy Bunny!
 slug: getting-started
-
 ---
 
-This tutorial will teach you how to implement a Flappy Bird clone for iOS using Apple's Swift programming language together with SpriteKit, their game development framework.
+This tutorial will teach you how to implement a Flappy Bird clone for iOS using
+Apple's Swift programming language together with SpriteKit, their game
+development framework.
 
 ## Learning Outcomes
 
@@ -22,4 +22,4 @@ The final game will look like this:
 
 ![The end result](../Tutorial-Images/finalProject.gif)
 
-Now let's get started with *Hoppy Bunny Swift!*
+Now let's get started with _Hoppy Bunny Swift!_
