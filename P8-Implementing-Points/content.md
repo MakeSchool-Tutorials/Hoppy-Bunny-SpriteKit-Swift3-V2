@@ -8,7 +8,9 @@ obstacles without any reward.
 
 # Adding the score label
 
-> [action] Drag a _Label_ object from the Object Library into the
+> [action]
+>
+> Drag a _Label_ object from the Object Library into the
 > `GameScene.sks`, set the _Name_ to `scoreLabel` and set the font to something
 > you like and will also be easy for the player to read. You could try
 > `Helvetica Neue, Bold, 72`. Set the _Z Position_ to `10` as you want to ensure
@@ -20,7 +22,9 @@ obstacles without any reward.
 
 <!-- -->
 
-> [info] If you are having difficulty moving the _scoreLabel_ or just want finer
+> [info]
+>
+> If you are having difficulty moving the _scoreLabel_ or just want finer
 > control over node placement in general. You can use the _Arrow Keys_ to move
 > any node a pixel at a time or hold _Shift + Arrow Keys_ to move in a bigger
 > step.
@@ -28,20 +32,19 @@ obstacles without any reward.
 Can you add a code connection in _GameScene.swift_ for `scoreLabel`? **Tip: The
 node type will be SKLabel**
 
-> [solution] Open `GameScene.swift` and add the following property near the top
-> of the `GameScene` class:
-
+> [solution]
+>
+> Open `GameScene.swift` and add the following property near the top of the `GameScene` class:
+>
 ```
 var scoreLabel: SKLabelNode!
 ```
-
+>
 > Add the following code after the `buttonRestart` connection:
-
+>
 ```
 scoreLabel = (self.childNode(withName: "scoreLabel") as! SKLabelNode)
 ```
-
->
 
 Great the connection has been made, if you did it yourself, virtual high five!
 
@@ -50,9 +53,10 @@ Great the connection has been made, if you did it yourself, virtual high five!
 The _scoreLabel_ will display game score. However, as it stands there is no way
 to track this, let's add a score counter.
 
-> [action] Open `GameScene.swift` and add the following property to the
-> _GameScene_ class:
-
+> [action]
+>
+> Open `GameScene.swift` and add the following property to the _GameScene_ class:
+>
 ```
 var points = 0
 ```
@@ -60,16 +64,17 @@ var points = 0
 When the game starts you want to ensure the label is reset to `0`, let's make
 that happen.
 
-> [action] In `GameScene.swift`, add the following code to the bottom of the
+> [action]
+>
+> In `GameScene.swift`, add the following code to the bottom of the
 > `didMove(to view:)` method:
-
+>
 ```
 /* Reset Score label */
 scoreLabel.text = "\(points)"
 ```
-
-> `scorLabel.text` expects a string `points` is an Int, wrapping points in "\()"
-> converts it into a string.
+>
+> `scorLabel.text` expects a string `points` is an Int, wrapping points in "\()" converts it into a string.
 
 So far if the bunny collides with anything it will trigger the death sequence.
 When there is a collision with the goal you want to score a point instead of
@@ -83,9 +88,11 @@ the two objects that just made contact with each other. In this next step you
 will check them both and if one is the player and the other the goal you will
 add 1 to `points` and ignore the rest of code that ends the game.
 
-> [action] Open `GameScene.swift` and add this code to the **start** of the
+> [action]
+>
+> Open `GameScene.swift` and add this code to the **start** of the
 > `didBegin(...)` method, **before** the `gameState` check.
-
+>
 ```
 /* Get references to bodies involved in collision */
 let contactA = contact.bodyA

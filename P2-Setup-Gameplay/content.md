@@ -32,13 +32,13 @@ other devices. This size will scale to fit iPhone 4, 5, 6, and 7.
 
 > [info] Have a look through the code in `GameViewController.swift`. In
 > particular:
-
+>
 ```
 /* Set the scale mode to scale to fit the window */
 >
 scene.scaleMode = .aspectFill
 ```
-
+>
 > If you `option+click` _scaleMode_ and look at the _Quick Help inspector_ panel
 > you can find out more about the scaling options available.
 

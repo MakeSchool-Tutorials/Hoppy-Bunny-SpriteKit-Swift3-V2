@@ -8,7 +8,8 @@ implementing a mechanic to randomize their position to challenge the player.
 
 # Creating the obstacle
 
-> [action] Create a new _SpriteKit Scene File_ by selecting
+> [action]
+> Create a new _SpriteKit Scene File_ by selecting
 > `File > New > File > SpriteKit Scene`:
 >
 > ![Selecting the SKS File](../Tutorial-Images/xcode_add_sks.png)
@@ -21,7 +22,8 @@ You will be constructing the obstacle with two carrots, one at the top and one
 at the bottom and a special invisible _Color Sprite_ between the carrots, which
 you will later use to score the player.
 
-> [action] Modify the size and anchor point of this new obstacle scene
+> [action]
+> Modify the size and anchor point of this new obstacle scene
 > properties as shown:
 > ![Modify the obstacle scene size](../Tutorial-Images/xcode_obstacle_scene_size.png)
 >
@@ -50,7 +52,9 @@ you will later use to score the player.
 
 <!-- -->
 
-> [info] So how did I know that the scene size should be exactly `51` pixels
+> [info]
+>
+> So how did I know that the scene size should be exactly `51` pixels
 > wide and `820` tall? Well, sometimes you need to play in the visual editor and
 > then adjust, I saw the carrot's had a width of `51` so I used that value. The
 > default height of `820` (iPhone 5) was no coincidence as the assets were
@@ -62,7 +66,8 @@ you will later use to score the player.
 You can test if you've set up the obstacle correctly by adding it to the
 _GameScene_.
 
-> [action] Open `GameScene.sks` and drag `Obstacle.sks` into the scene, if you
+> [action]
+> Open `GameScene.sks` and drag `Obstacle.sks` into the scene, if you
 > don't see anything, do a quick _Save_ to refresh SpriteKit.
 >
 > I'm sure you noticed the obstacle is sitting behind the crystals, you will
@@ -71,12 +76,14 @@ _GameScene_.
 Can you fix this? Remember you've ran into similar _Z-Position_ issues when you
 initially setup the scene.
 
-> [solution] Tweak the _scrollLayer_ which contains the ground nodes, set
+> [solution]
+> Tweak the _scrollLayer_ which contains the ground nodes, set
 > _Z-Position_ to `2` and set the z-Position of the _Obstacle_ node to `1`.
 
 <!--  -->
 
-> [action] Open `GameScene.sks`. Select the obstacle node and give it the name:
+> [action]
+> Open `GameScene.sks`. Select the obstacle node and give it the name:
 > "obstacle"
 >
 > Make sure you've set its position to `(383.769, 296.5)` as well!
@@ -98,21 +105,19 @@ and act as a source for obstacles that will move across the screen.
 
 > [action] In `GameScene.swift`, add a variable at the top of your GameScene
 > class to hold a reference to the source obstacle:
-
+>
 ```
 var obstacleSource: SKNode!
 ```
-
+>
 > Now set the value of the `obstacleSource` to the "obstacle" node in
 > `GameScene.sks` using `child(withName:)`. In `didMove(to view:)`, add the
 > following at the end of the method:
-
+>
 ```
 /* Set reference to obstacle Source node */
 obstacleSource = self.childNode(withName: "obstacle")
 ```
-
->
 
 ## Obstacle layer
 
@@ -140,7 +145,9 @@ of the obstacles by moving the node.
 
 <!-- -->
 
-> [info] It can sometimes be tricky to select nodes in the editor when they are
+> [info]
+>
+> It can sometimes be tricky to select nodes in the editor when they are
 > on top of each other, an awesome tip that not everyone is aware of is to use
 > the scene hierarchy selector:
 >
@@ -152,16 +159,17 @@ of the obstacles by moving the node.
 
 You'll need to code connect the obstacle layer object.
 
-> [action] Open `GameScene.swift` and add the following property to the
+> [action]
+>
+> Open `GameScene.swift` and add the following property to the
 > `GameScene` class:
-
+>
 ```
 var obstacleLayer: SKNode!
 ```
-
-> Add the following code after the `scrollLayer` in the `didMove(to view:)`
-> method. Create a connection:
-
+>
+> Add the following code after the `scrollLayer` in the `didMove(to view:)` method. Create a connection:
+>
 ```
 /* Set reference to obstacle layer node */
 obstacleLayer = self.childNode(withName: "obstacleLayer")
@@ -175,21 +183,18 @@ important to game play, too slow it's boring, too fast it's too hard.
 
 > [action] In `GameScene.swift`, add the following code after the _sinceTouch_
 > property declaration at the top of the `GameScene` class:
-
+>
 ```
 var spawnTimer: CFTimeInterval = 0
 ```
-
->
 
 # Obstacle scrolling
 
 You are going to create another conveyor belt solution for the newly added
 `ObstacleLayer`.
 
-> [action] In `GameScene.swift`, add the following method to the `GameScene`
-> class:
-
+> [action] In `GameScene.swift`, add the following method to the `GameScene` class:
+>
 ```
 func updateObstacles() {
    /* Update Obstacles */
@@ -222,9 +227,10 @@ it, so it will be removed by calling the `removeFromParent()` method.
 Can you modify your game code to call the `updateObstacles()` method every
 frame?
 
-> [solution] As with the `scrollWorld()` method, in `GameScene.swift,` add the
-> following to the `update(...)` method, after the `scrollWorld()` method.
-
+> [solution]
+>
+> As with the `scrollWorld()` method, in `GameScene.swift,` add the following to the `update(...)` method, after the `scrollWorld()` method.
+>
 ```
 /* Process obstacles */
 updateObstacles()
@@ -242,9 +248,10 @@ obstacle you created in `GameScene.sks`.
 To make the game interesting you will want each new obstacle appear at a
 different height.
 
-> [action] In `GameScene.swift`, add this code to the end of your
+> [action]
+> In `GameScene.swift`, add this code to the end of your
 > `updateObstacles` method:
-
+>
 ```
 /* Time to add a new obstacle? */
 if spawnTimer >= 1.5 {
@@ -280,7 +287,9 @@ Once you are finished move the source obstacle outside of the scene on the right
 side. This way it will not be visible. Players will only see the copies as they
 are created.
 
-> [info] You know that feeling when you play a great game and the core mechanic
+> [info]
+>
+> You know that feeling when you play a great game and the core mechanic
 > feels just right? This is rarely a coincidence, expect to adjust these values
 > and tinker with mechanics, get friends to play and ask for feedback. Keep
 > adjusting the values until the game play feels right and your play testers are
@@ -289,9 +298,10 @@ are created.
 Although you've added a _spawnTimer_ property, it's not been setup to track
 time. Can you think of how to do this?
 
-> [solution] Add the following line to the end of your `update(...)` method in
-> `GameScene.swift`:
-
+> [solution]
+>
+> Add the following line to the end of your `update(...)` method in  `GameScene.swift`:
+>
 ```
 spawnTimer+=fixedDelta
 ```

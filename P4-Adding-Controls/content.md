@@ -20,7 +20,7 @@ Next you will add a code connection to the `hero` in your `GameScene` Class.
 
 > [action] Still in `GameScene.swift` setup the code connection.  
 > Add the hero property to the top of the _GameScene_ class.
-
+>
 ```
 import SpriteKit
 import GameplayKit
@@ -43,8 +43,6 @@ class GameScene: SKScene {
 }
 ```
 
->
-
 You now have a property to use for connecting to our bunny object. However, this
 alone will not do anything, you then need to add some code to find the bunny
 inside `GameScene.sks` and assign it to our newly added `hero` property. Once
@@ -52,7 +50,7 @@ we've done that, we can change its `isPaused` property so that it can flap its
 ears again! This also allows us to use other animations with it as well.
 
 > [action] Add the following code to the `didMoveToView(...)` method:
-
+>
 ```
 override func didMove(to view: SKView) {
   /* Setup your scene here */
@@ -65,11 +63,10 @@ override func didMove(to view: SKView) {
 }
 ```
 
->
-
 <!--  -->
 
-> [info] You need to perform a recursive search as the hero node is not directly
+> [info]
+> You need to perform a recursive search as the hero node is not directly
 > in the _GameScene_, even though you can see it in the scene editor. In the
 > _GameScene_ you added a `Reference node` which holds the bunny (it could
 > easily be pointed to another _SpriteKit Scene_ if we had one). You are making
@@ -81,11 +78,12 @@ override func didMove(to view: SKView) {
 The goal is to have the bunny hop every time we touch the screen, which will
 keep the bunny flying high.
 
-> [action] In `GameScene.swift`, add a `touchesBegan` event. This event notifies
+> [action]
+> In `GameScene.swift`, add a `touchesBegan` event. This event notifies
 > `GameScene` when a touch makes contact with the screen.
 >
 > Add the following inside `touchesBegan(touches:)`:
-
+>
 ```
 override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
   /* Called when a touch begins */
@@ -94,7 +92,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
   hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))
 }
 ```
-
+>
 > Here you are applying an impulse to the _hero's_ `physicsBody`. Think of an
 > impulse like being hit by a baseball bat. In this case a short vertical burst
 > to make the bunny move vertically.
@@ -120,7 +118,7 @@ vertical upward velocity. The best way to limit the bunny's speed is by
 modifying it in the `update` method, which is called every frame.
 
 > [action] In `GameScene.swift`, add the following code to the `update` method:
-
+>
 ```
 override func update(_ currentTime: CFTimeInterval) {
   /* Called before each frame is rendered */
@@ -135,16 +133,13 @@ override func update(_ currentTime: CFTimeInterval) {
 }
 ```
 
->
-
 You've added a simple yet effective modification.
 
 - Grab the y velocity value of our bunny.
 - Check this value and if necessary limit it to 400.
 
-<!--  -->
-
-> [info] You can think of `let velocityY = hero.physicsBody?.velocity.dy ?? 0`
+> [info]
+> You can think of `let velocityY = hero.physicsBody?.velocity.dy ?? 0`
 > as saying "set velocityY to the hero's y velocity or to 0 if it has none".
 
 There is no need to limit the falling speed or modify the x velocity as the
@@ -168,17 +163,18 @@ There are a couple of things you will need to do to achieve this:
 - If no touch occurred for a while, turn the bunny downwards.
 - Limit the rotation between slightly up and 90 degrees down.
 
-> [action] The first step is to add a property to keep track of the time since
+> [action]
+> The first step is to add a property to keep track of the time since
 > the last touch. Add this declaration just after our `hero` property
 > declaration in `GameScene.swift`:
-
+>
 ```
 var sinceTouch : CFTimeInterval = 0
 ```
-
+>
 > Next add this code to the `touchBegan(...)` method, after the application of
 > vertical impulse `applyImpulse(...)`
-
+>
 ```
 /* Apply subtle rotation */
 hero.physicsBody?.applyAngularImpulse(1)
@@ -193,14 +189,16 @@ wild head spin. If you want to see this, go ahead and try the game now.
 You need to limit the rotation of the bunny and also perform a downward rotation
 if no touch has occurred in a while. You perform both in the update method.
 
-> [info] A great way to restrict values to a range is to use _clamp_
+> [info]
+> A great way to restrict values to a range is to use _clamp_
 > functionality. However, as it currently stands there is no handy clamp
 > function available. Thankfully we've provided a handy file of helper functions
 > you can add to the project.
 
 <!--  -->
 
-> [action][download cgfloat+extensions.swift](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift3-V2/raw/master/CGFloat+Extensions.swift)
+> [action]
+> [download cgfloat+extensions.swift](https://github.com/MakeSchool-Tutorials/Hoppy-Bunny-SpriteKit-Swift3-V2/raw/master/CGFloat+Extensions.swift)
 > and drag this file into your project. Ensure _Copy items if needed_ is
 > checked.
 >
@@ -211,9 +209,9 @@ if no touch has occurred in a while. You perform both in the update method.
 Next you will apply the `clamp(...)` function to limit the rotation of the
 bunny, limit the angular velocity and increment the new `sinceTouch` timer.
 
-> [action] In `GameScene.swift`, add this code at end of the `update(...)`
-> method:
-
+> [action]
+> In `GameScene.swift`, add this code at end of the `update(...)` method:
+>
 ```
 /* Apply falling rotation */
 if sinceTouch > 0.2 {
@@ -229,8 +227,6 @@ hero.physicsBody?.angularVelocity.clamp(v1: -1, 3)
 sinceTouch += fixedDelta
 ```
 
->
-
 First thing you will notice are the red errors, you need to define the value for
 `fixedDelta`.
 
@@ -241,14 +237,13 @@ smooth, an optimal fixed delta time would be
 value. However, in practice for more complex scenes we would calculate a more
 accurate delta.
 
-> [action] In `GameScene.swift`, add the following code after the declaration of
+> [action]
+> In `GameScene.swift`, add the following code after the declaration of
 > the `sinceTouch` property.
-
+>
 ```
 let fixedDelta: CFTimeInterval = 1.0 / 60.0 /* 60 FPS */
 ```
-
->
 
 There are a couple things going on here:
 
@@ -261,7 +256,8 @@ There are a couple things going on here:
 - You add the _delta_ (change in time) to the _sinceTouch_ value to capture how
   much time has passed since the last touch event.
 
-> [info] If you want to experiment with clamp values, a handy way is to use the
+> [info]
+> If you want to experiment with clamp values, a handy way is to use the
 > Scene Editor to quickly visualize different values and then apply them in
 > code. Click on _hero_ and have a play with the _Z-Rotation_ value, just
 > remember to set it back to `0` when you're finished playing.

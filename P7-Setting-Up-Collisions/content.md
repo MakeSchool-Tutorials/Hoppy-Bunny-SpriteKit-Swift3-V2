@@ -198,7 +198,9 @@ You need to setup the ground sprite physics, do you think you can tackle this
 yourself? Check back if you don't remember the _Category Mask_ value we decided
 to use. What value do you think you'll need for the _Contact Mask?_
 
-> [solution] Open `GameScene.sks` and modify both **ground** sprites. The _Body
+> [solution]
+>
+> Open `GameScene.sks` and modify both **ground** sprites. The _Body
 > Type_ should be `Bounding Rectangle`, and the four boxes below should
 > unchecked.  
 > Set _Category Mask_ to `4` and _Contact Mask_ to `1`, you want to be informed
@@ -231,7 +233,7 @@ delegate you will be informed when they occur.
 > You declare that a class is implementing this protocol in Swift by appending
 > `SKPhysicsContactDelegate` after the class' super class `SKScene`, separated
 > by a comma, as shown:
-
+>
 ```
 class GameScene: SKScene, SKPhysicsContactDelegate {
 ```
@@ -244,7 +246,7 @@ messages. You should assign `GameScene` as the collision delegate.
 
 > [action] In `GameScene.swift`, add the following code to the
 > `didMove(to view:)` method:
-
+>
 ```
 /* Set physics contact delegate */
 physicsWorld.contactDelegate = self
@@ -255,7 +257,7 @@ whenever a collision takes place that you want to know about e.g. The ones with
 a _contactMask_ of `1`.
 
 > [action] In `GameScene.swift`, add this new method to the `GameScene` class:
-
+>
 ```
 func didBegin(_ contact: SKPhysicsContact) {
   /* Hero touches anything, game over */
@@ -306,23 +308,23 @@ with a custom class called _MSButtonNode_.
 
 Can you setup a code connection for this button?
 
-> [solution] Open `GameScene.swift`, add a property for the button to the
+> [solution]
+>
+> Open `GameScene.swift`, add a property for the button to the
 > `GameScene` class at the top near all the other `var` declarations:
-
+>
 ```
 /* UI Connections */
 var buttonRestart: MSButtonNode!
 ```
-
+>
 > When you connect this node you need to ensure the node is downcast to the
 > `MSButtonNode` class. Add the following to the `didMove(to view:)` method.
-
+>
 ```
 /* Set UI connections */
 buttonRestart = (self.childNode(withName: "buttonRestart") as! MSButtonNode)
 ```
-
->
 
 ## Selection handler
 
@@ -330,9 +332,11 @@ The code connection is ready, if you run the game you can touch the button, it
 looks like it was touched yet nothing happens. You need to add some code to be
 executed upon user touch.
 
-> [action] In `GameScene.swift`, add the following code after the code
-> connection (still in `didMove(to view:)``):
-
+> [action]
+>
+> In `GameScene.swift`, add the following code after the code
+> connection (still in `didMove(to view:)`):
+>
 ```
 /* Setup restart button selection handler */
 buttonRestart.selectedHandler = {
@@ -366,7 +370,7 @@ Great you have a button, might be an idea to hide it once the game is in-play.
 
 > [action] Add the following code after the selection handler setup (at the
 > bottom of `didMove(to view:)`).
-
+>
 ```
 /* Hide restart button */
 buttonRestart.state = .MSButtonNodeStateHidden
@@ -398,17 +402,17 @@ An `Enumeration` is a great way to setup a custom state type.
 
 > [action] Add the following `Enumeration` to the top of `GameScene.swift`
 > (Outside of the GameScene class):
-
+>
 ```
 enum GameSceneState {
     case active, gameOver
 }
 ```
-
+>
 > To track the state you need to add a `gameState` property to the `GameScene`
 > class. Declare this where your other `var` declarations are at. Set the
 > default to `Active`
-
+>
 ```
 /* Game management */
 var gameState: GameSceneState = .active
@@ -420,7 +424,7 @@ Great you now have some rudimentary game management in place, time to kill the
 bunny (we're sad too)
 
 > [action] Replace the `didBegin(_ contact:)` method with the following code:
-
+>
 ```
 func didBegin(_ contact: SKPhysicsContact) {
   /* Hero touches anything, game over */
@@ -467,19 +471,19 @@ property.
 
 > [action] In `GameScene.swift`, add the following to the very top of the
 > `update(...)` method:
-
+>
 ```
 /* Skip game update if game no longer active */
 if gameState != .active { return }
 ```
 
->
-
 Can you figure out how to disable touch?
 
-> [solution] In `GameScene.swift`, add the following to the top of the
+> [solution]
+>
+> In `GameScene.swift`, add the following to the top of the
 > `touchesBegan(...)` method:
-
+>
 ```
 /* Disable touch if game state is not active */
 if gameState != .active { return }
@@ -497,7 +501,7 @@ you've already used actions to setup the the flappy animation frames.
 
 > [action] In `GameScene.swift`, add the following code after you stopped the
 > hero's actions with the `removeAllActions()` method in `didBegin(...)`:
-
+>
 ```
 /* Create our hero death action */
 let heroDeath = SKAction.run({
@@ -509,8 +513,6 @@ let heroDeath = SKAction.run({
 /* Run action */
 hero.run(heroDeath)
 ```
-
->
 
 The `runBlock` action lets you define your own custom action and in this case,
 manually rotate the bunny face down. With actions you can animate sprites, plays
@@ -556,7 +558,7 @@ Time to apply this action to your scene.
 
 > [action] Open _GameScene.swift_ and add the following code after the death
 > action (in `didBegin()`).
-
+>
 ```
 /* Load the shake action resource */
 let shakeScene:SKAction = SKAction.init(named: "Shake")!
@@ -568,14 +570,16 @@ for node in self.children {
     node.run(shakeScene)
 }
 ```
-
+>
 > The effect can not be applied directly to the _GameScene_, so you need to loop
 > through all the child nodes in the scene and apply them individually.
 > Thankfully it is straight forward to do so.
 
 Run the game. When the bunny dies the screen should give a short shake.
 
-> [info] I encourage you to make this effect as crazy as you like,
+> [info]
+>
+> I encourage you to make this effect as crazy as you like,
 > experimentation is the best way to learn what works. Often it's the happy
 > little accidents lead you onto something awesome.
 
@@ -600,13 +604,11 @@ might make it feel more responsive.
 
 > [action] Open `GameScene.swift`, add the following in the `touchesBegan(...)`
 > method after the `if gameState..` check:
-
+>
 ```
 /* Reset velocity, helps improve response against cumulative falling velocity */
 hero.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
 ```
-
->
 
 Run the game. That little change has made the core mechanic feel much more
 satisfying :]

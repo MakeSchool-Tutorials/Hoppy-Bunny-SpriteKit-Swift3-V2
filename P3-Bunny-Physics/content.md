@@ -96,7 +96,7 @@ ground.** If it doesn't please go back and double check your work so far :]
 
 > [action] Before you hit that `Run`, you need to clear out the default project
 > template code. Open `GameScene.swift` and replace with the following:
-
+>
 ```
 import SpriteKit
 import GameplayKit
@@ -115,8 +115,6 @@ class GameScene: SKScene {
     }
 }
 ```
-
->
 
 ## Action
 

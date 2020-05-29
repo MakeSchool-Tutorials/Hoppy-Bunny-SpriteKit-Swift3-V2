@@ -14,7 +14,8 @@ player moving.
 To control the speed of this conveyor belt you will want to add a new
 _scrollSpeed_ property to the _GameScene_ class.
 
-> [action] Add the following line to `GameScene.swift` after the `fixedDelta`
+> [action]
+> Add the following line to `GameScene.swift` after the `fixedDelta`
 > property:
 
 ```
@@ -27,7 +28,8 @@ You will need to use this property to manipulate the scroll speed of the
 conveyor belt, before you do this you need to modify the _GameScene_ to create a
 virtual layer for all the objects you wish to scroll.
 
-> [action] In `GameScene.sks`, drag an _Empty_ node to the scene (Hit that `+`
+> [action]
+> In `GameScene.sks`, drag an _Empty_ node to the scene (Hit that `+`
 > again and find it under the Objet library!), set the position to `(0,0)`, set
 > _Z-Position_ to `2` and set the _Name_ to `scrollLayer`:
 >
@@ -35,7 +37,8 @@ virtual layer for all the objects you wish to scroll.
 
 Next you need to create a code connection for the _scrollLayer_
 
-> [action] Open `GameScene.swift` and add the following after the `hero`
+> [action]
+> Open `GameScene.swift` and add the following after the `hero`
 > property declaration.
 
 ```
@@ -47,9 +50,10 @@ step is very similar to creating the _hero_ code connection, although this time
 there is no need to do a recursive node search as this node sits directly below
 the _GameScene_.
 
-> [action] In `GameScene.swift`, add the following after the _hero_ node code
+> [action]
+> In `GameScene.swift`, add the following after the _hero_ node code
 > connection in the `didMove` function.
-
+>
 ```
 /* Set reference to scroll layer node */
 scrollLayer = self.childNode(withName: "scrollLayer")
@@ -60,24 +64,28 @@ scrollLayer = self.childNode(withName: "scrollLayer")
 To help organize your code, let's create a new method called **scrollWorld** and
 call this in the `update(...)` method.
 
-> [action] In `GameScene.swift`, add the following method at the end of the
+> [action]
+> In `GameScene.swift`, add the following method at the end of the
 > _GameScene_ class (but before the last closing bracket):
-
+>
 ```
 func scrollWorld() {
   /* Scroll World */
   scrollLayer.position.x -= scrollSpeed * CGFloat(fixedDelta)
 }
 ```
-
+>
 > Then add the following to the bottom of your `update(...)` method:
-
+>
 ```
 /* Process world scrolling */
 scrollWorld()
 ```
 
-> [info] Defining a member variable for the scroll speed rather than simply
+<!-- -->
+
+> [info]
+> Defining a member variable for the scroll speed rather than simply
 > defining the hero's position to be increased by `100` \* _delta_ every time is
 > an important programming practice. Variable names offer us clarity - if
 > someone else looks at your code, or even if you revisit it next week, it may
@@ -89,14 +97,15 @@ scrollWorld()
 > wrote `100` and change it. It's not hard to understand how this could quickly
 > get messy and inefficient.
 
-Run the game.
+Run the game!
 
 # Adding objects to scroll
 
 Oh, no scrolling? Now that you have a virtual conveyor belt system, you need to
 put some objects on it :]
 
-> [action] Open `GameScene.sks`, select the _ground_ node in the scene editor
+> [action]
+> Open `GameScene.sks`, select the _ground_ node in the scene editor
 > and set the _Parent_ value to `scrollLayer`, this modifies the hierarchy of
 > the scene graph.
 >
@@ -123,7 +132,8 @@ the ground seem endlessly repeating.
 
 The first step will be adding a second ground sprite to `GameScene.sks`
 
-> [action] Duplicate the existing _ground_ by `Edit -> Copy` then
+> [action]
+> Duplicate the existing _ground_ by `Edit -> Copy` then
 > `Edit -> Paste`. This way all the properties of ground are already setup. You
 > should snap it to the end of the first ground piece. so that it looks like the
 > following image: ![ground snapped](../Tutorial-Images/ground_copy.png)
@@ -141,7 +151,7 @@ if so you will then relocate it to back to the right edge.
 
 > [action] In `GameScene.swift`, add the following code to the end of the
 > `scrollWorld()` method:
-
+>
 ```
 /* Loop through scroll layer nodes */
 for ground in scrollLayer.children as! [SKSpriteNode] {
